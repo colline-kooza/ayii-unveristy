@@ -29,7 +29,7 @@ export function MobileBottomNav({ role, unreadNotifications = 0, unreadMessages 
       {
         icon: LayoutDashboard,
         label: "Home",
-        href: role === "ADMIN" ? "/dashboard/admin/overview" : role === "LECTURER" ? "/dashboard/lecturer" : "/dashboard/student",
+        href: "/dashboard",
       },
     ];
 

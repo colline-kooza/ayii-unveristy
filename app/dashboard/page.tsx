@@ -17,11 +17,11 @@ export default async function DashboardPage() {
   }
 
   if (user.role === "LECTURER") {
-    redirect("/dashboard/lecturer/my-courses");
+    redirect("/dashboard/lecturer");
   }
 
   if (user.role === "STUDENT") {
-    redirect("/dashboard/student/courses");
+    redirect("/dashboard/student");
   }
 
   // Default fallback
