@@ -46,15 +46,15 @@ export default function AcademicPrograms() {
 
       <div className="container mx-auto px-6 lg:px-24 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <Badge className="mb-6 bg-[#283593]/5 text-[#283593] border-0 text-[11px] font-black uppercase tracking-[0.3em] px-6 py-2 rounded-full">
+          <Badge className="mb-6 bg-[#283593]/5 text-[#283593] border-0 text-[10px] font-black uppercase tracking-[0.3em] px-6 py-2 rounded-full">
             Institutional Programs
           </Badge>
-          <h2 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 mb-6 leading-tight">
+          <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-gray-900 mb-5 leading-tight">
             Premier Academic <br />
             <span className="text-[#283593]">Excellence</span>
           </h2>
-          <p className="text-lg text-gray-500 font-medium max-w-2xl mx-auto">
-            Discover our curated academic pathways designed to equip you with institutional mastery and professional dominance in your chosen field.
+          <p className="text-sm lg:text-base text-gray-500 font-medium max-w-2xl mx-auto">
+            Discover our curated academic pathways designed to equip you with institutional mastery and professional excellence in your chosen field.
           </p>
         </div>
 
@@ -79,11 +79,11 @@ export default function AcademicPrograms() {
                     {program.category}
                   </Badge>
                   
-                  <h3 className="text-3xl font-black text-white mb-4 tracking-tight leading-[1.1]">
+                  <h3 className="text-2xl font-black text-white mb-3 tracking-tight leading-tight">
                     {program.title}
                   </h3>
                   
-                  <p className="text-[13px] text-gray-300 font-bold uppercase tracking-widest leading-relaxed mb-10 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-4 group-hover:translate-y-0">
+                  <p className="text-xs text-gray-300 font-bold uppercase tracking-widest leading-relaxed mb-10 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-4 group-hover:translate-y-0">
                     {program.desc}
                   </p>
 

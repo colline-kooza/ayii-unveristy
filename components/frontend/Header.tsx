@@ -17,15 +17,15 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-lg shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#283593]/95 backdrop-blur-md shadow-lg border-b border-white/10">
       <nav className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-20">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-blue-500 p-2 rounded-lg">
-              <GraduationCap className="h-6 w-6 text-white" />
+            <div className="bg-[#0ee0f8] p-2 rounded-lg">
+              <GraduationCap className="h-6 w-6 text-[#283593]" />
             </div>
-            <span className="text-xl font-bold text-gray-100">
+            <span className="text-xl font-bold text-white">
               AYii University
             </span>
           </Link>
@@ -36,7 +36,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-[#283593] font-medium transition-colors"
+                className="text-white/90 hover:text-[#0ee0f8] font-medium transition-colors"
               >
                 {item.name}
               </Link>
@@ -46,18 +46,18 @@ export default function Header() {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/courses">
-              <Button variant="ghost" className="text-gray-300 font-black uppercase tracking-widest text-[10px] hover:text-[#0ee0f8] hover:bg-white/5 px-6">
+              <Button variant="ghost" className="text-white/90 font-black uppercase tracking-widest text-[10px] hover:text-[#0ee0f8] hover:bg-white/10 px-6">
                 Courses
               </Button>
             </Link>
             <Link href="/courses">
-              <Button className="bg-[#0ee0f8] hover:bg-white text-black font-black uppercase tracking-widest text-[10px] px-8 h-10 rounded-xl shadow-lg shadow-[#0ee0f8]/20 transition-all">
+              <Button className="bg-[#0ee0f8] hover:bg-white text-[#283593] font-black uppercase tracking-widest text-[10px] px-8 h-10 rounded-xl shadow-lg shadow-[#0ee0f8]/20 transition-all">
                 Enroll Now
               </Button>
             </Link>
-            <div className="h-8 w-px bg-white/10 mx-2" />
+            <div className="h-8 w-px bg-white/20 mx-2" />
             <Link href="/auth/sign-in">
-              <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/10">
+              <Button variant="ghost" className="text-white/90 hover:text-white hover:bg-white/10">
                 Sign In
               </Button>
             </Link>
@@ -65,7 +65,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700"
+            className="md:hidden p-2 text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -78,26 +78,26 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden py-4 border-t border-white/10">
             <div className="flex flex-col space-y-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-[#283593] font-medium transition-colors px-2"
+                  className="text-white/90 hover:text-[#0ee0f8] font-medium transition-colors px-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
+              <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
                 <Link href="/auth/sign-in" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full border-[#283593] text-[#283593]">
+                  <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-[#283593] hover:bg-[#283593]/90 text-white">
+                  <Button className="w-full bg-[#0ee0f8] hover:bg-white text-[#283593]">
                     Dashboard
                   </Button>
                 </Link>

@@ -37,12 +37,12 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.3rem] font-extrabold text-white mb-5 lg:mb-6 leading-[1.1] sm:leading-[1] lg:leading-[1] tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 lg:mb-5 leading-tight tracking-tight">
              AYii University <br />
             <span className="text-[#0ee0f8]">Learning Hub</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-blue-100/80 mb-8 lg:mb-10 leading-relaxed font-medium max-w-xl">
+          <p className="text-sm sm:text-base text-blue-100/80 mb-6 lg:mb-8 leading-relaxed font-medium max-w-xl">
             Find past papers, lecture notes, videos — and get your questions
             answered by peers and lecturers at AYii University.
           </p>
@@ -68,17 +68,17 @@ export default function Hero() {
           </div>
 
           {/* Trust Strip / Stats */}
-          <div className="mt-10 lg:mt-16">
+          <div className="mt-8 lg:mt-12">
             <div className="flex flex-wrap items-center gap-6 sm:gap-x-10 gap-y-4">
               <div className="flex items-center gap-2 group">
                 <div className="p-2 bg-white/5 rounded-lg border border-white/10 group-hover:bg-white/10 transition-colors">
-                  <Users className="w-5 h-5 text-[#F4A800]" />
+                  <Users className="w-4 h-4 text-[#F4A800]" />
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-white leading-none">
+                  <div className="text-lg font-bold text-white leading-none">
                     3K+
                   </div>
-                  <div className="text-lg text-blue-100/50 uppercase font-bold tracking-widest mt-1">
+                  <div className="text-xs text-blue-100/50 uppercase font-bold tracking-widest mt-1">
                     Students
                   </div>
                 </div>
@@ -86,13 +86,13 @@ export default function Hero() {
 
               <div className="flex items-center gap-2 group text-white">
                 <div className="p-2 bg-white/5 rounded-lg border border-white/10 group-hover:bg-white/10 transition-colors">
-                  <GraduationCap className="w-5 h-5 text-[#F4A800]" />
+                  <GraduationCap className="w-4 h-4 text-[#F4A800]" />
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-white leading-none">
+                  <div className="text-lg font-bold text-white leading-none">
                     12+
                   </div>
-                  <div className="text-lg text-blue-100/50 uppercase font-bold tracking-widest mt-1">
+                  <div className="text-xs text-blue-100/50 uppercase font-bold tracking-widest mt-1">
                     Faculties
                   </div>
                 </div>
@@ -100,13 +100,13 @@ export default function Hero() {
 
               <div className="flex items-center gap-2 group text-white">
                 <div className="p-2 bg-white/5 rounded-xl border border-white/10 group-hover:bg-white/10 transition-colors">
-                  <BookOpenCheck className="w-5 h-5 text-[#F4A800]" />
+                  <BookOpenCheck className="w-4 h-4 text-[#F4A800]" />
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-white leading-none">
+                  <div className="text-lg font-bold text-white leading-none">
                     500+
                   </div>
-                  <div className="text-lg text-blue-100/50 uppercase font-bold tracking-widest mt-1">
+                  <div className="text-xs text-blue-100/50 uppercase font-bold tracking-widest mt-1">
                     Resources
                   </div>
                 </div>
