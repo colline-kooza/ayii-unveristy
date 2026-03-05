@@ -1,0 +1,18 @@
+app/dashboard/admin/users/lecturers/page.tsx(60,27): error TS2339: Property 'data' does not exist on type '{}'.
+app/dashboard/admin/users/lecturers/page.tsx(61,22): error TS2339: Property 'meta' does not exist on type '{}'.
+components/shared/modals/ContentUploadModal.tsx(164,19): error TS2322: Type '"standard"' is not assignable to type '"default" | "compact" | "minimal" | undefined'.
+components/shared/SelectInput.tsx(9,35): error TS2307: Cannot find module '@/types/attendance' or its corresponding type declarations.
+components/ui/chart.tsx(107,7): error TS2339: Property 'payload' does not exist on type 'Omit<Omit<Props<ValueType, NameType>, PropertiesReadFromContext> & { active?: boolean | undefined; allowEscapeViewBox?: AllowInDimension | undefined; ... 24 more ...; wrapperStyle?: CSSProperties | undefined; } & ClassAttributes<...> & HTMLAttributes<...> & { ...; }, "ref">'.
+components/ui/chart.tsx(112,7): error TS2339: Property 'label' does not exist on type 'Omit<Omit<Props<ValueType, NameType>, PropertiesReadFromContext> & { active?: boolean | undefined; allowEscapeViewBox?: AllowInDimension | undefined; ... 24 more ...; wrapperStyle?: CSSProperties | undefined; } & ClassAttributes<...> & HTMLAttributes<...> & { ...; }, "ref">'.
+components/ui/chart.tsx(176,25): error TS7006: Parameter 'item' implicitly has an 'any' type.
+components/ui/chart.tsx(176,31): error TS7006: Parameter 'index' implicitly has an 'any' type.
+components/ui/chart.tsx(205,58): error TS2367: This comparison appears to be unintentional because the types '"line" | "dashed"' and '"dash"' have no overlap.
+components/ui/chart.tsx(252,41): error TS2344: Type '"payload" | "verticalAlign"' does not satisfy the constraint '"string" | "name" | "path" | "seed" | "filter" | "fill" | "values" | "id" | "type" | "result" | "role" | "key" | "method" | "max" | "cursor" | "crossOrigin" | "origin" | "nonce" | ... 431 more ... | "onBBoxUpdate"'.
+  Type '"payload"' is not assignable to type '"string" | "name" | "path" | "seed" | "filter" | "fill" | "values" | "id" | "type" | "result" | "role" | "key" | "method" | "max" | "cursor" | "crossOrigin" | "origin" | "nonce" | ... 431 more ... | "onBBoxUpdate"'.
+components/ui/chart.tsx(259,17): error TS2339: Property 'length' does not exist on type '{}'.
+components/ui/chart.tsx(272,16): error TS2339: Property 'map' does not exist on type '{}'.
+components/ui/chart.tsx(272,21): error TS7006: Parameter 'item' implicitly has an 'any' type.
+prisma/seed.ts(25,5): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '{ email: string; password: string; name: string; }' is not assignable to type '{ name: string; email: string; password: string; image?: string | undefined; callbackURL?: string | undefined; rememberMe?: boolean | undefined; } & { role: string; isTemporaryPassword: boolean; status: string; } & { ...; }'.
+      Type '{ email: string; password: string; name: string; }' is missing the following properties from type '{ role: string; isTemporaryPassword: boolean; status: string; }': role, isTemporaryPassword, status

@@ -1,0 +1,375 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────
+// BETTER AUTH REQUIRED MODELS
+// ─────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  emailVerified Boolean  @default(false)
+  image         String? // avatarUrl stored as R2 key
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // AYii University extensions
+  role                UserRole   @default(STUDENT)
+  registrationNumber  String?    @unique // students only (e.g. 2024/CS/001)
+  isTemporaryPassword Boolean    @default(true)
+  status              UserStatus @default(ACTIVE)
+  suspensionReason    String?
+  department          String?
+  bio                 String?
+  program             String? // students only
+  employeeId          String? // lecturers only
+
+  // Better Auth relations
+  sessions Session[]
+  accounts Account[]
+
+  // Domain relations
+  taughtCourses      Course[]       @relation("LecturerCourses")
+  enrollments        Enrollment[]
+  assignments        Assignment[]   @relation("AssignmentCreator")
+  submissions        Submission[]   @relation("StudentSubmissions")
+  liveLectures       LiveLecture[]  @relation("LecturerLiveLectures")
+  sentMessages       Message[]      @relation("SentMessages")
+  receivedMessages   Message[]      @relation("ReceivedMessages")
+  notifications      Notification[]
+  uploadedPapers     PastPaper[]
+  submittedJournals  Journal[]
+  uploadedNewspapers Newspaper[]
+  uploadedBooks      Book[]
+  auditLogs          AuditLog[]     @relation("AdminAuditLogs")
+  auditTargets       AuditLog[]     @relation("AuditTargets")
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("verification")
+}
+
+// ─────────────────────────────────────────
+// AYii UNIVERSITY DOMAIN MODELS
+// ─────────────────────────────────────────
+
+model Course {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  unitCode    String       @unique
+  department  String
+  lecturerId  String
+  status      CourseStatus @default(ACTIVE)
+  imageUrl    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  lecturer     User          @relation("LecturerCourses", fields: [lecturerId], references: [id])
+  enrollments  Enrollment[]
+  assignments  Assignment[]
+  liveLectures LiveLecture[]
+  applications AdmissionApplication[]
+
+  @@index([lecturerId])
+  @@index([department])
+  @@map("course")
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  studentId  String
+  courseId   String
+  enrolledAt DateTime @default(now())
+
+  student User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+  @@index([courseId])
+  @@map("enrollment")
+}
+
+model Assignment {
+  id           String   @id @default(cuid())
+  courseId     String
+  createdById  String
+  title        String
+  instructions String?
+  dueDate      DateTime
+  fileKey      String? // R2 key — never expose raw
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdBy   User         @relation("AssignmentCreator", fields: [createdById], references: [id])
+  submissions Submission[]
+
+  @@index([courseId])
+  @@map("assignment")
+}
+
+model Submission {
+  id           String   @id @default(cuid())
+  assignmentId String
+  studentId    String
+  fileKey      String // R2 key
+  submittedAt  DateTime @default(now())
+  grade        String?
+  feedback     String?
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  student    User       @relation("StudentSubmissions", fields: [studentId], references: [id])
+
+  @@unique([assignmentId, studentId])
+  @@index([studentId])
+  @@map("submission")
+}
+
+model LiveLecture {
+  id         String            @id @default(cuid())
+  courseId   String
+  lecturerId String
+  status     LiveLectureStatus @default(LIVE)
+  meetingUrl String?
+  startedAt  DateTime          @default(now())
+  endedAt    DateTime?
+
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lecturer User   @relation("LecturerLiveLectures", fields: [lecturerId], references: [id])
+
+  @@index([courseId])
+  @@map("live_lecture")
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  isRead     Boolean  @default(false)
+  sentAt     DateTime @default(now())
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
+
+  @@index([senderId, receiverId])
+  @@index([receiverId, isRead])
+  @@map("message")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  isRead    Boolean          @default(false)
+  metadata  Json?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notification")
+}
+
+model PastPaper {
+  id           String   @id @default(cuid())
+  title        String
+  subject      String
+  courseUnit   String
+  year         Int
+  fileKey      String // R2 key
+  uploadedById String
+  createdAt    DateTime @default(now())
+
+  uploadedBy User @relation(fields: [uploadedById], references: [id])
+
+  @@index([subject, year])
+  @@map("past_paper")
+}
+
+model Journal {
+  id              String        @id @default(cuid())
+  title           String
+  abstract        String
+  authors         String[]
+  fileKey         String // R2 key
+  submittedById   String
+  status          JournalStatus @default(PENDING)
+  rejectionReason String?
+  approvedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  submittedBy User @relation(fields: [submittedById], references: [id])
+
+  @@index([status])
+  @@map("journal")
+}
+
+model Newspaper {
+  id            String   @id @default(cuid())
+  headline      String
+  edition       String
+  publishedDate DateTime
+  fileKey       String // R2 key
+  uploadedById  String
+  createdAt     DateTime @default(now())
+
+  uploadedBy User @relation(fields: [uploadedById], references: [id])
+
+  @@map("newspaper")
+}
+
+model Book {
+  id           String   @id @default(cuid())
+  title        String
+  author       String
+  category     String
+  description  String?
+  coverImage   String? // R2 key for cover
+  fileKey      String // R2 key for PDF/EPUB
+  uploadedById String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploadedBy User @relation(fields: [uploadedById], references: [id])
+
+  @@index([category])
+  @@map("book")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  adminId      String
+  targetUserId String?
+  action       String // e.g. "SUSPEND_STUDENT", "APPROVE_JOURNAL", "BULK_CREATE_STUDENTS"
+  reason       String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  admin      User  @relation("AdminAuditLogs", fields: [adminId], references: [id])
+  targetUser User? @relation("AuditTargets", fields: [targetUserId], references: [id])
+
+  @@index([adminId])
+  @@map("audit_log")
+}
+
+// ─────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────
+
+enum UserRole {
+  STUDENT
+  LECTURER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum CourseStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum LiveLectureStatus {
+  LIVE
+  ENDED
+}
+
+enum JournalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NotificationType {
+  LIVE_LECTURE
+  ASSIGNMENT_POSTED
+  MESSAGE
+  ANNOUNCEMENT
+  SYSTEM
+  JOURNAL_REVIEWED
+  ACCOUNT_STATUS
+  ADMISSION_UPDATE
+}
+
+enum AdmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model AdmissionApplication {
+  id              String          @id @default(cuid())
+  courseId        String
+  fullName        String
+  email           String
+  phone           String
+  academicRecords Json // Previous education details
+  academicDocs    String[] // R2 keys for certificates/transcripts
+  status          AdmissionStatus @default(PENDING)
+  rejectionReason String?
+  approvedAt      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@index([status])
+  @@index([courseId])
+  @@map("admission_application")
+}
