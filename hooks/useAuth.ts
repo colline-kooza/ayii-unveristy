@@ -45,9 +45,8 @@ export function useSignIn() {
         router.push("/change-password");
         return;
       }
-      if (role === "ADMIN") router.push("/dashboard/overview");
-      else if (role === "LECTURER") router.push("/dashboard/my-courses");
-      else router.push("/dashboard/student");
+      // Redirect to /dashboard which will then redirect based on role
+      router.push("/dashboard");
     },
     onError: (error) => {
       toast.error("Sign in failed", { description: getErrorMessage(error) });
