@@ -71,7 +71,7 @@ export function DeleteCategoryButton({
             </button>
 
             {/* Header */}
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 pr-8 text-left">
+            <h3 className="text-lg font-semibold text-black mb-2 pr-8 text-left">
               Delete this category?
             </h3>
 

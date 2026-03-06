@@ -46,7 +46,7 @@ export function Navbar({ onSearch, searchResults = [], user }: NavbarProps) {
           placeholder="Search students, courses..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="pl-10 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400"
+          className="pl-10 bg-gray-50 border-gray-200 text-black placeholder:text-gray-400"
         />
       </div>
 

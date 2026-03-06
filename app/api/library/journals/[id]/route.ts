@@ -8,6 +8,7 @@ const updateJournalSchema = z.object({
   title: z.string().min(1).optional(),
   abstract: z.string().min(1).optional(),
   authors: z.array(z.string()).min(1).optional(),
+  doi: z.string().optional(),
   fileKey: z.string().optional(),
   status: z.string().optional(),
 });

@@ -38,7 +38,7 @@ export default function StudentSubmissionsPage() {
         toast.error("Failed to retrieve submission history");
       }
     } catch (error) {
-      toast.error("Network synchronization error");
+      toast.error("Connection error. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +70,7 @@ export default function StudentSubmissionsPage() {
           <Badge className="bg-primary/5 text-primary border-primary/20 text-[10px] font-black uppercase tracking-widest px-3 py-1 mb-2">
             Academic Record
           </Badge>
-          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 italic">
+          <h1 className="text-2xl font-extrabold tracking-tight text-black italic">
             Submission <span className="text-primary">History.</span>
           </h1>
           <p className="text-[12px] text-gray-500 font-medium italic mt-1">
@@ -79,7 +79,7 @@ export default function StudentSubmissionsPage() {
         </div>
         <div className="flex items-center gap-3">
           <Badge className="bg-green-50 text-green-700 border-green-100 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full">
-            {submissions.filter(s => s.grade).length} Graded Tasks
+            {submissions.filter(s => s.grade).length} Marked Tasks
           </Badge>
         </div>
       </header>
@@ -114,7 +114,7 @@ export default function StudentSubmissionsPage() {
                            {submission.assignment.course.unitCode}
                          </span>
                       </div>
-                      <h3 className="text-base font-black text-gray-900 truncate tracking-tight italic group-hover:text-primary transition-colors">
+                      <h3 className="text-base font-black text-black truncate tracking-tight italic group-hover:text-primary transition-colors">
                         {submission.assignment.title}
                       </h3>
                       <p className="text-[11px] font-bold text-gray-400 uppercase tracking-tighter truncate mt-0.5">
@@ -147,10 +147,10 @@ export default function StudentSubmissionsPage() {
                       {submission.grade ? (
                         <div className="flex items-center gap-3">
                           <Badge className="bg-green-50 text-green-600 border-none text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-md">
-                            Graded
+                            Marked
                           </Badge>
-                          <div className="h-10 w-10 h-10 w-10 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/5 text-sm font-black text-primary shadow-sm group-hover:scale-110 transition-transform">
-                            {submission.grade}
+                          <div className="h-10 w-auto px-4 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/5 text-sm font-black text-primary shadow-sm group-hover:scale-110 transition-transform">
+                            {submission.grade}/100
                           </div>
                         </div>
                       ) : (
@@ -191,14 +191,14 @@ export default function StudentSubmissionsPage() {
               <ClipboardList className="h-8 w-8 text-gray-200" />
             </div>
             <div className="space-y-1 px-6">
-              <h3 className="text-base font-black italic text-gray-400 uppercase tracking-widest">Archive Empty</h3>
-              <p className="text-[11px] text-gray-300 font-bold italic">No academic artifacts have been synchronized with your account.</p>
+              <h3 className="text-base font-black italic text-gray-400 uppercase tracking-widest">No Submissions Yet</h3>
+              <p className="text-[11px] text-gray-300 font-bold italic">You haven't submitted any assignments yet. Enroll in courses to get started.</p>
             </div>
             <Button 
               className="mt-4 bg-primary text-white rounded-2xl font-black h-11 px-8 text-xs italic tracking-widest shadow-xl shadow-primary/20"
               onClick={() => window.location.href = "/dashboard/student/courses"}
             >
-              Initialize Deployment
+              Browse Courses
             </Button>
           </div>
         )}

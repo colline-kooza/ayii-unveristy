@@ -3,7 +3,6 @@ import {
   Users,
   GraduationCap,
   BookOpen,
-  Newspaper,
   MessageSquare,
   Bell,
   Library,
@@ -12,7 +11,6 @@ import {
   Settings,
   User,
   ClipboardList,
-  ShieldCheck,
   Video,
 } from "lucide-react";
 
@@ -54,11 +52,6 @@ export function getNavigationForRole(
           ],
         },
         {
-          title: "Admissions",
-          url: "/dashboard/admin/admissions",
-          icon: ShieldCheck,
-        },
-        {
           title: "Courses",
           url: "/dashboard/admin/courses",
           icon: BookOpen,
@@ -82,11 +75,6 @@ export function getNavigationForRole(
               title: "Journals",
               url: "/dashboard/library/journals",
               icon: BookOpen,
-            },
-            {
-              title: "Newspapers",
-              url: "/dashboard/library/newspapers",
-              icon: Newspaper,
             },
           ],
         },
@@ -161,11 +149,6 @@ export function getNavigationForRole(
               url: "/dashboard/library/journals",
               icon: BookOpen,
             },
-            {
-              title: "Newspapers",
-              url: "/dashboard/library/newspapers",
-              icon: Newspaper,
-            },
           ],
         },
         {
@@ -204,6 +187,11 @@ export function getNavigationForRole(
           icon: CheckSquare,
         },
         {
+          title: "Assignments",
+          url: "/dashboard/student/assignments",
+          icon: FileText,
+        },
+        {
           title: "Live Classes",
           url: "/dashboard/student/live-classes",
           icon: Video,
@@ -232,11 +220,6 @@ export function getNavigationForRole(
               title: "Journals",
               url: "/dashboard/library/journals",
               icon: BookOpen,
-            },
-            {
-              title: "Newspapers",
-              url: "/dashboard/library/newspapers",
-              icon: Newspaper,
             },
           ],
         },

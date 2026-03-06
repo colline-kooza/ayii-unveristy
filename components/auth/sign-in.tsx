@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Icons, AppLogoIcon } from '@/components/icons'
+import { Icons } from '@/components/icons'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -74,11 +74,11 @@ export function SignIn() {
   return (
     <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
       <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
-        <div className="p-8 pb-6">
+        <div className="p-1 pb-2">
           <Link href="/" aria-label="go home">
-            <AppLogoIcon className="h-10 fill-current text-black sm:h-12" />
+            <img src="/ayii-logo.png" alt="AYii University" className="h-30 w-auto" />
           </Link>
-          <h1 className="mb-1 mt-4 text-xl font-semibold">Sign in to Tailark</h1>
+          <h1 className="mb-1 mt-4 text-xl font-semibold">Sign in to AYii University</h1>
           <p className="text-sm text-muted-foreground">Welcome back! Sign in to continue</p>
 
           <div className="mt-6 grid grid-cols-2 gap-3">

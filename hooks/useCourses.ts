@@ -117,9 +117,12 @@ export function useEnroll() {
         toast.error("Already enrolled in this course");
       else toast.error("Enrollment failed", { description: msg });
     },
-    onSettled: () => {
+    onSettled: (_, __, courseId) => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.enrolled });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.courses.detail(courseId),
+      });
     },
   });
 }
@@ -166,9 +169,36 @@ export function useUnenroll() {
         description: getErrorMessage(error),
       });
     },
-    onSettled: () => {
+    onSettled: (_, __, courseId) => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.enrolled });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.courses.detail(courseId),
+      });
+    },
+  });
+}
+
+// ── Claim Course (Lecturer Enroll) ──────────
+export function useClaimCourse() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (courseId: string) => {
+      const { data } = await apiClient.post(
+        `/lecturer/courses/${courseId}/enroll`,
+      );
+      return { data, courseId };
+    },
+    onSuccess: () => {
+      toast.success("Successfully enrolled in course!");
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.mine });
+    },
+    onError: (error) => {
+      toast.error("Failed to enroll in course", {
+        description: getErrorMessage(error),
+      });
     },
   });
 }
@@ -197,7 +227,7 @@ export function useCreateCourse() {
 
       // Invalidate everything under "courses" to catch "all", "mine", "enrolled", etc.
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-      
+
       toast.success("Course created", {
         description: `"${newCourse.title}" is now live.`,
       });
@@ -234,5 +264,23 @@ export function useUpdateCourse(courseId: string) {
     },
     onError: (error) =>
       toast.error("Update failed", { description: getErrorMessage(error) }),
+  });
+}
+
+// ── Delete course ─────────────────────────
+export function useDeleteCourse() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (courseId: string) => {
+      await apiClient.delete(`/lecturer/courses/${courseId}`);
+      return courseId;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      toast.success("Course deleted successfully");
+    },
+    onError: (error) =>
+      toast.error("Deletion failed", { description: getErrorMessage(error) }),
   });
 }

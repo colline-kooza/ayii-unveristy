@@ -73,9 +73,9 @@ const mockCourseStats = [
 ];
 
 const mockMarkingQueue = [
-  { id: 1, title: "Calculus Quiz 3", course: "Math 101", pending: 15, dueDate: "2 days left", color: "text-[#7C3AED]" },
+  { id: 1, title: "Calculus Quiz 3", course: "Math 101", pending: 15, dueDate: "2 days left", color: "text-[#6b21a8]" },
   { id: 2, title: "Lab Report 2", course: "Physics 2A", pending: 8, dueDate: "Tomorrow", color: "text-orange-500" },
-  { id: 3, title: "Final Essay", course: "English 102", pending: 22, dueDate: "5 days left", color: "text-blue-600" },
+  { id: 3, title: "Final Essay", course: "English 102", pending: 22, dueDate: "5 days left", color: "text-[#8B1538]" },
 ];
 
 const mockRecentActivity = [
@@ -122,7 +122,7 @@ export default function LecturerDashboard() {
       {/* Compact Header */}
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-100 pb-6">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 flex items-center gap-2">
+          <h1 className="text-2xl font-black tracking-tight text-black flex items-center gap-2">
              Professional Dashboard 🎓
           </h1>
           <p className="text-[13px] text-gray-500 font-bold uppercase tracking-widest mt-1">
@@ -153,7 +153,7 @@ export default function LecturerDashboard() {
         <div className="grid lg:grid-cols-12 gap-6 h-full min-h-0 flex-1">
           {/* Main Stats Column - Span 3 */}
           <div className="lg:col-span-3 flex flex-col gap-4 h-full overflow-y-auto pr-1 custom-scrollbar">
-            <Card className="border-none shadow-xl shadow-blue-500/10 bg-gradient-to-br from-blue-700 to-indigo-800 text-white shrink-0 min-h-[120px] rounded-[1.5rem] overflow-hidden group flex flex-col">
+            <Card className="border-none shadow-xl shadow-[#8B1538]/10 bg-gradient-to-br from-[#5A0F23] to-[#8B1538] text-white shrink-0 min-h-[120px] rounded-[1.5rem] overflow-hidden group flex flex-col">
               <div className="absolute inset-0 bg-white/5 opacity-10 group-hover:opacity-20 transition-opacity"></div>
               <CardContent className="p-5 relative z-10 flex flex-col justify-between flex-1">
                 <div className="flex justify-between items-start mb-2">
@@ -180,7 +180,7 @@ export default function LecturerDashboard() {
                    <Badge variant="secondary" className="bg-orange-50 text-orange-600 border-0 text-[10px] font-black uppercase tracking-widest">Active Units</Badge>
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black mb-0.5 text-gray-900 tracking-tighter">{activeCourses}</h3>
+                  <h3 className="text-3xl font-black mb-0.5 text-black tracking-tighter">{activeCourses}</h3>
                   <p className="text-gray-400 text-[11px] font-bold uppercase tracking-widest">Institutional Assets</p>
                 </div>
               </CardContent>
@@ -195,7 +195,7 @@ export default function LecturerDashboard() {
                    <Badge variant="secondary" className="bg-green-50 text-green-600 border-0 text-[10px] font-black uppercase tracking-widest">Efficiency</Badge>
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black mb-0.5 text-gray-900 tracking-tighter">84%</h3>
+                  <h3 className="text-3xl font-black mb-0.5 text-black tracking-tighter">84%</h3>
                   <p className="text-gray-400 text-[11px] font-bold uppercase tracking-widest">Network Health</p>
                 </div>
               </CardContent>
@@ -206,12 +206,12 @@ export default function LecturerDashboard() {
           <Card className="lg:col-span-6 border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] flex flex-col h-full overflow-hidden">
             <CardHeader className="py-5 px-6">
               <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Analytic Visualization</CardTitle>
-              <CardDescription className="text-lg font-black text-gray-900 mt-1">Course Performance & Acquisition</CardDescription>
+              <CardDescription className="text-lg font-black text-black mt-1">Course Performance & Acquisition</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 min-h-0 pb-6 px-4">
                <ChartContainer
                 config={{
-                  students: { label: "Enrollment", color: "#2563eb" },
+                  students: { label: "Enrollment", color: "#8B1538" },
                   engagement: { label: "Engagement", color: "#f97316" },
                 }}
                 className="h-full w-full"
@@ -244,7 +244,7 @@ export default function LecturerDashboard() {
             <Card className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden">
               <CardHeader className="py-6 px-8">
                 <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Global Activity Feed</CardTitle>
-                <CardDescription className="text-lg font-black text-gray-900 mt-1">Real-time Student Synchronization</CardDescription>
+                <CardDescription className="text-lg font-black text-black mt-1">Real-time Student Synchronization</CardDescription>
               </CardHeader>
               <CardContent className="px-8 pb-8">
                 <Table>
@@ -259,13 +259,13 @@ export default function LecturerDashboard() {
                   <TableBody>
                     {mockRecentActivity.map((activity) => (
                       <TableRow key={activity.id} className="border-gray-50 hover:bg-gray-50/50 transition-colors">
-                        <TableCell className="font-black text-gray-900 text-[11px] h-12">{activity.student}</TableCell>
+                        <TableCell className="font-black text-black text-[11px] h-12">{activity.student}</TableCell>
                         <TableCell className="text-gray-500 text-[10px] font-bold">{activity.activity}</TableCell>
                         <TableCell className="text-gray-400 text-[9px] font-black uppercase tracking-widest">{activity.time}</TableCell>
                         <TableCell>
                           <Badge className={cn(
                             "text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
-                            activity.status === "New" ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" :
+                            activity.status === "New" ? "bg-primary text-white shadow-lg shadow-primary/20" :
                             activity.status === "Graded" ? "bg-green-100 text-green-600 border-0" :
                             "bg-gray-100 text-gray-600 border-0"
                           )}>
@@ -285,7 +285,7 @@ export default function LecturerDashboard() {
             <Card className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] h-fit overflow-hidden">
               <CardHeader className="py-5 px-6 flex flex-row items-center justify-between border-b border-gray-50">
                 <CardTitle className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500">
-                  <ClipboardList className="h-3.5 w-3.5 text-blue-600" />
+                  <ClipboardList className="h-3.5 w-3.5 text-primary" />
                   Academic Queue
                 </CardTitle>
                 <div className="flex gap-2">
@@ -293,7 +293,7 @@ export default function LecturerDashboard() {
                       <Button 
                         size="sm" 
                         variant="ghost" 
-                        className="h-7 px-3 text-[9px] font-black uppercase tracking-widest text-blue-600 hover:bg-blue-50 rounded-lg p-1 transition-all"
+                        className="h-7 px-3 text-[9px] font-black uppercase tracking-widest text-primary hover:bg-rose-50 rounded-lg p-1 transition-all"
                         onClick={() => {
                            setSelectedCourseId(myCourses[0].id);
                            setIsAssignmentModalOpen(true);
@@ -306,17 +306,17 @@ export default function LecturerDashboard() {
               </CardHeader>
               <CardContent className="p-6 space-y-3">
                 {isLoadingAssignments ? (
-                   <div className="flex justify-center p-4"><Loader2 className="h-4 w-4 animate-spin text-blue-600" /></div>
+                   <div className="flex justify-center p-4"><Loader2 className="h-4 w-4 animate-spin text-primary" /></div>
                 ) : assignments && assignments.length > 0 ? (
                   assignments.map((item: any) => (
-                    <div key={item.id} className="p-3 rounded-2xl border border-gray-50 bg-gray-50/30 hover:bg-white hover:border-blue-500/20 hover:shadow-lg hover:shadow-blue-500/5 transition-all group">
+                    <div key={item.id} className="p-3 rounded-2xl border border-gray-50 bg-gray-50/30 hover:bg-white hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all group">
                       <div className="flex justify-between items-start mb-2">
-                        <h4 className="text-[11px] font-black text-gray-900 group-hover:text-blue-600 transition-colors tracking-tight">{item.title}</h4>
+                        <h4 className="text-[11px] font-black text-black group-hover:text-primary transition-colors tracking-tight">{item.title}</h4>
                         <span className="text-[8px] uppercase font-black tracking-widest text-gray-400 bg-white px-1.5 py-0.5 rounded border border-gray-100">{item.course?.unitCode}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Badge className="bg-blue-50 text-blue-600 border-0 text-[8px] font-black uppercase tracking-widest px-1.5 py-0">
+                          <Badge className="bg-rose-50 text-primary border-0 text-[8px] font-black uppercase tracking-widest px-1.5 py-0">
                              {item._count?.submissions || 0} Submissions
                           </Badge>
                           <span className="text-[9px] font-bold text-gray-400 flex items-center gap-1.5">
@@ -326,7 +326,7 @@ export default function LecturerDashboard() {
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-6 px-2 text-[9px] font-black uppercase tracking-widest text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          className="h-6 px-2 text-[9px] font-black uppercase tracking-widest text-primary hover:bg-rose-50 rounded-lg transition-all"
                           onClick={() => {
                              setSelectedAssignment({ id: item.id, title: item.title });
                              setIsSubmissionsModalOpen(true);
@@ -345,8 +345,8 @@ export default function LecturerDashboard() {
             </Card>
 
             {/* Live Sessions */}
-            <Card className="border-none shadow-xl shadow-blue-900/10 bg-gray-900 text-white overflow-hidden relative h-fit rounded-[1.5rem]">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl -mr-16 -mt-16" />
+            <Card className="border-none shadow-xl shadow-gray-900/10 bg-black text-white overflow-hidden relative h-fit rounded-[1.5rem]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16" />
               <CardHeader className="py-5 px-6 flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="flex items-center gap-2 text-white text-[10px] font-black uppercase tracking-[0.2em] opacity-50">
                   Live Terminal
@@ -356,14 +356,14 @@ export default function LecturerDashboard() {
               <CardContent className="p-6 pt-0 space-y-3">
                 {mockSchedule.map((session) => (
                   <div key={session.id} className="p-3 bg-white/5 rounded-2xl border border-white/5 flex items-center gap-4 hover:bg-white/10 transition-all group">
-                    <div className="h-10 w-10 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-400 font-black text-[10px] border border-blue-500/20 shadow-inner">
+                    <div className="h-10 w-10 bg-primary/20 rounded-xl flex items-center justify-center text-rose-400 font-black text-[10px] border border-primary/20 shadow-inner">
                        {session.time.split(" ")[0]}
                     </div>
                     <div>
                       <h5 className="text-[11px] font-black tracking-tight">{session.title}</h5>
                       <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest mt-0.5">{session.platform} • {session.students} Joined</p>
                     </div>
-                    <Button variant="ghost" size="icon" className="ml-auto h-8 w-8 rounded-lg text-white/20 group-hover:text-blue-400 transition-colors">
+                    <Button variant="ghost" size="icon" className="ml-auto h-8 w-8 rounded-lg text-white/20 group-hover:text-rose-400 transition-colors">
                        <ArrowUpRight className="h-4 w-4" />
                     </Button>
                   </div>

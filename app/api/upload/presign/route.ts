@@ -9,7 +9,6 @@ const schema = z.object({
     "submissions",
     "past-papers",
     "journals",
-    "newspapers",
     "avatars",
   ]),
   filename: z.string().min(1),

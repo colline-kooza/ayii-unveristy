@@ -439,7 +439,7 @@ export function Dropzone({
           <input {...getInputProps()} />
           {isDragActive ? (
             <div className="flex flex-col items-center gap-2">
-              <Upload className="h-8 w-8 text-[#283593]" />
+              <Upload className="h-8 w-8 text-[#8B1538]" />
               <p className="text-center text-sm">Drop the files here...</p>
             </div>
           ) : (

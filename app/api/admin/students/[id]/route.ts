@@ -67,3 +67,38 @@ export async function PATCH(
 
   return NextResponse.json(updated);
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { error, session } = await requireAuth([UserRole.ADMIN]);
+  if (error) return error;
+  const admin = session!.user as any;
+  const { id } = await params;
+
+  const target = await prisma.user.findUnique({ 
+    where: { id },
+    select: { role: true } 
+  });
+
+  if (!target)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  if (target.role !== UserRole.STUDENT)
+    return NextResponse.json({ error: "Only student accounts can be deleted via this route" }, { status: 403 });
+
+  // Audit log must be created BEFORE deleting the user because
+  // targetUserId is a foreign key — the row must still exist.
+  await prisma.auditLog.create({
+    data: {
+      adminId: admin.id,
+      targetUserId: id,
+      action: "DELETE_STUDENT",
+    },
+  });
+
+  await prisma.user.delete({ where: { id } });
+
+  return NextResponse.json({ message: "Student deleted successfully" });
+}

@@ -153,7 +153,7 @@ export default function LecturerLiveClasses() {
           <Badge variant="outline" className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/5 border-primary/20">
             Live Learning Terminal
           </Badge>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 lg:text-4xl italic">
+          <h1 className="text-3xl font-extrabold tracking-tight text-black lg:text-4xl italic">
             Broadcast <span className="text-primary">Knowledge.</span>
           </h1>
           <p className="text-gray-500 max-w-xl text-base font-medium leading-relaxed italic">

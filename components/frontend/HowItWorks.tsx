@@ -36,7 +36,7 @@ export default function HowItWorks() {
 
         <div className="relative">
           {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-12 left-[15%] right-[15%] h-0.5 border-t-2 border-dashed border-blue-200" />
+          <div className="hidden lg:block absolute top-12 left-[15%] right-[15%] h-0.5 border-t-2 border-dashed border-red-200" />
 
           <div className="grid gap-12 lg:grid-cols-3">
             {steps.map((step, index) => (
@@ -44,7 +44,7 @@ export default function HowItWorks() {
                 key={index}
                 className="relative flex flex-col items-center text-center group"
               >
-                <div className="w-24 h-24 rounded-full bg-white border-4 border-blue-50 flex items-center justify-center mb-6 shadow-xl group-hover:border-[#F4A800] transition-colors z-10">
+                <div className="w-24 h-24 rounded-full bg-white border-4 border-red-50 flex items-center justify-center mb-6 shadow-xl group-hover:border-[#F4A800] transition-colors z-10">
                   <span className="text-3xl font-bold text-[#283593]">
                     {step.number}
                   </span>

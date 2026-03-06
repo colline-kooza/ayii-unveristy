@@ -18,6 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
+import { getAvatarUrl } from "@/lib/avatarUtils";
 
 interface NavUserProps {
   user: {
@@ -45,23 +46,18 @@ export function NavUser({ user }: NavUserProps) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              // min-w-0 allows flex children to shrink; overflow-hidden clips any overflow
               className="min-w-0 overflow-hidden data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg flex-shrink-0">
                 <AvatarImage
-                  src={user.image || "/placeholder.svg"}
+                  src={getAvatarUrl(user.image, user.name, user.role.toLowerCase() as any)}
                   alt={user.name}
                   className="object-cover"
                 />
-                <AvatarFallback className="rounded-lg">
-                  {user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
+                <AvatarFallback className="bg-rose-50 text-primary font-bold text-xs rounded-lg">
+                  {user.name?.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              {/* min-w-0 here is critical — without it, the grid won't shrink and will overflow */}
               <div className="grid flex-1 min-w-0 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.role}</span>
@@ -79,15 +75,12 @@ export function NavUser({ user }: NavUserProps) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg flex-shrink-0">
                   <AvatarImage
-                    src={user.image || "/placeholder.svg"}
+                    src={getAvatarUrl(user.image, user.name, user.role.toLowerCase() as any)}
                     alt={user.name}
                     className="object-cover"
                   />
-                  <AvatarFallback className="rounded-lg">
-                    {user.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+                  <AvatarFallback className="bg-rose-50 text-primary font-bold text-xs rounded-lg">
+                    {user.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 min-w-0 text-left text-sm leading-tight">

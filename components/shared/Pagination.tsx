@@ -58,7 +58,7 @@ export function Pagination({
       <div className="text-xs text-gray-500 font-medium order-2 sm:order-1 text-center sm:text-left">
         {totalItems ? (
           <>
-            Showing <span className="text-gray-900 font-bold">{Math.min(itemsPerPage || 0, totalItems)}</span> of <span className="text-gray-900 font-bold">{totalItems}</span> {itemName}
+            Showing <span className="text-black font-bold">{Math.min(itemsPerPage || 0, totalItems)}</span> of <span className="text-black font-bold">{totalItems}</span> {itemName}
           </>
         ) : (
           `Page ${currentPage} of ${totalPages}`
@@ -97,7 +97,7 @@ export function Pagination({
               className={cn(
                 "h-8 w-8 p-0 text-[11px] font-bold transition-all shadow-none border-gray-200",
                 currentPage === pageNum 
-                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 border-0" 
+                  ? "bg-[#8B1538] hover:bg-[#6B1329] text-white shadow-lg shadow-[#8B1538]/20 border-0" 
                   : "text-gray-600 hover:bg-white"
               )}
             >

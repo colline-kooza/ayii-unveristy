@@ -55,7 +55,7 @@ import {
 } from "recharts";
 import { EventCalendar } from "@/components/dashboard/event-calendar";
 import { useMyEnrollments } from "@/hooks/useCourses";
-import { useAssignments, useSubmissions } from "@/hooks/useAssignments";
+import { useMyAssignments, useSubmissions } from "@/hooks/useAssignments";
 import { SubmitAssignmentModal } from "@/components/shared/modals/SubmitAssignmentModal";
 import { Loader2, Plus } from "lucide-react";
 
@@ -76,7 +76,7 @@ const mockCurrentCourses = [
     instructor: "Dr. Smith",
     progress: 75,
     lastAccessed: "2 hours ago",
-    color: "bg-blue-500",
+    color: "bg-[#8B1538]",
   },
   {
     id: 2,
@@ -107,10 +107,7 @@ export default function StudentDashboard() {
   const [selectedAssignment, setSelectedAssignment] = useState<{id: string, title: string} | null>(null);
   
   const { data: enrollments, isLoading: isLoadingEnrolled } = useMyEnrollments();
-  
-  // For the demo/dashboard, we'll fetch assignments for the first enrolled course
-  const firstCourseId = enrollments?.[0]?.courseId;
-  const { data: assignments, isLoading: isLoadingAssignments } = useAssignments(firstCourseId || "");
+  const { data: assignments, isLoading: isLoadingAssignments } = useMyAssignments();
 
   const handleSubmitClick = (item: any) => {
     setSelectedAssignment({ id: item.id, title: item.title });
@@ -118,30 +115,30 @@ export default function StudentDashboard() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-gray-50/50 p-4 md:p-8">
+    <div className="flex min-h-screen w-full flex-col bg-gray-50/30 p-4 md:p-8">
       {/* Header Area */}
-      <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-5">
-          <Avatar className="h-20 w-20 ring-4 ring-primary/10 border-4 border-white shadow-xl shadow-primary/5">
+      <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-16 w-16 ring-2 ring-primary/10 border-2 border-white shadow-sm">
             <AvatarImage src="/avatar-student.png" />
-            <AvatarFallback className="bg-primary/5 text-primary text-2xl font-black">JD</AvatarFallback>
+            <AvatarFallback className="bg-primary/5 text-primary text-xl font-bold">JD</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome back, John 👋</h1>
-            <p className="text-gray-500 mt-1.5 text-sm font-medium flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-black">Welcome back, John 👋</h1>
+            <p className="text-gray-500 mt-1 text-sm flex items-center gap-2">
               <GraduationCap className="h-4 w-4 text-primary" />
-              Sophomore • Computer Science Department • ID: 29402
+              Sophomore • Computer Science • ID: 29402
             </p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
-             <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl shadow-sm bg-white border-gray-100 hover:bg-gray-50 transition-colors">
-               <Bell className="h-5 w-5 text-gray-600" />
-               <span className="absolute top-2 right-2 flex h-3 w-3 items-center justify-center rounded-full bg-primary text-[8px] font-bold text-white ring-2 ring-white"></span>
+             <Button variant="outline" size="icon" className="h-10 w-10 rounded-lg shadow-sm bg-white border-gray-200">
+               <Bell className="h-4 w-4 text-gray-600" />
+               <span className="absolute top-1 right-1 flex h-2 w-2 rounded-full bg-primary ring-2 ring-white"></span>
              </Button>
           </div>
-          <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-2xl h-12 px-8 font-bold tracking-tight">
+          <Button className="bg-primary hover:bg-primary/90 text-white shadow-sm rounded-lg h-10 px-6 font-semibold">
             Continue Learning
           </Button>
         </div>
@@ -151,21 +148,21 @@ export default function StudentDashboard() {
         {/* Top Row: Stats, Performance, and Calendar */}
         <div className="grid lg:grid-cols-12 gap-6 h-full min-h-0 flex-1">
           {/* Stats Bar - Span 3 */}
-          <div className="lg:col-span-3 grid grid-cols-2 lg:grid-cols-1 gap-3 h-full overflow-y-auto pr-1 custom-scrollbar">
+          <div className="lg:col-span-3 grid grid-cols-2 lg:grid-cols-1 gap-3 h-full overflow-y-auto pr-1">
              {[
-               { icon: Target, label: "GPA", value: "3.84", color: "text-[#7C3AED]", bg: "bg-[#7C3AED]/10" },
-               { icon: CheckCircle2, label: "Done", value: "12", color: "text-green-600", bg: "bg-green-100" },
-               { icon: Trophy, label: "Medals", value: "8", color: "text-orange-500", bg: "bg-orange-100" },
-               { icon: Clock, label: "Study", value: "142h", color: "text-blue-600", bg: "bg-blue-100" },
+               { icon: Target, label: "GPA", value: "3.84", color: "text-purple-600", bg: "bg-purple-50" },
+               { icon: CheckCircle2, label: "Done", value: "12", color: "text-green-600", bg: "bg-green-50" },
+               { icon: Trophy, label: "Medals", value: "8", color: "text-orange-500", bg: "bg-orange-50" },
+               { icon: Clock, label: "Study", value: "142h", color: "text-accent-crimson", bg: "bg-rose-50" },
              ].map((stat, i) => (
-               <Card key={i} className="border-none shadow-sm hover:shadow-md transition-shadow h-24">
+               <Card key={i} className="border-gray-200 shadow-sm hover:shadow-md transition-shadow h-24">
                  <CardContent className="p-3 flex items-center gap-3">
-                    <div className={cn("p-2 rounded-xl", stat.bg)}>
+                    <div className={cn("p-2 rounded-lg", stat.bg)}>
                       <stat.icon className={cn("h-4 w-4", stat.color)} />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">{stat.label}</span>
-                      <span className="text-lg font-bold text-gray-900">{stat.value}</span>
+                      <span className="text-xs font-medium text-gray-500 block">{stat.label}</span>
+                      <span className="text-lg font-bold text-black">{stat.value}</span>
                     </div>
                  </CardContent>
                </Card>
@@ -173,23 +170,23 @@ export default function StudentDashboard() {
           </div>
 
           {/* Performance Flow - Span 6 */}
-          <Card className="lg:col-span-6 border-none shadow-sm flex flex-col h-full overflow-hidden">
+          <Card className="lg:col-span-6 border-gray-200 shadow-sm flex flex-col h-full overflow-hidden">
             <CardHeader className="py-3">
-              <CardTitle className="text-sm">Attendance & Performance</CardTitle>
-              <CardDescription className="text-xs">Visual tracker of your consistency</CardDescription>
+              <CardTitle className="text-sm font-semibold">Attendance & Performance</CardTitle>
+              <CardDescription className="text-xs">Track your consistency over time</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 min-h-0 pb-2">
                <ChartContainer
                 config={{
-                  attendance: { label: "Attendance %", color: "#7C3AED" },
+                  attendance: { label: "Attendance %", color: "#6b21a8" },
                 }}
                 className="h-full w-full"
               >
                 <AreaChart data={mockAttendanceData} margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorAttendance" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7C3AED" stopOpacity={0.1}/>
-                      <stop offset="95%" stopColor="#7C3AED" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#6b21a8" stopOpacity={0.1}/>
+                      <stop offset="95%" stopColor="#6b21a8" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.3} />
@@ -199,8 +196,8 @@ export default function StudentDashboard() {
                   <Area 
                     type="monotone" 
                     dataKey="attendance" 
-                    stroke="#7C3AED" 
-                    strokeWidth={3}
+                    stroke="#6b21a8" 
+                    strokeWidth={2}
                     fillOpacity={1} 
                     fill="url(#colorAttendance)" 
                   />
@@ -220,29 +217,29 @@ export default function StudentDashboard() {
           {/* Current Courses */}
           <div className="lg:col-span-8">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold text-gray-900">Current Courses</h2>
-              <Button variant="link" className="text-primary font-bold text-xs h-8">View All</Button>
+              <h2 className="text-base font-semibold text-black">Current Courses</h2>
+              <Button variant="link" className="text-primary font-semibold text-sm h-8">View All</Button>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {mockCurrentCourses.map((course) => (
-                <Card key={course.id} className="border-none shadow-sm overflow-hidden group hover:shadow-xl transition-all duration-300 h-fit">
-                  <div className={cn("h-1.5 w-full", course.color)} />
+                <Card key={course.id} className="border-gray-200 shadow-sm overflow-hidden group hover:shadow-md transition-all h-fit">
+                  <div className={cn("h-1 w-full", course.color)} />
                   <CardHeader className="p-3 pb-1">
-                    <CardTitle className="text-xs font-bold line-clamp-1">{course.title}</CardTitle>
-                    <CardDescription className="text-[10px] font-medium">{course.instructor}</CardDescription>
+                    <CardTitle className="text-sm font-semibold line-clamp-1">{course.title}</CardTitle>
+                    <CardDescription className="text-xs">{course.instructor}</CardDescription>
                   </CardHeader>
                   <CardContent className="p-3 space-y-2">
                     <div className="space-y-1">
-                      <div className="flex justify-between text-[10px] font-bold">
+                      <div className="flex justify-between text-xs font-medium">
                         <span>Progress</span>
                         <span>{course.progress}%</span>
                       </div>
-                      <Progress value={course.progress} className="h-1" />
+                      <Progress value={course.progress} className="h-1.5" />
                     </div>
                   </CardContent>
-                  <CardFooter className="p-3 pt-0 flex justify-between items-center text-[9px] text-muted-foreground font-medium">
-                    <span className="flex items-center gap-1"><Clock className="h-2.5 w-2.5" /> {course.lastAccessed}</span>
-                    <Button variant="ghost" size="icon" className="h-5 w-5 rounded-full group-hover:bg-primary group-hover:text-white"><ArrowUpRight className="h-3 w-3" /></Button>
+                  <CardFooter className="p-3 pt-0 flex justify-between items-center text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {course.lastAccessed}</span>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 rounded-full group-hover:bg-primary group-hover:text-white"><ArrowUpRight className="h-3 w-3" /></Button>
                   </CardFooter>
                 </Card>
               ))}
@@ -252,9 +249,9 @@ export default function StudentDashboard() {
           {/* Assignments & Fees */}
           <div className="space-y-6 lg:col-span-4">
             {/* Assignments */}
-            <Card className="border-none shadow-sm h-fit">
+            <Card className="border-gray-200 shadow-sm h-fit">
               <CardHeader className="py-4">
-                <CardTitle className="flex items-center gap-2 text-sm font-bold">
+                <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                   <FileText className="h-4 w-4 text-orange-500" />
                   Due Assignments
                 </CardTitle>
@@ -264,52 +261,54 @@ export default function StudentDashboard() {
                    <div className="flex justify-center p-4"><Loader2 className="h-4 w-4 animate-spin text-primary" /></div>
                 ) : assignments && assignments.length > 0 ? (
                   assignments.map((assignment: any) => (
-                    <div key={assignment.id} className="group p-2.5 rounded-xl border border-gray-100 hover:border-primary/20 hover:bg-white hover:shadow-sm transition-all">
+                    <div key={assignment.id} className="group p-2.5 rounded-lg border border-gray-200 hover:border-primary/30 hover:bg-gray-50 transition-all">
                       <div className="flex items-start justify-between mb-1.5">
                         <div>
-                          <h4 className="text-xs font-bold text-gray-900 leading-none mb-1">{assignment.title}</h4>
-                          <p className="text-[10px] font-medium text-muted-foreground">{assignment.course?.title}</p>
+                          <h4 className="text-sm font-semibold text-black leading-none mb-1">{assignment.title}</h4>
+                          <p className="text-xs text-muted-foreground">{assignment.course?.title}</p>
                         </div>
                         <Badge variant="secondary" className={cn(
-                          "text-[9px] px-1.5 py-0",
-                           "bg-blue-50 text-blue-600" // Simple styling for now
+                          "text-xs px-2 py-0.5",
+                          assignment.submission
+                            ? "bg-green-50 text-green-700 border-green-200"
+                            : "bg-rose-50 text-accent-crimson border-rose-200"
                         )}>
-                          {assignment._count?.submissions > 0 ? "Submitted" : "Pending"}
+                          {assignment.submission ? "Submitted" : "Pending"}
                         </Badge>
                       </div>
                       <div className="flex items-center justify-between mt-2">
-                        <span className="text-[9px] font-bold text-gray-400 flex items-center gap-1">
-                          <Calendar className="h-2.5 w-2.5" /> {new Date(assignment.dueDate).toLocaleDateString()}
+                        <span className="text-xs text-gray-500 flex items-center gap-1">
+                          <Calendar className="h-3 w-3" /> {new Date(assignment.dueDate).toLocaleDateString()}
                         </span>
                         <Button 
                           variant="ghost" 
                           size="sm" 
                           onClick={() => handleSubmitClick(assignment)}
-                          className="h-6 text-[9px] font-bold text-primary px-1.5 hover:bg-primary/5"
+                          className="h-7 text-xs font-semibold text-primary px-2 hover:bg-primary/5"
                         >
-                           {assignment._count?.submissions > 0 ? "Resubmit" : "Submit"}
+                           {assignment.submission ? "Resubmit" : "Submit"}
                         </Button>
                       </div>
                     </div>
                   ))
                 ) : (
-                   <div className="text-center p-4 text-slate-400 text-xs font-medium">No assignments due.</div>
+                   <div className="text-center p-4 text-gray-400 text-xs">No assignments due.</div>
                 )}
               </CardContent>
             </Card>
 
             {/* Fee Quick Pay */}
-            <Card className="bg-gradient-to-br from-[#7C3AED] to-primary/80 border-none shadow-lg text-white h-fit">
+            <Card className="bg-linear-to-br from-purple-600 to-primary border-none shadow-lg text-white h-fit">
               <CardHeader className="py-4">
                  <div className="flex items-center justify-between">
                     <CreditCard className="h-6 w-6 text-white/40" />
-                    <Badge className="bg-white/20 text-white border-0 text-[10px]">Term 2</Badge>
+                    <Badge className="bg-white/20 text-white border-0 text-xs">Term 2</Badge>
                  </div>
                  <CardTitle className="pt-2 text-white text-base">Balance: $2,450.00</CardTitle>
-                 <CardDescription className="text-white/60 text-[10px]">Payment deadline in 12 days</CardDescription>
+                 <CardDescription className="text-white/70 text-xs">Payment deadline in 12 days</CardDescription>
               </CardHeader>
               <CardContent className="p-4 pt-0">
-                 <Button className="w-full h-8 text-xs bg-white text-primary font-bold hover:bg-white/90">Pay Now</Button>
+                 <Button className="w-full h-9 text-sm bg-white text-primary font-semibold hover:bg-white/90">Pay Now</Button>
               </CardContent>
             </Card>
           </div>

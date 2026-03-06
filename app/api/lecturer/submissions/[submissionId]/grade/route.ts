@@ -5,7 +5,10 @@ import { UserRole } from "@/lib/generated/prisma";
 import { z } from "zod";
 
 const schema = z.object({
-  grade: z.string().min(1),
+  grade: z.string().refine((val) => {
+    const num = parseInt(val, 10);
+    return !isNaN(num) && num >= 0 && num <= 100;
+  }, "Marks must be a valid number between 0 and 100"),
   feedback: z.string().optional(),
 });
 

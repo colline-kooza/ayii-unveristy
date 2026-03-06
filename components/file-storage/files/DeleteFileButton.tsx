@@ -65,7 +65,7 @@ export function DeleteFileButton({
               <X className="h-5 w-5" />
             </button>
 
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 pr-8">
+            <h3 className="text-lg font-semibold text-black mb-2 pr-8">
               Delete this file?
             </h3>
 

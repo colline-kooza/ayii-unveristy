@@ -42,6 +42,7 @@ export async function GET(req: NextRequest) {
         email: true,
         department: true,
         employeeId: true,
+        image: true,
         status: true,
         suspensionReason: true,
         createdAt: true,
@@ -65,6 +66,7 @@ const createLecturerSchema = z.object({
   department: z.string().min(1),
   specialization: z.string().optional(),
   employeeId: z.string().optional(),
+  image: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -94,6 +96,7 @@ export async function POST(req: NextRequest) {
       email: data.email,
       department: data.department,
       employeeId: data.employeeId,
+      image: data.image,
       role: UserRole.LECTURER,
       isTemporaryPassword: true,
       emailVerified: false,

@@ -18,7 +18,8 @@ export interface Lecturer {
   employeeId: string | null;
   status: "ACTIVE" | "SUSPENDED" | "INACTIVE";
   specialization?: string;
-  avatarUrl?: string;
+  image?: string;
+  suspensionReason?: string | null;
   createdAt: string;
   _count?: {
     taughtCourses: number;
@@ -33,7 +34,7 @@ export interface Student {
   department: string;
   program: string | null;
   status: "ACTIVE" | "SUSPENDED" | "INACTIVE";
-  avatarUrl?: string;
+  image?: string;
   createdAt: string;
   _count?: {
     enrollments: number;

@@ -28,18 +28,18 @@ export default function LibraryLayout({ children }: { children: React.ReactNode 
       {/* Header Area */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-50 rounded-xl">
-            <Library className="h-5 w-5 text-blue-600" />
+          <div className="p-2 bg-red-50 rounded-xl">
+            <Library className="h-5 w-5 text-red-600" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-gray-900">Digital Library</h1>
+            <h1 className="text-xl font-bold tracking-tight text-black">Digital Library</h1>
             <p className="text-xs text-gray-500 font-medium">Research, journals, and academic archives</p>
           </div>
         </div>
         {isAdmin && (
           <Button 
             onClick={() => setModalOpen(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-9 px-5 rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center gap-2"
+            className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs h-9 px-5 rounded-xl transition-all shadow-lg shadow-red-500/20 flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
             <span>Add Resource</span>
@@ -51,10 +51,9 @@ export default function LibraryLayout({ children }: { children: React.ReactNode 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <Tabs value={activeTab} onValueChange={onTabChange} className="w-fit">
             <TabsList className="bg-gray-100/50 p-1 border border-gray-100 italic">
-              <TabsTrigger value="books" className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Books</TabsTrigger>
-              <TabsTrigger value="past-papers" className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Past Papers</TabsTrigger>
-              <TabsTrigger value="journals" className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Journals</TabsTrigger>
-              <TabsTrigger value="newspapers" className="data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Newspapers</TabsTrigger>
+              <TabsTrigger value="books" className="data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Books</TabsTrigger>
+              <TabsTrigger value="past-papers" className="data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Past Papers</TabsTrigger>
+              <TabsTrigger value="journals" className="data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-sm font-bold text-[11px] px-5 h-7">Journals</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -69,7 +68,7 @@ export default function LibraryLayout({ children }: { children: React.ReactNode 
                 router.replace(`${pathname}?${params.toString()}`);
               }}
               defaultValue={typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("search") || "" : ""}
-              className="pl-9 h-9 bg-white border-gray-100 focus:border-blue-200 focus:ring-blue-100 text-xs shadow-none rounded-xl"
+              className="pl-9 h-9 bg-white border-gray-100 focus:border-red-200 focus:ring-red-100 text-xs shadow-none rounded-xl"
             />
           </div>
         </div>
@@ -77,10 +76,16 @@ export default function LibraryLayout({ children }: { children: React.ReactNode 
         {children}
       </div>
 
-      <LibraryAssetModal 
-        open={modalOpen} 
-        onOpenChange={setModalOpen} 
-        type={activeTab === "past-papers" ? "paper" : activeTab as any} 
+      <LibraryAssetModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        type={
+          activeTab === "books"
+            ? "book"
+            : activeTab === "journals"
+            ? "journal"
+            : "paper"
+        }
       />
     </div>
   );

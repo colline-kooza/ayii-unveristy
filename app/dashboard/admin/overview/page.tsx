@@ -27,10 +27,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 // --- Inline EventCalendar ---
 const EVENT_COLORS: Record<string, string> = {
-  purple: "bg-[#7C3AED] text-white",
+  purple: "bg-[#6b21a8] text-white",
   orange: "bg-orange-500 text-white",
   green: "bg-green-500 text-white",
-  blue: "bg-blue-500 text-white",
   red: "bg-red-500 text-white",
 };
 
@@ -44,7 +43,7 @@ const MOCK_EVENTS: CalendarEvent[] = [
   { date: 3, title: "Staff Meeting", color: "purple" },
   { date: 7, title: "Exam Day", color: "orange" },
   { date: 12, title: "Sports Day", color: "green" },
-  { date: 15, title: "Parent-Teacher", color: "blue" },
+  { date: 15, title: "Parent-Teacher", color: "red" },
   { date: 20, title: "Holiday", color: "red" },
   { date: 25, title: "Fee Deadline", color: "purple" },
   { date: 28, title: "Board Meeting", color: "orange" },
@@ -106,13 +105,13 @@ function EventCalendar() {
               <div key={idx} className={cn(
                 "relative flex items-center justify-center rounded text-[11px] h-7 cursor-pointer transition-colors",
                 day === null && "invisible",
-                isToday && "bg-[#7C3AED] text-white font-bold",
-                !isToday && hasEvent && "bg-[#E8DFFC] text-[#7C3AED] font-semibold",
+                isToday && "bg-[#6b21a8] text-white font-bold",
+                !isToday && hasEvent && "bg-[#E8DFFC] text-[#6b21a8] font-semibold",
                 !isToday && !hasEvent && day !== null && "hover:bg-gray-100 text-foreground",
               )}>
                 {day}
                 {hasEvent && !isToday && (
-                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#7C3AED]" />
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#6b21a8]" />
                 )}
               </div>
             );
@@ -155,8 +154,8 @@ interface OverallAnalyticsData { totalUsers: number; totalCourses: number; avera
 
 // --- Mock Data ---
 const MOCK_STATS: StatCardData[] = [
-  { title: "Total Students", value: "1,250", change: "5.2%", trend: "up", icon: Users, iconBgColor: "bg-[#E8DFFC]", iconColor: "text-[#7C3AED]", description: "Total number of students enrolled." },
-  { title: "Total Teachers", value: "85", change: "1.5%", trend: "up", icon: User, iconBgColor: "bg-blue-100", iconColor: "text-blue-600", description: "Total number of teaching staff." },
+  { title: "Total Students", value: "1,250", change: "5.2%", trend: "up", icon: Users, iconBgColor: "bg-[#E8DFFC]", iconColor: "text-[#6b21a8]", description: "Total number of students enrolled." },
+  { title: "Total Teachers", value: "85", change: "1.5%", trend: "up", icon: User, iconBgColor: "bg-rose-100", iconColor: "text-[#8B1538]", description: "Total number of teaching staff." },
   { title: "Total Users", value: "2,320", change: "3.1%", trend: "up", icon: School, iconBgColor: "bg-green-100", iconColor: "text-green-600", description: "Total platform users across all roles." },
 ];
 
@@ -194,7 +193,7 @@ const mockFeesOverviewData = {
 };
 
 const mockAdmissionStatusData: AdmissionStatusData[] = [
-  { status: "New", count: 15, color: "#7C3AED" },
+  { status: "New", count: 15, color: "#6b21a8" },
   { status: "In Review", count: 8, color: "#F97316" },
   { status: "Accepted", count: 25, color: "#22C55E" },
   { status: "Rejected", count: 5, color: "#EF4444" },
@@ -231,16 +230,16 @@ const mockStudentProgressData: StudentProgressData = {
     { status: "Passed", value: 50, color: "#22C55E" },
     { status: "Failed", value: 10, color: "#EF4444" },
     { status: "Overdue", value: 5, color: "#F97316" },
-    { status: "In Progress", value: 25, color: "#7C3AED" },
+    { status: "In Progress", value: 25, color: "#6b21a8" },
     { status: "Not Started", value: 10, color: "#E5E7EB" },
   ],
 };
 
 const mockProgramEnrollmentData: ProgramEnrollmentData[] = [
-  { type: "Science", students: 450, fill: "#7C3AED" },
+  { type: "Science", students: 450, fill: "#6b21a8" },
   { type: "Arts", students: 280, fill: "#F97316" },
   { type: "Commerce", students: 120, fill: "#22C55E" },
-  { type: "Vocational", students: 90, fill: "#3B82F6" },
+  { type: "Vocational", students: 90, fill: "#C41E3A" },
   { type: "Other", students: 60, fill: "#EF4444" },
 ];
 
@@ -269,7 +268,7 @@ const mockRevenueAreaData = [
 ];
 
 const mockGradeDistributionData = [
-  { grade: "A+", count: 180, fill: "#7C3AED" },
+  { grade: "A+", count: 180, fill: "#6b21a8" },
   { grade: "A", count: 240, fill: "#6D28D9" },
   { grade: "B+", count: 310, fill: "#F97316" },
   { grade: "B", count: 275, fill: "#FB923C" },
@@ -315,7 +314,7 @@ function StatCard({
         </p>
       </CardFooter>
       <div className="absolute -bottom-2 -right-2 opacity-[0.08]">
-        <Icon className="h-20 w-20 text-[#7C3AED]" />
+        <Icon className="h-20 w-20 text-[#6b21a8]" />
       </div>
     </Card>
   );
@@ -349,11 +348,11 @@ function AboveFoldSection() {
       {/* LEFT: Quick access + stat cards */}
       <div className="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
         <div className="flex-shrink-0 flex flex-wrap gap-2">
-          <QuickAccessButton icon={GraduationCap} label="Add Students" showPlus link="/dashboard/students/new" iconBgColor="bg-[#E8DFFC]" iconColor="text-[#7C3AED]" />
+          <QuickAccessButton icon={GraduationCap} label="Add Students" showPlus link="/dashboard/students/new" iconBgColor="bg-[#E8DFFC]" iconColor="text-[#6b21a8]" />
           <QuickAccessButton icon={BookOpen} label="Manage Courses" showPlus iconBgColor="bg-orange-100" iconColor="text-orange-600" />
           <QuickAccessButton icon={BarChart3} label="Analytics" showPlus iconBgColor="bg-red-100" iconColor="text-red-600" />
           {/* <QuickAccessButton icon={Users} label="Manage Staff" showPlus iconBgColor="bg-green-100" iconColor="text-green-600" />
-          <QuickAccessButton icon={FileText} label="Resources" showPlus iconBgColor="bg-blue-100" iconColor="text-blue-600" /> */}
+          <QuickAccessButton icon={FileText} label="Resources" showPlus iconBgColor="bg-red-100" iconColor="text-red-600" /> */}
         </div>
         <div className="flex-1 min-h-0 flex flex-col gap-3">
           {MOCK_STATS.map((stat, index) => (
@@ -373,7 +372,7 @@ function AboveFoldSection() {
         <CardContent className="flex-1 min-h-0 overflow-hidden pb-2 px-3">
           <ChartContainer
             config={{
-              collection: { label: "Collection", color: "#7C3AED" },
+              collection: { label: "Collection", color: "#6b21a8" },
               expenses: { label: "Expenses", color: "#F97316" },
             }}
             className="h-full w-full"
@@ -419,14 +418,14 @@ function FeesOverviewCard({ data }: { data: typeof mockFeesOverviewData }) {
           { label: "Monthly Expenses", value: `$${monthlyExpenses.toLocaleString()}`, color: "text-red-600" },
           { label: "Monthly Collection", value: `$${monthlyFeesCollection.toLocaleString()}`, color: "text-green-600" },
           { label: "Fees Awaiting Payment", value: `$${feesAwaitingPayment.toLocaleString()}`, color: "text-yellow-600" },
-          { label: "Income — Aug 2025", value: `$${incomeAugust2025.toLocaleString()}`, color: "text-[#7C3AED]" },
+          { label: "Income — Aug 2025", value: `$${incomeAugust2025.toLocaleString()}`, color: "text-[#6b21a8]" },
         ].map(({ label, value, color }) => (
           <div key={label} className="flex items-center justify-between">
             <span className="text-sm font-medium text-foreground">{label}</span>
             <span className={cn("text-base font-bold", color)}>{value}</span>
           </div>
         ))}
-        <Button variant="outline" className="w-full mt-1 bg-transparent text-[#7C3AED] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">
+        <Button variant="outline" className="w-full mt-1 bg-transparent text-[#6b21a8] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">
           View Financial Reports
         </Button>
       </CardContent>
@@ -448,7 +447,7 @@ function RecentApplicationsTable({ data }: { data: RecentApplication[] }) {
           <CardTitle className="text-base">Recent Applications</CardTitle>
           <CardDescription className="text-xs">Overview of new student applications.</CardDescription>
         </div>
-        <Button variant="outline" size="sm" className="h-8 text-xs text-[#7C3AED] border-[#E8DFFC] hover:bg-[#F5F0FF] bg-transparent" asChild>
+        <Button variant="outline" size="sm" className="h-8 text-xs text-[#6b21a8] border-[#E8DFFC] hover:bg-[#F5F0FF] bg-transparent" asChild>
           <Link href="/admin/applications">View All</Link>
         </Button>
       </CardHeader>
@@ -574,7 +573,7 @@ function StudentProgressCard({ data }: { data: StudentProgressData }) {
             </div>
           ))}
         </div>
-        <Button variant="outline" className="w-full bg-transparent text-[#7C3AED] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">View Details</Button>
+        <Button variant="outline" className="w-full bg-transparent text-[#6b21a8] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">View Details</Button>
       </CardContent>
     </Card>
   );
@@ -588,11 +587,11 @@ function FinancialPerformanceChart({ data }: { data: FinancialPerformanceData[] 
         <CardDescription className="text-xs">Monthly revenue and sales trends.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={{ revenue: { label: "Revenue", color: "#7C3AED" }, sales: { label: "Sales", color: "#F97316" } }} className="h-[200px] w-full">
+        <ChartContainer config={{ revenue: { label: "Revenue", color: "#6b21a8" }, sales: { label: "Sales", color: "#F97316" } }} className="h-[200px] w-full">
           <RechartsLineChart data={data} margin={{ left: -10, right: 8 }}>
             <CartesianGrid vertical={false} />
-            <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v) => v.slice(0, 3)} />
-            <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v) => `$${v / 1000}k`} />
+            <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v: string) => v.slice(0, 3)} />
+            <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v: number) => `$${v / 1000}k`} />
             <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
             <Line dataKey="revenue" type="monotone" stroke="var(--color-revenue)" strokeWidth={2} dot={false} />
             <Line dataKey="sales" type="monotone" stroke="var(--color-sales)" strokeWidth={2} dot={false} />
@@ -611,7 +610,7 @@ function EnquiryOverviewChart({ data }: { data: EnquiryData[] }) {
         <CardDescription className="text-xs">Monthly trend of new inquiries.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={{ inquiries: { label: "Inquiries", color: "#7C3AED" } }} className="h-[180px] w-full">
+        <ChartContainer config={{ inquiries: { label: "Inquiries", color: "#6b21a8" } }} className="h-[180px] w-full">
           <RechartsLineChart data={data} margin={{ left: -10, right: 8 }}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} />
@@ -639,7 +638,7 @@ function StudentAttendanceChart({ data }: { data: AttendanceData[] }) {
         <CardDescription className="text-xs">Daily attendance overview.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={{ present: { label: "Present", color: "#7C3AED" }, absent: { label: "Absent", color: "#EF4444" } }} className="h-[180px] w-full">
+        <ChartContainer config={{ present: { label: "Present", color: "#6b21a8" }, absent: { label: "Absent", color: "#EF4444" } }} className="h-[180px] w-full">
           <BarChart data={data} margin={{ left: -10, right: 8 }}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} />
@@ -668,12 +667,12 @@ function RevenueVsTargetChart() {
         <CardDescription className="text-xs">Monthly revenue performance against targets.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={{ revenue: { label: "Revenue", color: "#7C3AED" }, target: { label: "Target", color: "#F97316" } }} className="h-[180px] w-full">
+        <ChartContainer config={{ revenue: { label: "Revenue", color: "#6b21a8" }, target: { label: "Target", color: "#F97316" } }} className="h-[180px] w-full">
           <AreaChart data={mockRevenueAreaData} margin={{ left: -10, right: 8 }}>
             <defs>
               <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#7C3AED" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#7C3AED" stopOpacity={0} />
+                <stop offset="5%" stopColor="#6b21a8" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#6b21a8" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#F97316" stopOpacity={0.2} />
@@ -682,9 +681,9 @@ function RevenueVsTargetChart() {
             </defs>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} />
-            <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v) => `$${v / 1000}k`} />
+            <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 10 }} tickFormatter={(v: number) => `$${v / 1000}k`} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Area type="monotone" dataKey="revenue" stroke="#7C3AED" strokeWidth={2} fill="url(#colorRevenue)" />
+            <Area type="monotone" dataKey="revenue" stroke="#6b21a8" strokeWidth={2} fill="url(#colorRevenue)" />
             <Area type="monotone" dataKey="target" stroke="#F97316" strokeWidth={2} strokeDasharray="4 4" fill="url(#colorTarget)" />
           </AreaChart>
         </ChartContainer>
@@ -707,7 +706,7 @@ function GradeDistributionChart() {
         <CardDescription className="text-xs">Student performance breakdown by grade.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={{ count: { label: "Students", color: "#7C3AED" } }} className="h-[180px] w-full">
+        <ChartContainer config={{ count: { label: "Students", color: "#6b21a8" } }} className="h-[180px] w-full">
           <BarChart data={mockGradeDistributionData} margin={{ left: -10, right: 8 }}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="grade" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} />
@@ -733,12 +732,12 @@ function SubjectPerformanceRadar() {
         <CardDescription className="text-xs">Average student scores by subject.</CardDescription>
       </CardHeader>
       <CardContent className="flex justify-center">
-        <ChartContainer config={{ A: { label: "This Year", color: "#7C3AED" }, B: { label: "Last Year", color: "#F97316" } }} className="h-[180px] w-full">
+        <ChartContainer config={{ A: { label: "This Year", color: "#6b21a8" }, B: { label: "Last Year", color: "#F97316" } }} className="h-[180px] w-full">
           <RadarChart data={mockSubjectPerformanceData} margin={{ top: 0, right: 20, bottom: 0, left: 20 }}>
             <PolarGrid />
             <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10 }} />
             <PolarRadiusAxis tick={{ fontSize: 8 }} />
-            <Radar name="This Year" dataKey="A" stroke="#7C3AED" fill="#7C3AED" fillOpacity={0.3} />
+            <Radar name="This Year" dataKey="A" stroke="#6b21a8" fill="#6b21a8" fillOpacity={0.3} />
             <Radar name="Last Year" dataKey="B" stroke="#F97316" fill="#F97316" fillOpacity={0.2} />
             <ChartTooltip content={<ChartTooltipContent />} />
           </RadarChart>
@@ -790,7 +789,7 @@ function ApplicationStatsCard({ data }: { data: ApplicationStats }) {
       <CardContent className="grid gap-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CalendarCheck className="h-4 w-4 text-[#7C3AED]" />
+            <CalendarCheck className="h-4 w-4 text-[#6b21a8]" />
             <span className="text-sm font-medium">Pending</span>
           </div>
           <Badge className="bg-yellow-100 text-yellow-800 text-sm font-bold animate-pulse">{data.pending}</Badge>
@@ -802,7 +801,7 @@ function ApplicationStatsCard({ data }: { data: ApplicationStats }) {
           </div>
           <span className="text-lg font-bold">{data.rejected}</span>
         </div>
-        <Button className="w-full text-xs h-8 bg-[#7C3AED] text-white hover:bg-[#6A2ED0]">See All Applications</Button>
+        <Button className="w-full text-xs h-8 bg-[#6b21a8] text-white hover:bg-[#6A2ED0]">See All Applications</Button>
       </CardContent>
     </Card>
   );
@@ -817,7 +816,7 @@ function OverallAnalyticsCard({ data }: { data: OverallAnalyticsData }) {
       </CardHeader>
       <CardContent className="grid gap-3">
         {[
-          { icon: Users, label: "Total Users", value: data.totalUsers.toLocaleString(), color: "text-[#7C3AED]" },
+          { icon: Users, label: "Total Users", value: data.totalUsers.toLocaleString(), color: "text-[#6b21a8]" },
           { icon: BookOpen, label: "Total Courses", value: data.totalCourses.toLocaleString(), color: "text-orange-500" },
           { icon: Award, label: "Avg. Engagement", value: data.averageEngagement, color: "text-yellow-500" },
         ].map(({ icon: Icon, label, value, color }) => (
@@ -829,7 +828,7 @@ function OverallAnalyticsCard({ data }: { data: OverallAnalyticsData }) {
             <span className="text-base font-bold">{value}</span>
           </div>
         ))}
-        <Button variant="outline" className="w-full mt-1 bg-transparent text-[#7C3AED] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">View Full Analytics</Button>
+        <Button variant="outline" className="w-full mt-1 bg-transparent text-[#6b21a8] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">View Full Analytics</Button>
       </CardContent>
     </Card>
   );
@@ -848,9 +847,9 @@ function StorageUsageCard({ data }: { data: typeof mockStorageUsageData }) {
           <span className="text-2xl font-bold">{data.usedGB} GB</span>
           <span className="text-sm text-muted-foreground">of {data.totalGB} GB</span>
         </div>
-        <Progress value={pct} className="h-3 bg-gray-200 [&>*]:bg-[#7C3AED]" />
+        <Progress value={pct} className="h-3 bg-gray-200 [&>*]:bg-[#6b21a8]" />
         <p className="text-xs text-muted-foreground">{pct.toFixed(1)}% used</p>
-        <Button variant="outline" className="w-full bg-transparent text-[#7C3AED] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">Manage Storage</Button>
+        <Button variant="outline" className="w-full bg-transparent text-[#6b21a8] border-[#E8DFFC] hover:bg-[#F5F0FF] text-xs h-8">Manage Storage</Button>
       </CardContent>
     </Card>
   );
@@ -879,7 +878,7 @@ export default function AdminDashboard() {
             <Bell className="h-5 w-5" />
             <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs bg-red-500">3</Badge>
           </Button>
-          <Button variant="outline" className="hidden lg:flex items-center gap-2 text-xs bg-transparent text-[#7C3AED] hover:bg-[#F5F0FF] flex-shrink-0 border-[#E8DFFC]">
+          <Button variant="outline" className="hidden lg:flex items-center gap-2 text-xs bg-transparent text-[#6b21a8] hover:bg-[#F5F0FF] flex-shrink-0 border-[#E8DFFC]">
             <School className="h-4 w-4" />
             View School Profile
           </Button>

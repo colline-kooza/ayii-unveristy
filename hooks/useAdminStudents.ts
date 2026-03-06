@@ -239,3 +239,21 @@ export function useUpdateStudent() {
     },
   });
 }
+
+export function useDeleteStudent() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      await apiClient.delete(`/admin/students/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["students"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.stats });
+      toast.success("Student removed successfully");
+    },
+    onError: (error) => {
+      toast.error("Deletion failed", { description: getErrorMessage(error) });
+    },
+  });
+}

@@ -44,10 +44,11 @@ export async function GET(req: NextRequest) {
 }
 
 const createJournalSchema = z.object({
-  title: z.string().min(1),
-  abstract: z.string().min(1),
-  authors: z.array(z.string()).min(1),
-  fileKey: z.string().min(1),
+  title: z.string().min(1, "Title is required"),
+  abstract: z.string().min(1, "Abstract is required"),
+  authors: z.array(z.string()).min(1, "At least one author is required"),
+  doi: z.string().optional(),
+  fileKey: z.string().min(1, "File is required"),
 });
 
 export async function POST(req: NextRequest) {
@@ -59,10 +60,10 @@ export async function POST(req: NextRequest) {
   if ("validationError" in validated) return validated.validationError;
 
   const journal = await prisma.journal.create({
-    data: { 
-      ...validated.data, 
-      submittedById: user.id, 
-      status: JournalStatus.APPROVED // Admin created journals are automatically approved
+    data: {
+      ...validated.data,
+      submittedById: user.id,
+      status: JournalStatus.APPROVED, // Admin created journals are automatically approved
     },
   });
 

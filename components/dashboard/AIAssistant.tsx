@@ -76,7 +76,7 @@ export function AIAssistant() {
           >
             <Button
               onClick={() => setIsOpen(true)}
-              className="h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/40"
+              className="h-14 w-14 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/40"
             >
               <Bot className="h-6 w-6 text-white" />
             </Button>
@@ -100,14 +100,14 @@ export function AIAssistant() {
             className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-[calc(100vw-2rem)] md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-blue-600 to-blue-700">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-red-600 to-red-700">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
                   <Bot className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white">AI Assistant</h3>
-                  <p className="text-xs text-blue-100">Always here to help</p>
+                  <p className="text-xs text-red-100">Always here to help</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -157,7 +157,7 @@ export function AIAssistant() {
                           <AvatarFallback
                             className={
                               message.role === "user"
-                                ? "bg-blue-600 text-white"
+                                ? "bg-red-600 text-white"
                                 : "bg-gray-200 text-gray-700"
                             }
                           >
@@ -167,15 +167,15 @@ export function AIAssistant() {
                         <div
                           className={`px-4 py-2 rounded-2xl ${
                             message.role === "user"
-                              ? "bg-blue-600 text-white rounded-br-none"
-                              : "bg-white text-gray-900 rounded-bl-none border border-gray-200"
+                              ? "bg-red-600 text-white rounded-br-none"
+                              : "bg-white text-black rounded-bl-none border border-gray-200"
                           }`}
                         >
                           <p className="text-sm leading-relaxed">{message.content}</p>
                           <p
                             className={`text-xs mt-1 ${
                               message.role === "user"
-                                ? "text-blue-100"
+                                ? "text-red-100"
                                 : "text-gray-400"
                             }`}
                           >
@@ -216,12 +216,12 @@ export function AIAssistant() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleSend()}
-                      className="flex-1 border-gray-200 focus-visible:ring-blue-500"
+                      className="flex-1 border-gray-200 focus-visible:ring-red-500"
                     />
                     <Button
                       onClick={handleSend}
                       disabled={!input.trim() || isTyping}
-                      className="bg-blue-600 hover:bg-blue-700 h-10 w-10 p-0 rounded-lg"
+                      className="bg-red-600 hover:bg-red-700 h-10 w-10 p-0 rounded-lg"
                     >
                       <Send className="h-4 w-4" />
                     </Button>

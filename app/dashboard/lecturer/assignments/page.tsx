@@ -21,6 +21,7 @@ import { useMyCoursesLecturer } from "@/hooks/useCourses";
 import { useAssignments, useDeleteAssignment } from "@/hooks/useAssignments";
 import { CreateAssignmentModal } from "@/components/shared/modals/CreateAssignmentModal";
 import { ViewSubmissionsModal } from "@/components/shared/modals/ViewSubmissionsModal";
+import { ConfirmDeleteModal } from "@/components/shared/modals/ConfirmDeleteModal";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -32,12 +33,30 @@ import { Trash2, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
+interface Assignment {
+  id: string;
+  title: string;
+  instructions?: string;
+  dueDate: string | Date;
+  fileKey?: string;
+  courseId: string;
+  course?: {
+    title: string;
+    unitCode: string;
+  };
+  _count?: {
+    submissions: number;
+  };
+}
+
 export default function LecturerAssignmentsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAssignmentModalOpen, setIsAssignmentModalOpen] = useState(false);
   const [isSubmissionsModalOpen, setIsSubmissionsModalOpen] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] = useState<{id: string, title: string, instructions?: string, dueDate: string | Date, fileKey?: string} | null>(null);
+  const [selectedAssignment, setSelectedAssignment] = useState<{id: string, title: string, instructions?: string, dueDate: string | Date, fileKey?: string, courseId?: string} | null>(null);
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [assignmentToDelete, setAssignmentToDelete] = useState<{ courseId: string; assignmentId: string } | null>(null);
 
   const { data: myCourses, isLoading: isLoadingCourses } = useMyCoursesLecturer();
   
@@ -49,9 +68,22 @@ export default function LecturerAssignmentsPage() {
   const { data: assignments, isLoading: isLoadingAssignments } = useAssignments(selectedCourseId || (myCourses?.[0]?.id || ""));
   const deleteAssignment = useDeleteAssignment();
 
-  const filteredAssignments = assignments?.filter((item: any) => 
+  const filteredAssignments = assignments?.filter((item: Assignment) => 
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
+
+  const handleDelete = (courseId: string, id: string) => {
+    setAssignmentToDelete({ courseId, assignmentId: id });
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (assignmentToDelete) {
+      await deleteAssignment.mutateAsync(assignmentToDelete);
+      setDeleteModalOpen(false);
+      setAssignmentToDelete(null);
+    }
+  };
 
   if (isLoadingCourses) {
     return (
@@ -66,7 +98,7 @@ export default function LecturerAssignmentsPage() {
       {/* Compact Header */}
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-100 pb-6">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 flex items-center gap-2">
+          <h1 className="text-2xl font-black tracking-tight text-black flex items-center gap-2">
             <FileText className="h-6 w-6 text-primary" />
             Assignment Ledger
           </h1>
@@ -105,7 +137,7 @@ export default function LecturerAssignmentsPage() {
             onChange={(e) => setSelectedCourseId(e.target.value)}
           >
             <option value="">All Courses</option>
-            {myCourses?.map((course: any) => (
+            {myCourses?.map((course: { id: string; title: string; unitCode: string }) => (
               <option key={course.id} value={course.id}>{course.title} ({course.unitCode})</option>
             ))}
           </select>
@@ -120,7 +152,7 @@ export default function LecturerAssignmentsPage() {
         {isLoadingAssignments ? (
           <div className="flex justify-center p-12"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : filteredAssignments.length > 0 ? (
-          filteredAssignments.map((assignment: any) => (
+          filteredAssignments.map((assignment: Assignment) => (
             <Card key={assignment.id} className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden hover:ring-2 hover:ring-primary/10 transition-all group">
               <CardContent className="p-0">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 gap-6">
@@ -130,7 +162,7 @@ export default function LecturerAssignmentsPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-3 mb-1">
-                        <h3 className="text-base font-black text-gray-900 group-hover:text-primary transition-colors">{assignment.title}</h3>
+                        <h3 className="text-base font-black text-black group-hover:text-primary transition-colors">{assignment.title}</h3>
                         <Badge className="bg-gray-100 text-gray-500 border-0 text-[10px] font-black uppercase tracking-widest">
                           {assignment.course?.unitCode}
                         </Badge>
@@ -145,15 +177,15 @@ export default function LecturerAssignmentsPage() {
                     <div className="text-center">
                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Submissions</p>
                       <div className="flex items-center justify-center gap-2">
-                        <Users className="h-4 w-4 text-blue-600" />
-                        <span className="text-base font-black text-gray-900">{assignment._count?.submissions || 0}</span>
+                        <Users className="h-4 w-4 text-red-600" />
+                        <span className="text-base font-black text-black">{assignment._count?.submissions || 0}</span>
                       </div>
                     </div>
                     <div className="text-center">
                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Deadline</p>
                       <div className="flex items-center justify-center gap-2">
                         <Clock className="h-4 w-4 text-orange-500" />
-                        <span className="text-[13px] font-black text-gray-900">{new Date(assignment.dueDate).toLocaleDateString()}</span>
+                        <span className="text-[13px] font-black text-black">{new Date(assignment.dueDate).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
@@ -188,14 +220,7 @@ export default function LecturerAssignmentsPage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem 
                           className="gap-2 cursor-pointer font-bold text-xs p-3 text-red-600 focus:text-red-600"
-                          onClick={async () => {
-                            if (confirm("Terminate this academic task? All submissions will be archived.")) {
-                              await deleteAssignment.mutateAsync({
-                                courseId: assignment.courseId,
-                                assignmentId: assignment.id,
-                              });
-                            }
-                          }}
+                          onClick={() => handleDelete(assignment.courseId, assignment.id)}
                         >
                           <Trash2 className="h-4 w-4" />
                           Purged from Registry
@@ -213,7 +238,7 @@ export default function LecturerAssignmentsPage() {
               <div className="h-16 w-16 rounded-3xl bg-gray-50 flex items-center justify-center mb-4">
                 <FileText className="h-8 w-8 text-gray-300" />
               </div>
-              <h3 className="text-lg font-black text-gray-900">Zero Assignments Found</h3>
+              <h3 className="text-lg font-black text-black">Zero Assignments Found</h3>
               <p className="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-2 max-w-xs">
                 Initialize your first academic task to begin synchronization with students.
               </p>
@@ -245,6 +270,15 @@ export default function LecturerAssignmentsPage() {
           assignment={selectedAssignment}
         />
       )}
+
+      <ConfirmDeleteModal
+        open={deleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        onConfirm={confirmDelete}
+        title="Terminate Academic Task"
+        description="Are you sure you want to terminate this academic task? All associated student submissions will be archived and inaccessible. This action is irreversible."
+        isLoading={deleteAssignment.isPending}
+      />
     </div>
   );
 }

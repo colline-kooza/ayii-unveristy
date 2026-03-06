@@ -68,7 +68,7 @@ export default function NotificationsPage() {
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col min-w-0 p-4 md:p-8 space-y-6 bg-gray-50/30 min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-red-600" />
       </div>
     );
   }
@@ -77,10 +77,10 @@ export default function NotificationsPage() {
     <div className="flex-1 flex flex-col min-w-0 p-4 md:p-8 space-y-6 bg-gray-50/30 min-h-screen">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Notifications</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-black">Notifications</h1>
           <p className="text-sm text-gray-500 mt-1">
             {unreadCount > 0 ? (
-              <>You have <span className="text-blue-600 font-bold">{unreadCount}</span> unread alert{unreadCount > 1 ? 's' : ''}</>
+              <>You have <span className="text-red-600 font-bold">{unreadCount}</span> unread alert{unreadCount > 1 ? 's' : ''}</>
             ) : 'You\'re all caught up!'}
           </p>
         </div>
@@ -88,7 +88,7 @@ export default function NotificationsPage() {
           <Button 
             variant="ghost" 
             onClick={handleMarkAllRead} 
-            className="flex items-center space-x-2 text-blue-600 font-bold text-xs hover:bg-blue-50 transition-all px-4"
+            className="flex items-center space-x-2 text-red-600 font-bold text-xs hover:bg-red-50 transition-all px-4"
             disabled={markAllRead.isPending}
           >
             {markAllRead.isPending ? (
@@ -114,18 +114,18 @@ export default function NotificationsPage() {
           {notifications.map((notification: any) => (
             <div
               key={notification.id}
-              className={`p-5 hover:bg-blue-50/30 cursor-pointer transition-colors relative ${
-                !notification.isRead ? "bg-blue-50/10" : ""
+              className={`p-5 hover:bg-red-50/30 cursor-pointer transition-colors relative ${
+                !notification.isRead ? "bg-red-50/10" : ""
               }`}
               onClick={() => handleNotificationClick(notification)}
             >
               {!notification.isRead && (
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-600" />
               )}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-sm border ${
-                    !notification.isRead ? "bg-blue-50 border-blue-100" : "bg-gray-50 border-gray-100"
+                    !notification.isRead ? "bg-red-50 border-red-100" : "bg-gray-50 border-gray-100"
                   }`}>
                     {getNotificationIcon(notification.type)}
                   </div>
@@ -134,7 +134,7 @@ export default function NotificationsPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
                       <p className={`text-sm font-bold ${
-                        !notification.isRead ? "text-gray-900" : "text-gray-700"
+                        !notification.isRead ? "text-black" : "text-gray-700"
                       }`}>
                         {notification.title}
                       </p>
@@ -146,7 +146,7 @@ export default function NotificationsPage() {
                           {formatTimeAgo(notification.createdAt)}
                         </p>
                         {!notification.isRead && (
-                          <Badge className="bg-blue-600 text-white text-[9px] font-black uppercase px-1.5 py-0 shadow-lg shadow-blue-500/20 border-0">
+                          <Badge className="bg-red-600 text-white text-[9px] font-black uppercase px-1.5 py-0 shadow-lg shadow-red-500/20 border-0">
                             New
                           </Badge>
                         )}

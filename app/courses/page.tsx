@@ -4,22 +4,19 @@ import React, { useEffect, useState } from "react";
 import { 
   BookOpen, 
   Search, 
-  MapPin, 
-  Clock, 
   Users, 
-  ArrowRight, 
-  GraduationCap,
   Star,
   ChevronRight,
-  Loader2
+  Loader2,
+  LogIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useMe } from "@/hooks/useAuth";
 import Header from "@/components/frontend/Header";
 import Footer from "@/components/frontend/Footer";
 
@@ -27,6 +24,8 @@ export default function PublicCoursesPage() {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const { data: user } = useMe();
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/courses/public")
@@ -41,6 +40,16 @@ export default function PublicCoursesPage() {
       });
   }, []);
 
+  const handleCourseAction = () => {
+    if (user) {
+      // User is logged in, redirect to dashboard
+      router.push("/dashboard");
+    } else {
+      // User is not logged in, redirect to sign in
+      router.push("/auth/sign-in");
+    }
+  };
+
   const filteredCourses = courses.filter(course => 
     course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     course.unitCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,38 +58,37 @@ export default function PublicCoursesPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#fcfdfe]">
+      <div className="flex h-screen items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-10 w-10 animate-spin text-primary" />
-          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-400">Synchronizing Institutional Assets...</p>
+          <Loader2 className="h-10 w-10 animate-spin text-red-600" />
+          <p className="text-xs font-semibold text-gray-500">Loading courses...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fcfdfe]">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 py-24 text-white lg:py-32">
-          <div className="absolute inset-0 opacity-20 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800 py-16 text-white lg:py-20 mt-14">
           <div className="container relative z-10 mx-auto px-6 lg:px-12 text-center">
-            <Badge className="mb-6 bg-primary/20 text-primary border-primary/30 text-[10px] font-black uppercase tracking-[0.3em] px-5 py-1.5 backdrop-blur-xl">
-              Institutional Course Directory 2026
+            <Badge className="mb-4 bg-red-600/20 text-red-400 border-red-500/30 text-xs font-semibold px-4 py-1">
+              Course Catalog 2026
             </Badge>
-            <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-8 leading-[0.9]">
-              Architecting The <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary/80 animate-gradient-x">Future of Learning</span>
+            <h1 className="text-3xl lg:text-5xl font-bold mb-4">
+              Explore Our <br />
+              <span className="text-red-400">Academic Programs</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-[13px] font-bold text-gray-400 uppercase tracking-widest leading-relaxed mb-12">
-              Explore our curated selection of high-performance academic units designed to elevate professional capacity and technical mastery.
+            <p className="max-w-2xl mx-auto text-sm text-gray-300 mb-6">
+              Discover our comprehensive selection of courses designed to help you achieve your academic and professional goals.
             </p>
             
-            <div className="max-w-xl mx-auto relative group">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-primary transition-colors" />
+            <div className="max-w-xl mx-auto relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input 
-                placeholder="Query Department, Unit Code or Course Title..." 
-                className="h-14 pl-14 pr-6 bg-white/5 border-white/10 text-white rounded-2xl focus-visible:ring-primary/20 focus-visible:border-primary/30 text-[13px] font-medium backdrop-blur-xl transition-all"
+                placeholder="Search by department, code, or course title..." 
+                className="h-10 pl-10 pr-4 bg-white/10 border-white/20 text-white placeholder:text-gray-400 text-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -89,84 +97,94 @@ export default function PublicCoursesPage() {
         </section>
 
         {/* Course Grid */}
-        <div className="container mx-auto px-6 lg:px-12 -mt-10 relative z-20">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="container mx-auto px-6 lg:px-12 -mt-6 relative z-20 pb-12">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredCourses.map((course) => (
-              <Card key={course.id} className="border-none shadow-2xl shadow-gray-200/40 bg-white rounded-[2rem] overflow-hidden hover:ring-2 hover:ring-primary/10 transition-all group flex flex-col">
-                <CardHeader className="p-0 relative h-56 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent z-10"></div>
+              <Card key={course.id} className="border-gray-200 bg-white hover:shadow-lg transition-all group flex flex-col">
+                <CardHeader className="p-0 relative h-40 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent z-10"></div>
                   <img 
-                    src={`https://images.unsplash.com/photo-1523050335392-93851179ae09?q=80&w=800&auto=format&fit=crop&sig=${course.id}`} 
+                    src="https://img.freepik.com/free-photo/group-diverse-pupils-engaging-online-course-discussion-via-video-call_482257-123125.jpg?semt=ais_hybrid&w=740&q=80"
                     alt={course.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-6 left-6 z-20">
-                    <Badge className="bg-white/10 text-white border-white/20 text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 backdrop-blur-xl">
+                  <div className="absolute top-3 left-3 z-20">
+                    <Badge className="bg-white/90 text-gray-900 border-0 text-xs font-semibold">
                       {course.unitCode}
                     </Badge>
                   </div>
-                  <div className="absolute bottom-6 left-6 z-20 right-6">
-                     <h2 className="text-xl font-black text-white tracking-tight leading-[1.1] mb-1">{course.title}</h2>
-                     <p className="text-[10px] font-bold text-blue-300 uppercase tracking-widest leading-none">{course.department}</p>
+                  <div className="absolute bottom-3 left-3 z-20 right-3">
+                     <h2 className="text-base font-bold text-white mb-0.5">{course.title}</h2>
+                     <p className="text-xs font-medium text-red-300">{course.department}</p>
                   </div>
                 </CardHeader>
                 
-                <CardContent className="p-8 flex-1">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Avatar className="h-8 w-8 rounded-xl border border-gray-100 shadow-sm">
+                <CardContent className="p-5 flex-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Avatar className="h-7 w-7 border">
                       <AvatarImage src={course.lecturer?.image || ""} />
-                      <AvatarFallback className="bg-primary/5 text-primary text-[10px] font-black">
+                      <AvatarFallback className="bg-red-100 text-red-700 text-xs font-semibold">
                         {course.lecturer?.name?.[0] || 'L'}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Director of Studies</p>
-                      <p className="text-[11px] font-black text-gray-900">{course.lecturer?.name || "Senior Faculty"}</p>
+                      <p className="text-xs text-gray-500">Instructor</p>
+                      <p className="text-xs font-semibold text-gray-900">{course.lecturer?.name || "Faculty Member"}</p>
                     </div>
                   </div>
 
-                  <p className="text-[13px] font-bold text-gray-500 mb-8 line-clamp-2 leading-relaxed h-10">
-                    {course.description || "Comprehensive academic exploration of institutional fundamentals and strategic paradigms."}
+                  <p className="text-xs text-gray-600 mb-4 line-clamp-2">
+                    {course.description || "Comprehensive course covering essential concepts and practical applications."}
                   </p>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-2xl border border-gray-100 transition-colors group-hover:bg-gray-100/50">
-                      <Users className="h-4 w-4 text-primary" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg">
+                      <Users className="h-3 w-3 text-red-600" />
                       <div>
-                        <p className="text-[11px] font-black text-gray-900 leading-none">{course._count?.enrollments || 0}</p>
-                        <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-0.5">Agents</p>
+                        <p className="text-xs font-semibold text-gray-900">{course._count?.enrollments || 0}</p>
+                        <p className="text-xs text-gray-500">Students</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-2xl border border-gray-100 transition-colors group-hover:bg-gray-100/50">
-                      <Star className="h-4 w-4 text-orange-500" />
+                    <div className="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg">
+                      <Star className="h-3 w-3 text-orange-500" />
                       <div>
-                        <p className="text-[11px] font-black text-gray-900 leading-none">4.9</p>
-                        <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-0.5">Rating</p>
+                        <p className="text-xs font-semibold text-gray-900">4.9</p>
+                        <p className="text-xs text-gray-500">Rating</p>
                       </div>
                     </div>
                   </div>
                 </CardContent>
                 
-                <CardFooter className="p-8 pt-0 mt-auto">
-                  <Link href={`/apply/${course.id}`} className="w-full">
-                    <Button className="w-full h-12 bg-gray-900 hover:bg-primary text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-gray-200/50 transition-all gap-3 group/btn">
-                      Initiate Application
-                      <ChevronRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
+                <CardFooter className="p-5 pt-0 mt-auto">
+                  <Button 
+                    onClick={handleCourseAction}
+                    className="w-full h-9 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold gap-2"
+                  >
+                    {user ? (
+                      <>
+                        View Course
+                        <ChevronRight className="h-4 w-4" />
+                      </>
+                    ) : (
+                      <>
+                        <LogIn className="h-4 w-4" />
+                        Sign In to Enroll
+                      </>
+                    )}
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
 
           {filteredCourses.length === 0 && (
-            <div className="py-24 text-center">
-              <div className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-50 mb-6">
-                <BookOpen className="h-10 w-10 text-gray-200" />
+            <div className="py-20 text-center">
+              <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 mb-4">
+                <BookOpen className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-2 tracking-tight">Zero Academic Units Found</h3>
-              <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest max-w-sm mx-auto">
-                Your query did not synchronize with our institutional directory. Please refine your search parameters.
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
+              <p className="text-sm text-gray-500 max-w-sm mx-auto">
+                Try adjusting your search criteria to find what you're looking for.
               </p>
             </div>
           )}

@@ -134,7 +134,7 @@ export default function CategoryForm() {
                       <FormControl>
                         <Input
                           placeholder="Enter category name..."
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                           {...field}
                         />
                       </FormControl>
@@ -155,7 +155,7 @@ export default function CategoryForm() {
                       <FormControl>
                         <Textarea
                           placeholder="Describe your category..."
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 min-h-16 resize-none"
+                          className="border-gray-300 focus:border-red-500 focus:ring-red-500 min-h-16 resize-none"
                           {...field}
                         />
                       </FormControl>
@@ -180,7 +180,7 @@ export default function CategoryForm() {
                       <FormControl>
                         <Input
                           placeholder="https://example.com/image.jpg"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                           {...field}
                         />
                       </FormControl>

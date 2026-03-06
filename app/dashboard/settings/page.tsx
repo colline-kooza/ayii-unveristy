@@ -17,6 +17,7 @@ import { R2ImageUpload } from "@/components/FormInputs/R2ImageUpload";
 import { FileCategory } from "@/types/files";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { getAvatarUrl } from "@/lib/avatarUtils";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -97,7 +98,7 @@ export default function SettingsPage() {
   if (loadingUser) {
     return (
       <div className="flex-1 flex items-center justify-center min-h-screen bg-gray-50/30">
-        <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
+        <Loader2 className="h-8 w-8 text-primary animate-spin" />
       </div>
     );
   }
@@ -107,8 +108,8 @@ export default function SettingsPage() {
       {/* Compact Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 pb-6">
         <div>
-          <h1 className="text-xl font-black tracking-tight text-gray-900 flex items-center gap-2">
-            <User className="h-5 w-5 text-blue-600" />
+          <h1 className="text-xl font-black tracking-tight text-black flex items-center gap-2">
+            <User className="h-5 w-5 text-primary" />
             Account Management
           </h1>
           <p className="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1">
@@ -118,15 +119,15 @@ export default function SettingsPage() {
         
         {/* Minimal User Info */}
         <div className="flex items-center gap-3 px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm">
-          <div className="h-8 w-8 rounded-lg overflow-hidden bg-blue-50 flex items-center justify-center border border-blue-100/50">
-            {user?.image ? (
-              <img src={user.image} alt="" className="h-full w-full object-cover" />
-            ) : (
-              <span className="text-[11px] font-black text-blue-600 uppercase">{user?.name?.charAt(0)}</span>
-            )}
+          <div className="h-8 w-8 rounded-lg overflow-hidden bg-rose-50 flex items-center justify-center border border-rose-100/50">
+            <img 
+              src={getAvatarUrl(user?.image, user?.name || 'User', 'user')} 
+              alt="" 
+              className="h-full w-full object-cover" 
+            />
           </div>
           <div className="leading-none">
-            <p className="text-[11px] font-black text-gray-900">{user?.name}</p>
+            <p className="text-[11px] font-black text-black">{user?.name}</p>
             <p className="text-[9px] font-bold text-gray-400 mt-0.5">{user?.role}</p>
           </div>
         </div>
@@ -138,13 +139,13 @@ export default function SettingsPage() {
           <TabsList className="bg-gray-100/50 p-1 rounded-xl h-auto gap-1">
             <TabsTrigger 
               value="account" 
-              className="px-6 py-2 rounded-lg text-xs font-black transition-all data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+              className="px-6 py-2 rounded-lg text-xs font-black transition-all data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm"
             >
               Identity & Profile
             </TabsTrigger>
             <TabsTrigger 
               value="security" 
-              className="px-6 py-2 rounded-lg text-xs font-black transition-all data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+              className="px-6 py-2 rounded-lg text-xs font-black transition-all data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm"
             >
               Security Protocols
             </TabsTrigger>
@@ -164,12 +165,12 @@ export default function SettingsPage() {
           {/* Account Settings */}
           <TabsContent value="account" className="m-0 focus-visible:outline-none animate-in fade-in zoom-in-95">
             <Card className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden">
-              <div className="h-24 bg-gradient-to-r from-blue-700 to-indigo-800 relative">
+              <div className="h-24 bg-gradient-to-r from-[#5A0F23] to-[#8B1538] relative">
                 <div className="absolute inset-0 bg-white/5 opacity-10"></div>
               </div>
               
               <div className="px-6 lg:px-10 -mt-10 relative z-10 flex flex-col md:flex-row items-end gap-5">
-                <div className="p-1.5 bg-white rounded-2xl shadow-xl shadow-blue-500/5">
+                <div className="p-1.5 bg-white rounded-2xl shadow-xl shadow-primary/5">
                   <div className="h-20 w-20 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shadow-inner">
                     <R2ImageUpload
                       value={(profileForm.watch("image") as string) || ""}
@@ -181,8 +182,8 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="pb-2">
-                  <h2 className="text-xl font-black text-gray-900">Personal Identity</h2>
-                  <p className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Core Institutional Data</p>
+                  <h2 className="text-xl font-black text-black">Personal Identity</h2>
+                  <p className="text-[9px] font-black text-primary uppercase tracking-widest">Core Institutional Data</p>
                 </div>
               </div>
 
@@ -193,7 +194,7 @@ export default function SettingsPage() {
                       <Label className="text-[9px] font-black uppercase text-gray-400 tracking-widest ml-0.5">Professional Name</Label>
                       <Input 
                         {...profileForm.register("name")} 
-                        className="h-11 px-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-blue-500/5 text-xs font-bold transition-all" 
+                        className="h-11 px-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-primary/5 text-xs font-bold transition-all" 
                       />
                       {profileForm.formState.errors.name && <p className="text-[9px] text-red-500 font-bold">{profileForm.formState.errors.name.message as string}</p>}
                     </div>
@@ -205,7 +206,7 @@ export default function SettingsPage() {
                         <Input 
                           {...profileForm.register("email")} 
                           disabled={user?.role === "STUDENT"}
-                          className="h-11 pl-11 pr-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-blue-500/5 text-xs font-bold transition-all disabled:opacity-50" 
+                          className="h-11 pl-11 pr-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-primary/5 text-xs font-bold transition-all disabled:opacity-50" 
                         />
                       </div>
                     </div>
@@ -215,19 +216,19 @@ export default function SettingsPage() {
                     <Label className="text-[9px] font-black uppercase text-gray-400 tracking-widest ml-0.5">Professional Summary</Label>
                     <Textarea 
                       {...profileForm.register("bio")} 
-                      className="min-h-[120px] p-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-blue-500/5 text-xs font-bold transition-all leading-relaxed resize-none" 
+                      className="min-h-[120px] p-4 rounded-xl bg-gray-50/50 border-none shadow-inner focus:bg-white focus:ring-2 focus:ring-primary/5 text-xs font-bold transition-all leading-relaxed resize-none" 
                     />
                   </div>
 
                   <div className="flex items-center justify-between pt-6 border-t border-gray-50">
                     <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold">
-                      <ShieldCheck className="h-3.5 w-3.5 text-blue-500" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-primary" />
                       Encrypted sync enabled
                     </div>
                     <Button 
                       type="submit" 
                       disabled={updateProfile.isPending}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-black h-11 px-8 rounded-xl shadow-lg shadow-blue-500/10 text-xs transition-all flex items-center gap-2"
+                      className="bg-primary hover:bg-primary/90 text-white font-black h-11 px-8 rounded-xl shadow-lg shadow-primary/10 text-xs transition-all flex items-center gap-2"
                     >
                       {updateProfile.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                       Push Changes
@@ -242,11 +243,11 @@ export default function SettingsPage() {
           <TabsContent value="security" className="m-0 focus-visible:outline-none animate-in fade-in zoom-in-95">
             <Card className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden p-8">
               <div className="flex items-center gap-4 mb-8">
-                <div className="h-10 w-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+                <div className="h-10 w-10 rounded-xl bg-rose-50 flex items-center justify-center text-[#8B1538] shrink-0">
                   <Lock className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-black text-gray-900">Security Protocols</h2>
+                  <h2 className="text-lg font-black text-black">Security Protocols</h2>
                   <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Update institutional credentials</p>
                 </div>
               </div>
@@ -284,7 +285,7 @@ export default function SettingsPage() {
                   <Button 
                     type="submit" 
                     disabled={changePassword.isPending}
-                    className="bg-gray-900 hover:bg-black text-white font-black h-11 px-8 rounded-xl shadow-lg text-xs flex items-center gap-2"
+                    className="bg-black hover:bg-black text-white font-black h-11 px-8 rounded-xl shadow-lg text-xs flex items-center gap-2"
                   >
                     {changePassword.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
                     Encrypt Credentials

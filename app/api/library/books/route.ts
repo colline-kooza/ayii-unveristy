@@ -5,12 +5,12 @@ import { UserRole } from "@/lib/generated/prisma";
 import { z } from "zod";
 
 const createBookSchema = z.object({
-  title: z.string().min(1),
-  author: z.string().min(1),
-  category: z.string().min(1),
+  title: z.string().min(1, "Title is required"),
+  publisher: z.string().min(1, "Publisher is required"),
+  category: z.string().min(1, "Category is required"),
   description: z.string().optional(),
   coverImage: z.string().optional(),
-  fileKey: z.string().min(1),
+  link: z.string().url("Must be a valid URL").min(1, "Link is required"),
 });
 
 export async function GET(req: NextRequest) {
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       ? {
           OR: [
             { title: { contains: search, mode: "insensitive" as const } },
-            { author: { contains: search, mode: "insensitive" as const } },
+            { publisher: { contains: search, mode: "insensitive" as const } },
             { category: { contains: search, mode: "insensitive" as const } },
             { description: { contains: search, mode: "insensitive" as const } },
           ],

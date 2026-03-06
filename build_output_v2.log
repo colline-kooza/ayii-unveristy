@@ -1,0 +1,25 @@
+
+> elearning@0.1.0 build G:\PROJECTS\CODELABS-PROJECTS\elearning
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 24.5s
+  Running TypeScript ...
+Failed to compile.
+
+./app/dashboard/admin/users/students/page.tsx:145:57
+Type error: Property 'avatarUrl' does not exist on type 'Student'.
+
+[0m [90m 143 |[39m                          [33m<[39m[33mdiv[39m className[33m=[39m[32m"flex items-center gap-3"[39m[33m>[39m
+ [90m 144 |[39m                             [33m<[39m[33mAvatar[39m size[33m=[39m[32m"sm"[39m className[33m=[39m[32m"border border-red-100"[39m[33m>[39m
+[31m[1m>[22m[39m[90m 145 |[39m                               [33m<[39m[33mAvatarImage[39m src[33m=[39m{student[33m.[39mavatarUrl} [33m/[39m[33m>[39m
+ [90m     |[39m                                                         [31m[1m^[22m[39m
+ [90m 146 |[39m                               [33m<[39m[33mAvatarFallback[39m className[33m=[39m[32m"bg-red-50 text-red-700 font-bold text-[10px]"[39m[33m>[39m
+ [90m 147 |[39m                                 {student[33m.[39mname[33m.[39mcharAt([35m0[39m)}
+ [90m 148 |[39m                               [33m<[39m[33m/[39m[33mAvatarFallback[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null
+ ELIFECYCLE  Command failed with exit code 1.

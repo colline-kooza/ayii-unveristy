@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { AppLogoIcon } from '@/components/icons'
 import {
   InputOTP,
   InputOTPGroup,
@@ -108,7 +107,7 @@ export function VerifyEmail() {
       <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
         <div className="p-8 pb-6">
           <Link href="/" aria-label="go home">
-            <AppLogoIcon className="h-10 fill-current text-black sm:h-12" />
+            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto" />
           </Link>
           <h1 className="mb-1 mt-4 text-xl font-semibold">Verify your email</h1>
           <p className="text-sm text-muted-foreground">We sent a verification code to {email}</p>

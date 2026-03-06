@@ -10,7 +10,6 @@ type R2Folder =
   | "submissions"
   | "past-papers"
   | "journals"
-  | "newspapers"
   | "avatars";
 
 interface UploadResult {

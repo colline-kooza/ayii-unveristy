@@ -22,6 +22,7 @@ export const queryKeys = {
 
   // Assignments
   assignments: {
+    lists: () => ["assignments"] as const,
     byCourse: (courseId: string) => ["assignments", courseId] as const,
     detail: (id: string) => ["assignments", "detail", id] as const,
   },
@@ -57,8 +58,6 @@ export const queryKeys = {
       ["library", "past-papers", params] as const,
     journals: (params?: Record<string, any>) =>
       ["library", "journals", params] as const,
-    newspapers: (params?: Record<string, any>) =>
-      ["library", "newspapers", params] as const,
   },
 
   // Admin Overview

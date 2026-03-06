@@ -9,7 +9,6 @@ export enum FileCategory {
   SUBMISSION = "SUBMISSION",
   PAST_PAPER = "PAST_PAPER",
   JOURNAL = "JOURNAL",
-  NEWSPAPER = "NEWSPAPER",
   AVATAR = "AVATAR",
 }
 

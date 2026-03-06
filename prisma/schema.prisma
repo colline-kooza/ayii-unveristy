@@ -46,7 +46,6 @@ model User {
   notifications      Notification[]
   uploadedPapers     PastPaper[]
   submittedJournals  Journal[]
-  uploadedNewspapers Newspaper[]
   uploadedBooks      Book[]
   auditLogs          AuditLog[]     @relation("AdminAuditLogs")
   auditTargets       AuditLog[]     @relation("AuditTargets")
@@ -242,7 +241,8 @@ model Journal {
   id              String        @id @default(cuid())
   title           String
   abstract        String
-  authors         String[]
+  authors         String[] // Full names of all contributors
+  doi             String? // Digital Object Identifier
   fileKey         String // R2 key
   submittedById   String
   status          JournalStatus @default(PENDING)
@@ -257,28 +257,15 @@ model Journal {
   @@map("journal")
 }
 
-model Newspaper {
-  id            String   @id @default(cuid())
-  headline      String
-  edition       String
-  publishedDate DateTime
-  fileKey       String // R2 key
-  uploadedById  String
-  createdAt     DateTime @default(now())
-
-  uploadedBy User @relation(fields: [uploadedById], references: [id])
-
-  @@map("newspaper")
-}
 
 model Book {
   id           String   @id @default(cuid())
   title        String
-  author       String
+  publisher    String
   category     String
   description  String?
   coverImage   String? // R2 key for cover
-  fileKey      String // R2 key for PDF/EPUB
+  link         String // External link to book resource
   uploadedById String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

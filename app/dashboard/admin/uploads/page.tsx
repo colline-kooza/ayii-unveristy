@@ -56,7 +56,6 @@ import { Database } from "lucide-react";
 // --- Mock Data ---
 const mockActivity = [
   { name: "Math Final 2023.pdf", type: "Past Paper", size: "2.4 MB", uploader: "Dr. Smith", status: "Published" },
-  { name: "Daily Post Morning.pdf", type: "Newspaper", size: "4.1 MB", uploader: "Admin", status: "Draft" },
   { name: "Physics Lab Guide.pdf", type: "Book", size: "1.8 MB", uploader: "Prof. Jane", status: "Published" },
   { name: "Chemistry Specimen.pdf", type: "Past Paper", size: "3.2 MB", uploader: "Dr. Brown", status: "Archived" },
 ];
@@ -69,7 +68,7 @@ export default function AdminUploadsPage() {
   if (isLoading) {
     return (
       <div className="p-8 space-y-6">
-        <div className="h-10 bg-blue-50/50 animate-pulse rounded-lg w-64"></div>
+        <div className="h-10 bg-red-50/50 animate-pulse rounded-lg w-64"></div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="h-24 bg-gray-50 animate-pulse rounded-xl"></div>
@@ -85,16 +84,16 @@ export default function AdminUploadsPage() {
       {/* Header Area */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-2xl font-bold tracking-tight text-black">
             Content Repository ({mockActivity.length})
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage university newspaper uploads and digital assets
+            Manage university digital library assets
           </p>
         </div>
         <Button 
           onClick={() => setUploadModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 shadow-lg shadow-blue-500/20 h-10 px-6 transition-all"
+          className="bg-red-600 hover:bg-red-700 flex items-center gap-2 shadow-lg shadow-red-500/20 h-10 px-6 transition-all"
         >
           <Upload className="h-4 w-4" />
           <span>Upload Content</span>
@@ -104,8 +103,7 @@ export default function AdminUploadsPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
-          { label: "Total Uploads", value: "1,284", icon: FileText, color: "text-blue-600", bg: "bg-blue-50" },
-          { label: "Newspapers", value: "842", icon: Newspaper, color: "text-purple-600", bg: "bg-purple-50" },
+          { label: "Total Uploads", value: "1,284", icon: FileText, color: "text-red-600", bg: "bg-red-50" },
           { label: "Storage Used", value: "12.4 GB", icon: Database, color: "text-green-600", bg: "bg-green-50" },
           { label: "Pending Review", value: "12", icon: Clock, color: "text-orange-600", bg: "bg-orange-50" },
         ].map((stat, i) => (
@@ -116,7 +114,7 @@ export default function AdminUploadsPage() {
               </div>
               <div>
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{stat.label}</p>
-                <p className="text-xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-xl font-bold text-black">{stat.value}</p>
               </div>
             </CardContent>
           </Card>
@@ -128,7 +126,7 @@ export default function AdminUploadsPage() {
         <CardHeader className="pb-3 border-b border-gray-50">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-sm font-semibold text-gray-900">Recent Activity</CardTitle>
+              <CardTitle className="text-sm font-semibold text-black">Recent Activity</CardTitle>
               <CardDescription className="text-xs text-gray-500">A detailed log of all recent file uploads and their current status</CardDescription>
             </div>
             <div className="relative w-full md:w-80">
@@ -157,13 +155,13 @@ export default function AdminUploadsPage() {
               </TableHeader>
               <TableBody>
                 {mockActivity.map((file, i) => (
-                  <TableRow key={i} className="hover:bg-blue-50/30 transition-colors border-b border-gray-50">
+                  <TableRow key={i} className="hover:bg-red-50/30 transition-colors border-b border-gray-50">
                     <TableCell className="py-4 px-6">
                       <div className="flex items-center gap-2.5">
                         <div className="p-1.5 bg-gray-50 rounded border border-gray-100">
                           <FileText className="h-3.5 w-3.5 text-gray-400" />
                         </div>
-                        <span className="font-bold text-gray-900 text-sm">{file.name}</span>
+                        <span className="font-bold text-black text-sm">{file.name}</span>
                       </div>
                     </TableCell>
                     <TableCell className="py-4 px-6">
@@ -174,7 +172,7 @@ export default function AdminUploadsPage() {
                     <TableCell className="py-4 px-6 text-gray-500 text-sm font-medium">{file.size}</TableCell>
                     <TableCell className="py-4 px-6">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-bold text-blue-700 border border-blue-100">
+                        <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center text-[10px] font-bold text-red-700 border border-red-100">
                           {file.uploader.charAt(0)}
                         </div>
                         <span className="text-xs font-semibold text-gray-700">{file.uploader}</span>
@@ -183,7 +181,7 @@ export default function AdminUploadsPage() {
                     <TableCell className="py-4 px-6">
                       <Badge className={cn(
                         "font-bold px-2 py-0.5 rounded-full text-[10px] tracking-tight border shadow-none",
-                        file.status === "Published" ? "bg-green-50 text-green-700 border-green-200" : "bg-blue-50 text-blue-700 border-blue-200"
+                        file.status === "Published" ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-700 border-red-200"
                       )}>
                         {file.status}
                       </Badge>
@@ -198,10 +196,10 @@ export default function AdminUploadsPage() {
                         <DropdownMenuContent align="end" className="w-52 p-1.5 shadow-xl border-gray-100">
                            <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-1.5">File Ops</DropdownMenuLabel>
                            <DropdownMenuSeparator className="bg-gray-50" />
-                           <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-blue-50 focus:text-blue-700 rounded-md">
+                           <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700 rounded-md">
                              <Eye className="h-4 w-4 opacity-70" /> <span>Preview File</span>
                            </DropdownMenuItem>
-                           <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-blue-50 focus:text-blue-700 rounded-md">
+                           <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700 rounded-md">
                              <Edit className="h-4 w-4 opacity-70" /> <span>Edit Metadata</span>
                            </DropdownMenuItem>
                            <DropdownMenuSeparator className="bg-gray-50" />

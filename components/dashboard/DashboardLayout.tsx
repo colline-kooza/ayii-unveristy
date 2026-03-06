@@ -67,26 +67,26 @@ export function DashboardLayout({ children, user }: DashboardLayoutProps) {
     <SidebarProvider defaultOpen={true}>
       <AppSidebar user={user} />
       <SidebarInset className="pb-16 lg:pb-0">
-        <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50/30 via-white to-purple-50/20">
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b border-purple-100 bg-white/80 backdrop-blur-sm z-50">
+        <div className="flex flex-col h-screen bg-gradient-to-br from-rose-50/30 via-white to-rose-50/20">
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b border-rose-100 bg-white/80 backdrop-blur-sm z-50">
             <div className="flex items-center gap-2 px-2 lg:px-4 flex-1">
-              <SidebarTrigger className="-ml-1 hover:bg-purple-50 hover:text-purple-700 hidden lg:block" />
+              <SidebarTrigger className="-ml-1 hover:bg-rose-50 hover:text-[#8B1538] hidden lg:block" />
               <Separator
                 orientation="vertical"
-                className="mr-2 h-4 bg-purple-200 hidden lg:block"
+                className="mr-2 h-4 bg-rose-200 hidden lg:block"
               />
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink
                       href="/dashboard"
-                      className="flex items-center gap-2 text-primary hover:text-purple-700 font-bold"
+                      className="flex items-center gap-2 text-primary hover:text-[#8B1538] font-bold"
                     >
                       <GraduationCap className="h-4 w-4" />
                       <span className="hidden sm:inline">AYii University</span>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block text-purple-300" />
+                  <BreadcrumbSeparator className="hidden md:block text-rose-300" />
                   <BreadcrumbItem>
                     <BreadcrumbPage className="text-primary/90 lg:font-medium font-bold">
                       Dashboard
@@ -119,7 +119,7 @@ export function DashboardLayout({ children, user }: DashboardLayoutProps) {
             </div>
           </header>
           <main className="flex-1 overflow-auto">
-            <div className="p-2 md:p-4 lg:p-6">{children}</div>
+            <div className="p-2 md:p-4 lg:p-2">{children}</div>
           </main>
         </div>
       </SidebarInset>

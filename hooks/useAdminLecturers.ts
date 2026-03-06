@@ -47,6 +47,7 @@ export function useCreateLecturer() {
       department: string;
       specialization?: string;
       employeeId?: string;
+      image?: string;
     }) => {
       const { data } = await apiClient.post("/admin/lecturers", payload);
       return data;
@@ -116,5 +117,48 @@ export function useUpdateLecturerStatus() {
       toast.error("Update failed", { description: getErrorMessage(error) });
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: ["lecturers"] }),
+  });
+}
+
+export function useUpdateLecturer() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, ...payload }: {
+      id: string;
+      name: string;
+      email: string;
+      department: string;
+      specialization?: string;
+      image?: string;
+    }) => {
+      const { data } = await apiClient.patch(`/admin/lecturers/${id}`, payload);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["lecturers"] });
+      toast.success("Lecturer details updated");
+    },
+    onError: (error) => {
+      toast.error("Update failed", { description: getErrorMessage(error) });
+    },
+  });
+}
+
+export function useDeleteLecturer() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      await apiClient.delete(`/admin/lecturers/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["lecturers"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.stats });
+      toast.success("Lecturer removed successfully");
+    },
+    onError: (error) => {
+      toast.error("Deletion failed", { description: getErrorMessage(error) });
+    },
   });
 }

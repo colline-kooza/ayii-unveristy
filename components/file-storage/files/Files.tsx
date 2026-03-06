@@ -195,13 +195,13 @@ const Files: React.FC = () => {
         {/* Search Bar */}
         <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-center">
           <div className="relative w-full md:w-96 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#8B1538] transition-colors" />
             <input
               type="text"
               placeholder="Search files..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-50 transition-all"
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-rose-50 transition-all"
             />
           </div>
           <div className="flex gap-3 w-full md:w-auto">
@@ -280,7 +280,7 @@ const Files: React.FC = () => {
                               href={file.publicUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2.5 text-slate-400 hover:text-indigo-600 rounded-xl transition-all"
+                              className="p-2.5 text-slate-400 hover:text-[#8B1538] rounded-xl transition-all"
                             >
                               <svg
                                 className="w-4 h-4"
@@ -341,7 +341,7 @@ const Files: React.FC = () => {
             <button
               disabled={page === 1}
               onClick={() => setPage((p) => p - 1)}
-              className="p-2 text-slate-400 hover:text-indigo-600 disabled:opacity-30 transition-all"
+              className="p-2 text-slate-400 hover:text-[#8B1538] disabled:opacity-30 transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -351,7 +351,7 @@ const Files: React.FC = () => {
             <button
               disabled={page >= totalPages}
               onClick={() => setPage((p) => p + 1)}
-              className="p-2 text-slate-400 hover:text-indigo-600 disabled:opacity-30 transition-all"
+              className="p-2 text-slate-400 hover:text-[#8B1538] disabled:opacity-30 transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>

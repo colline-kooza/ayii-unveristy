@@ -1,18 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   GraduationCap,
   Building2,
   School,
   User,
 } from "lucide-react";
+
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
@@ -23,101 +25,102 @@ interface UnifiedHeaderProps {
   user: AuthUser;
 }
 
-const getRoleIcon = (role: string) => {
-  switch (role) {
-    case "ADMIN":
-      return Building2;
-    case "LECTURER":
-      return GraduationCap;
-    case "STUDENT":
-      return School;
-    default:
-      return User;
-  }
+/* ---------------- ROLE CONFIG ---------------- */
+
+const roleConfig = {
+  ADMIN: {
+    icon: Building2,
+    gradient: "from-primary via-primary to-primary/90",
+    badge: "from-primary to-primary",
+  },
+  LECTURER: {
+    icon: GraduationCap,
+    gradient: "from-primary via-orange-500 to-primary",
+    badge: "from-primary to-orange-500",
+  },
+  STUDENT: {
+    icon: School,
+    gradient: "from-primary via-pink-500 to-primary",
+    badge: "from-primary to-pink-600",
+  },
+  DEFAULT: {
+    icon: User,
+    gradient: "from-primary to-primary",
+    badge: "from-primary to-primary",
+  },
 };
 
-const getRoleColor = (role: string) => {
-  switch (role) {
-    case "ADMIN":
-      return "from-primary via-primary to-primary/100";
-    case "LECTURER":
-      return "from-primary via-orange-500 to-primary";
-    case "STUDENT":
-      return "from-primary via-pink-500 to-primary";
-    default:
-      return "from-primary to-primary";
-  }
-};
+export function UnifiedHeader({ user }: UnifiedHeaderProps) {
+  const config =
+    roleConfig[user.role as keyof typeof roleConfig] ??
+    roleConfig.DEFAULT;
 
-const getRoleBadgeColor = (role: string) => {
-  switch (role) {
-    case "ADMIN":
-      return "bg-gradient-to-r from-primary to-primary/100 shadow-lg shadow-primary/25";
-    case "LECTURER":
-      return "bg-gradient-to-r from-primary to-primary shadow-lg shadow-primary/25";
-    case "STUDENT":
-      return "bg-gradient-to-r from-primary to-pink-600 shadow-lg shadow-primary/25";
-    default:
-      return "bg-gradient-to-r from-primary to-primary shadow-lg shadow-primary/25";
-  }
-};
-
-export function UnifiedHeader({
-  user,
-}: UnifiedHeaderProps) {
-  const RoleIcon = getRoleIcon(user.role);
-  const roleColorClass = getRoleColor(user.role);
-  const roleBadgeColor = getRoleBadgeColor(user.role);
+  const RoleIcon = config.icon;
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton
           size="lg"
-          className="h-16 p-2 rounded-xl border-2 border-red-100/60 backdrop-blur-sm bg-gradient-to-br from-white via-red-50/30 to-white transition-all duration-300 group shadow shadow-primary/15"
+          className="
+          h-18
+          p-3
+          rounded-xl
+          border
+          border-border/50
+          bg-background/70
+          backdrop-blur-md
+          transition-all
+          duration-300
+          hover:shadow-lg
+          hover:shadow-primary/10
+        "
         >
           <motion.div
-            className="flex items-center gap-3 w-full"
-            transition={{ duration: 0.2 }}
+            className="flex items-center gap-4 w-full"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
           >
-            {/* School Logo */}
-            <div className="relative">
-              <Avatar className="h-11 w-11 ring-3 ring-white shadow-xl shadow-primary/25 border-2 border-red-100/50">
+            {/* ---------------- LOGO ---------------- */}
+
+            <div className="relative flex-shrink-0">
+              <Avatar className="h-14 w-14 bg-white ring-2 ring-white shadow-md">
                 <AvatarImage
-                  className="object-cover"
-                  src="/images/lecify-1.png"
+                  src="/ayii-logo.png"
+                  alt="AYii University"
+                  className="object-contain p-1"
                 />
               </Avatar>
 
-              {/* Role Icon Overlay */}
-              <motion.div
-                className={`absolute -bottom-1 -right-1 bg-gradient-to-br ${roleColorClass} text-white rounded-full p-1.5 shadow-lg shadow-primary/40 border-2 border-white`}
+              {/* Role Icon */}
+              <div
+                className={`absolute -bottom-1 -right-1 bg-gradient-to-br ${config.gradient}
+                text-white rounded-full p-1.5 shadow-md border-2 border-white`}
               >
                 <RoleIcon className="h-3.5 w-3.5" />
-              </motion.div>
+              </div>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 text-left min-w-0">
-              {/* School Name */}
-              <div className="flex items-center gap-2 mb-1">
-                <span className="truncate font-bold bg-gradient-to-r from-primary via-red-700 to-orange-700 bg-clip-text text-transparent text-sm">
+            {/* ---------------- CONTENT ---------------- */}
+
+            <div className="flex flex-col min-w-0 flex-1 text-left">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="truncate font-semibold text-sm text-foreground">
                   AYii University
                 </span>
+
                 <Badge
-                  className={`${roleBadgeColor} text-white border-0 text-xs px-2.5 py-1 font-semibold shadow-md`}
+                  className={`bg-gradient-to-r ${config.badge} text-white border-0 text-[10px] px-2 py-0.5`}
                 >
                   {user.role}
                 </Badge>
               </div>
 
-              {/* User Info */}
-              <div className="flex items-center justify-between">
-                <span className="truncate text-xs text-red-700 font-semibold flex items-center gap-1">
-                  <User className="h-3.5 w-3.5 text-primary flex-shrink-0" />
-                  {user.name}
-                </span>
-              </div>
+              <span className="truncate text-xs text-muted-foreground flex items-center gap-1">
+                <User className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                {user.name}
+              </span>
             </div>
           </motion.div>
         </SidebarMenuButton>

@@ -2,41 +2,66 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Courses", href: "/courses" },
-    { name: "Library", href: "/library" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#283593]/95 backdrop-blur-md shadow-lg border-b border-white/10">
-      <nav className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-20">
-        <div className="flex h-16 items-center justify-between">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-gradient-to-r from-[#5A0F23]/95 via-[#8B1538]/95 to-[#6B1329]/95 backdrop-blur-md shadow-lg border-b border-white/10"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+        <div className="flex h-14 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-[#0ee0f8] p-2 rounded-lg">
-              <GraduationCap className="h-6 w-6 text-[#283593]" />
-            </div>
-            <span className="text-xl font-bold text-white">
-              AYii University
-            </span>
+          <Link href="/" className="flex items-center">
+            <img
+              src="/ayii-logo.png"
+              alt="AYii University"
+              className="h-30 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-white/90 hover:text-[#0ee0f8] font-medium transition-colors"
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  isActive(item.href)
+                    ? "bg-[#FF6B7A]/20 text-[#FFB3BA]"
+                    : "text-white/80 hover:text-[#FFB3BA] hover:bg-white/5"
+                }`}
               >
                 {item.name}
               </Link>
@@ -44,21 +69,18 @@ export default function Header() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/courses">
-              <Button variant="ghost" className="text-white/90 font-black uppercase tracking-widest text-[10px] hover:text-[#0ee0f8] hover:bg-white/10 px-6">
-                Courses
-              </Button>
-            </Link>
-            <Link href="/courses">
-              <Button className="bg-[#0ee0f8] hover:bg-white text-[#283593] font-black uppercase tracking-widest text-[10px] px-8 h-10 rounded-xl shadow-lg shadow-[#0ee0f8]/20 transition-all">
-                Enroll Now
-              </Button>
-            </Link>
-            <div className="h-8 w-px bg-white/20 mx-2" />
+          <div className="hidden md:flex items-center space-x-2">
             <Link href="/auth/sign-in">
-              <Button variant="ghost" className="text-white/90 hover:text-white hover:bg-white/10">
+              <Button
+                variant="ghost"
+                className="text-white/90 hover:text-white hover:bg-white/10 h-8 px-4 text-sm"
+              >
                 Sign In
+              </Button>
+            </Link>
+            <Link href="/courses">
+              <Button className="bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-8 px-4 text-sm font-semibold rounded-lg shadow-lg shadow-[#C41E3A]/20 transition-all">
+                Get Started
               </Button>
             </Link>
           </div>
@@ -78,27 +100,39 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/10">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden py-3 border-t border-white/10">
+            <div className="flex flex-col space-y-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-white/90 hover:text-[#0ee0f8] font-medium transition-colors px-2"
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive(item.href)
+                      ? "bg-[#FF6B7A]/20 text-[#FFB3BA]"
+                      : "text-white/80 hover:text-[#FFB3BA] hover:bg-white/5"
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
-                <Link href="/auth/sign-in" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10">
+
+              <div className="flex flex-col space-y-2 pt-3 mt-2 border-t border-white/10">
+                <Link
+                  href="/auth/sign-in"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full border-white/20 text-white hover:bg-white/10 h-9 text-sm"
+                  >
                     Sign In
                   </Button>
                 </Link>
-                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-[#0ee0f8] hover:bg-white text-[#283593]">
-                    Dashboard
+
+                <Link href="/courses" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-9 text-sm">
+                    Get Started
                   </Button>
                 </Link>
               </div>

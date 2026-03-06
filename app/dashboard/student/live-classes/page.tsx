@@ -55,7 +55,7 @@ export default function StudentLiveClasses() {
         setLectures(data);
       }
     } catch (error) {
-      toast.error("Failed to sync with academic satellites");
+      toast.error("Failed to load live classes");
     } finally {
       setIsLoading(false);
     }
@@ -82,19 +82,19 @@ export default function StudentLiveClasses() {
         
         <div className="relative z-10 max-w-2xl space-y-6">
           <Badge className="bg-white/20 hover:bg-white/30 text-white border-0 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
-            Digital Satellite Link Active
+            Live Classes Available
           </Badge>
           <h1 className="text-xl lg:text-3xl font-black tracking-tighter italic leading-[1.1]">
-            Real-Time <br />
-            <span className="text-primary-100">Synchronized</span> Learning.
+            Join Live <br />
+            <span className="text-primary-100">Classes</span> Now.
           </h1>
           <p className="text-primary-50 text-sm font-medium italic opacity-90">
-            Connect instantly with your lecturers and peers in high-definition virtual environments.
+            Connect instantly with your lecturers and peers in high-definition virtual classrooms.
           </p>
           <div className="flex items-center gap-4 pt-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
               <Wifi className="w-4 h-4 text-green-300 animate-pulse" />
-              <span className="text-xs font-bold italic tracking-wide">{lectures.length} Active Streams</span>
+              <span className="text-xs font-bold italic tracking-wide">{lectures.length} Live Classes</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">
               <Sparkles className="w-4 h-4 text-yellow-300" />
@@ -106,13 +106,13 @@ export default function StudentLiveClasses() {
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-2 border-b border-gray-100">
         <div>
-          <h2 className="text-lg font-black italic">Available Classrooms</h2>
-          <p className="text-xs text-gray-400 font-medium italic tracking-wide">Select an active transmission to join the academic discourse.</p>
+          <h2 className="text-lg font-black italic">Available Classes</h2>
+          <p className="text-xs text-gray-400 font-medium italic tracking-wide">Select a live class to join the session.</p>
         </div>
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
-            placeholder="Search academic tracks..." 
+            placeholder="Search courses..." 
             className="pl-10 h-11 text-sm rounded-2xl border-gray-100 bg-white/50 focus:ring-primary/20 italic"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -163,7 +163,7 @@ export default function StudentLiveClasses() {
                           <MonitorPlay className="w-3.5 h-3.5" />
                           Platform
                         </span>
-                        <span className="text-gray-600 uppercase">Synchronized Link</span>
+                        <span className="text-gray-600 uppercase">Meeting Link</span>
                       </div>
                     </div>
 
@@ -172,7 +172,7 @@ export default function StudentLiveClasses() {
                       className="w-full h-11 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-sm italic tracking-wider transition-all shadow-lg shadow-primary/20 group/btn"
                     >
                       <a href={lecture.meetingUrl} target="_blank" rel="noopener noreferrer">
-                        Enter Satellite Terminal
+                        Join Class Now
                         <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                       </a>
                     </Button>
@@ -186,8 +186,8 @@ export default function StudentLiveClasses() {
                 <Video className="w-10 h-10 text-gray-100" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-lg font-black italic text-gray-400 uppercase tracking-widest">Zero Active Streams</h3>
-                <p className="text-xs text-gray-300 font-bold italic">Academic satellites are currently in idle synchronization state.</p>
+                <h3 className="text-lg font-black italic text-gray-400 uppercase tracking-widest">No Live Classes</h3>
+                <p className="text-xs text-gray-300 font-bold italic">There are no live classes at the moment. Check back later.</p>
               </div>
             </div>
           )}

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, MoreVertical, BookOpen, Eye, Edit, Trash2, GraduationCap, Clock } from "lucide-react";
-import { useCourses } from "@/hooks/useCourses";
+import { useCourses, useDeleteCourse } from "@/hooks/useCourses";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Pagination } from "@/components/shared/Pagination";
 import {
@@ -34,17 +34,65 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { CreateCourseModal } from "@/components/shared/modals/CreateCourseModal";
+import { UpdateCourseModal } from "@/components/shared/modals/UpdateCourseModal";
+import { ViewCourseModal } from "@/components/shared/modals/ViewCourseModal";
+import { ConfirmDeleteModal } from "@/components/shared/modals/ConfirmDeleteModal";
+
+interface Course {
+  id: string;
+  title: string;
+  description?: string;
+  unitCode: string;
+  department: string;
+  _count?: {
+    enrollments: number;
+  };
+  lecturer?: {
+    name: string;
+    email?: string;
+  };
+  createdAt?: string;
+}
 
 export default function AdminCoursesPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [courseToDelete, setCourseToDelete] = useState<string | null>(null);
   const { data, isLoading } = useCourses({ page, search });
+  const deleteCourse = useDeleteCourse();
+
+  const handleView = (course: Course) => {
+    setSelectedCourse(course);
+    setIsViewModalOpen(true);
+  };
+
+  const handleEdit = (course: Course) => {
+    setSelectedCourse(course);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    setCourseToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (courseToDelete) {
+      await deleteCourse.mutateAsync(courseToDelete);
+      setIsDeleteModalOpen(false);
+      setCourseToDelete(null);
+    }
+  };
 
   if (isLoading) {
     return (
       <div className="p-8 space-y-6">
-        <div className="h-10 bg-blue-50/50 animate-pulse rounded-lg w-64"></div>
+        <div className="h-10 bg-red-50/50 animate-pulse rounded-lg w-64"></div>
         <div className="h-[400px] bg-gray-50 animate-pulse rounded-xl"></div>
       </div>
     );
@@ -58,7 +106,7 @@ export default function AdminCoursesPage() {
       {/* Header Area */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-2xl font-bold tracking-tight text-black">
             Courses {meta?.total ? `(${meta.total})` : "(0)"}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
@@ -67,7 +115,7 @@ export default function AdminCoursesPage() {
         </div>
         <Button 
           onClick={() => setIsCreateModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 shadow-lg shadow-blue-500/20 h-10 px-6 transition-all"
+          className="bg-red-600 hover:bg-red-700 flex items-center gap-2 shadow-lg shadow-red-500/20 h-10 px-6 transition-all"
         >
           <Plus className="h-4 w-4" />
           <span>Add Course</span>
@@ -79,7 +127,7 @@ export default function AdminCoursesPage() {
         <CardHeader className="pb-3 border-b border-gray-50">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-sm font-semibold text-gray-900">Curriculum Overview</CardTitle>
+              <CardTitle className="text-sm font-semibold text-black">Curriculum Overview</CardTitle>
               <CardDescription className="text-xs text-gray-500">Manage course materials, enrollments, and teaching staff</CardDescription>
             </div>
             <div className="relative w-full md:w-80">
@@ -118,20 +166,20 @@ export default function AdminCoursesPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {courses.map((course: any) => (
-                    <TableRow key={course.id} className="hover:bg-blue-50/30 transition-colors border-b border-gray-50">
+                  {courses.map((course: Course) => (
+                    <TableRow key={course.id} className="hover:bg-red-50/30 transition-colors border-b border-gray-50">
                       <TableCell className="py-4 px-6">
-                        <span className="font-bold text-gray-900 text-sm">{course.title}</span>
+                        <span className="font-bold text-black text-sm">{course.title}</span>
                       </TableCell>
                       <TableCell className="py-4 px-6">
-                        <code className="bg-blue-50/50 text-blue-700 px-2.5 py-1 rounded text-[10px] font-bold border border-blue-100/30">
+                        <code className="bg-red-50/50 text-red-700 px-2.5 py-1 rounded text-[10px] font-bold border border-red-100/30">
                           {course.unitCode}
                         </code>
                       </TableCell>
                       <TableCell className="py-4 px-6 text-gray-500 text-sm font-medium">{course.department}</TableCell>
                       <TableCell className="py-4 px-6">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[10px] font-bold text-blue-700 border border-blue-100 shadow-sm">
+                          <div className="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center text-[10px] font-bold text-red-700 border border-red-100 shadow-sm">
                             {course.lecturer?.name?.charAt(0) || "L"}
                           </div>
                           <span className="text-xs font-semibold text-gray-700">{course.lecturer?.name || "Unassigned"}</span>
@@ -152,18 +200,25 @@ export default function AdminCoursesPage() {
                           <DropdownMenuContent align="end" className="w-52 p-1.5 shadow-xl border-gray-100">
                              <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-1.5">Administration</DropdownMenuLabel>
                              <DropdownMenuSeparator className="bg-gray-50" />
-                             <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-blue-50 focus:text-blue-700 rounded-md">
+                             <DropdownMenuItem 
+                               className="cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700 rounded-md"
+                               onClick={() => handleView(course)}
+                             >
                                <Eye className="h-4 w-4 opacity-70" /> <span>Course Details</span>
                              </DropdownMenuItem>
-                             <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-blue-50 focus:text-blue-700 rounded-md">
+                             <DropdownMenuItem 
+                               className="cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700 rounded-md"
+                               onClick={() => handleEdit(course)}
+                             >
                                <Edit className="h-4 w-4 opacity-70" /> <span>Edit Curriculum</span>
                              </DropdownMenuItem>
-                             <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-blue-50 focus:text-blue-700 rounded-md">
-                               <GraduationCap className="h-4 w-4 opacity-70" /> <span>Manage Students</span>
-                             </DropdownMenuItem>
+                            
                              <DropdownMenuSeparator className="bg-gray-50" />
-                             <DropdownMenuItem className="text-red-600 focus:bg-red-50 focus:text-red-700 cursor-pointer gap-2 rounded-md">
-                               <Trash2 className="h-4 w-4" /> <span>Archive Course</span>
+                             <DropdownMenuItem 
+                               className="text-red-600 focus:bg-red-50 focus:text-red-700 cursor-pointer gap-2 rounded-md"
+                               onClick={() => handleDelete(course.id)}
+                             >
+                               <Trash2 className="h-4 w-4" /> <span>Delete Course</span>
                              </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -192,6 +247,24 @@ export default function AdminCoursesPage() {
         open={isCreateModalOpen}
         onOpenChange={setIsCreateModalOpen}
         isAdmin={true}
+      />
+      <ViewCourseModal
+        open={isViewModalOpen}
+        onOpenChange={setIsViewModalOpen}
+        course={selectedCourse}
+      />
+      <UpdateCourseModal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        course={selectedCourse}
+      />
+      <ConfirmDeleteModal
+        open={isDeleteModalOpen}
+        onOpenChange={setIsDeleteModalOpen}
+        onConfirm={confirmDelete}
+        title="Delete Course"
+        description="Are you sure you want to delete this course? This will permanently remove all associated materials and enrollments. This action cannot be undone."
+        isLoading={deleteCourse.isPending}
       />
     </div>
   );

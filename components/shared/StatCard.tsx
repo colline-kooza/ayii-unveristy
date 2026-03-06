@@ -20,7 +20,7 @@ export function StatCard({ title, value, change, trend, icon: Icon, iconColor = 
         <Icon className={`h-5 w-5 ${iconColor}`} />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-gray-900">{value}</div>
+        <div className="text-2xl font-bold text-black">{value}</div>
         {change && (
           <p className={`text-xs mt-1 ${trend === "up" ? "text-green-600" : "text-red-600"}`}>
             {change}

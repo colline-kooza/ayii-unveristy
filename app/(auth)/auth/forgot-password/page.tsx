@@ -65,9 +65,11 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-md pt-12 lg:pt-0">
           <div className="mb-6">
             <div className="flex items-center mb-4 justify-center sm:justify-start">
-              <div className="bg-[#283593] p-3 rounded-xl shadow-lg">
-                <KeyRound className="h-8 w-8 text-white" />
-              </div>
+              <img 
+                src="/ayii-logo.png" 
+                alt="AYii University" 
+                className="h-28 w-auto"
+              />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center sm:text-left">
               Forgot <span className="text-[#283593]">Password?</span>

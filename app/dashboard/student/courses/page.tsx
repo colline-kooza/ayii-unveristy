@@ -21,7 +21,8 @@ export default function StudentCoursesPage() {
   const enroll = useEnroll();
   const unenroll = useUnenroll();
 
-  const handleEnroll = async (courseId: string) => {
+  const handleEnroll = async (e: React.MouseEvent, courseId: string) => {
+    e.stopPropagation();
     try {
       await enroll.mutateAsync(courseId);
     } catch (e) {
@@ -29,7 +30,8 @@ export default function StudentCoursesPage() {
     }
   };
 
-  const handleUnenroll = async (courseId: string) => {
+  const handleUnenroll = async (e: React.MouseEvent, courseId: string) => {
+    e.stopPropagation();
     if (!confirm("Are you sure you want to unenroll from this course?")) return;
     try {
       await unenroll.mutateAsync(courseId);
@@ -45,7 +47,7 @@ export default function StudentCoursesPage() {
       whileHover={{ y: -5 }}
     >
       <Card 
-        className="group relative overflow-hidden rounded-[2rem] border-0 shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-white min-h-[340px] flex flex-col"
+        className="group relative overflow-hidden rounded-[2rem] border-0 shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-white min-h-[340px] flex flex-col cursor-pointer"
         onClick={() => router.push(`/dashboard/student/courses/${course.id}`)}
       >
         <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
@@ -66,7 +68,7 @@ export default function StudentCoursesPage() {
             {course.title}
           </CardTitle>
           <p className="text-xs font-bold text-gray-400 mt-2 italic line-clamp-2">
-            {course.description || "Academic track detailed data currently pending synchronization."}
+            {course.description || "Course details will be available soon."}
           </p>
         </CardHeader>
 
@@ -76,7 +78,7 @@ export default function StudentCoursesPage() {
               <div className="w-7 h-7 rounded-xl bg-primary/5 flex items-center justify-center">
                 <Users className="h-3.5 w-3.5 text-primary" />
               </div>
-              <span className="text-[11px] font-black italic text-gray-500">{course._count?.enrollments || 0} Synced</span>
+              <span className="text-[11px] font-black italic text-gray-500">{course._count?.enrollments || 0} Students</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-7 h-7 rounded-xl bg-gray-50 flex items-center justify-center">
@@ -86,26 +88,24 @@ export default function StudentCoursesPage() {
             </div>
           </div>
 
-          <div onClick={(e) => e.stopPropagation()}>
-            {isEnrolled ? (
-              <Button
-                variant="outline"
-                className="w-full h-12 rounded-2xl border-gray-100 font-black text-[11px] uppercase tracking-widest text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all italic"
-                onClick={() => handleUnenroll(course.id)}
-                disabled={unenroll.isPending}
-              >
-                Terminate Enrollment
-              </Button>
-            ) : (
-              <Button
-                className="w-full h-12 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-[11px] uppercase tracking-[0.15em] shadow-xl shadow-primary/20 transition-all italic"
-                onClick={() => handleEnroll(course.id)}
-                disabled={enroll.isPending}
-              >
-                Initialize Sync
-              </Button>
-            )}
-          </div>
+          {isEnrolled ? (
+            <Button
+              variant="outline"
+              className="w-full h-12 rounded-2xl border-gray-100 font-black text-[11px] uppercase tracking-widest text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all italic"
+              onClick={(e) => handleUnenroll(e, course.id)}
+              disabled={unenroll.isPending}
+            >
+              Already Enrolled
+            </Button>
+          ) : (
+            <Button
+              className="w-full h-12 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-[11px] uppercase tracking-[0.15em] shadow-xl shadow-primary/20 transition-all italic"
+              onClick={(e) => handleEnroll(e, course.id)}
+              disabled={enroll.isPending}
+            >
+              Enroll in Course
+            </Button>
+          )}
         </CardContent>
       </Card>
     </motion.div>
@@ -116,13 +116,13 @@ export default function StudentCoursesPage() {
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-gray-100 pb-8">
         <div className="space-y-2">
           <Badge className="px-3 py-1 text-[10px] font-black uppercase tracking-widest text-primary bg-primary/5 border-primary/20">
-            Academic Track Registry
+            Course Catalog
           </Badge>
-          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 lg:text-3xl italic">
-            Knowledge <span className="text-primary">Repository.</span>
+          <h1 className="text-2xl font-extrabold tracking-tight text-black lg:text-3xl italic">
+            My <span className="text-primary">Courses.</span>
           </h1>
           <p className="text-gray-500 text-sm font-medium italic">
-            Synchronize your curriculum with institutional standards.
+            Browse and enroll in available courses.
           </p>
         </div>
       </header>
@@ -140,7 +140,7 @@ export default function StudentCoursesPage() {
               value="enrolled" 
               className="rounded-xl px-10 h-11 text-[11px] font-black italic data-[state=active]:bg-white data-[state=active]:shadow-lg data-[state=active]:text-primary transition-all"
             >
-              My Deployments
+              My Enrolled Courses
             </TabsTrigger>
           </TabsList>
 

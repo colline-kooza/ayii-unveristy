@@ -55,21 +55,18 @@ type LoginFormValues = z.input<typeof loginSchema>;
 
 const defaultCarouselImages = [
   {
-    url: "https://img.freepik.com/free-photo/medium-shot-students-classroom_23-2148950533.jpg?ga=GA1.1.2016539446.1772535374&semt=ais_hybrid&w=740&q=80",
+    url: "/img1.jpeg",
     alt: "University students studying",
   },
   {
-    url: "https://img.freepik.com/free-photo/diversity-students-graduation-success-celebration-concept_53876-26400.jpg?ga=GA1.1.2016539446.1772535374&semt=ais_hybrid&w=740&q=80",
+    url: "/img2.jpeg",
     alt: "Campus life",
   },
   {
-    url: "https://img.freepik.com/free-photo/three-african-students-female-posed-with-backpacks-school-items-yard-university-look-tablet_627829-5957.jpg?ga=GA1.1.2016539446.1772535374&semt=ais_hybrid&w=740&q=80",
+    url: "/img3.jpeg",
     alt: "Lecture hall",
   },
-  {
-    url: "https://img.freepik.com/free-photo/graduate-students-wearing-cap-gown-medium-shot_23-2148950540.jpg?ga=GA1.1.2016539446.1772535374&semt=ais_hybrid&w=740&q=80",
-    alt: "Student celebration",
-  },
+
 ];
 
 const demoUsers: QuickLoginUser[] = [
@@ -87,9 +84,9 @@ const demoUsers: QuickLoginUser[] = [
     email: "lecturer@ayii.edu",
     password: "Lecturer@2025",
     icon: UserCheck,
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-    hoverColor: "hover:bg-blue-100",
+    color: "text-[#8B1538]",
+    bgColor: "bg-rose-50",
+    hoverColor: "hover:bg-rose-100",
   },
   {
     role: "Student",
@@ -187,7 +184,7 @@ export default function SignInPage() {
         ))}
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#283593]/80 via-[#283593]/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#5A0F23]/80 via-[#5A0F23]/15 to-transparent"></div>
 
         <h2 className="text-4xl font-medium mb-4 drop-shadow-2xl text-start text-white max-w-lg absolute bottom-20 left-20">
           Empowering Students
@@ -218,31 +215,31 @@ export default function SignInPage() {
       <div className="flex-1 bg-white flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="hidden sm:block">
-          <div className="absolute top-20 left-20 text-[#283593]/40 animate-pulse">
+          <div className="absolute top-20 left-20 text-[#8B1538]/40 animate-pulse">
             <Star
               className="h-6 w-6 animate-bounce"
               style={{ animationDelay: "0s", animationDuration: "3s" }}
             />
           </div>
-          <div className="absolute top-32 right-24 text-[#283593]/40 animate-pulse">
+          <div className="absolute top-32 right-24 text-[#8B1538]/40 animate-pulse">
             <BookOpen
               className="h-8 w-8 animate-bounce"
               style={{ animationDelay: "0.5s", animationDuration: "2.5s" }}
             />
           </div>
-          <div className="absolute bottom-40 left-16 text-[#283593]/40 animate-pulse">
+          <div className="absolute bottom-40 left-16 text-[#8B1538]/40 animate-pulse">
             <Users
               className="h-7 w-7 animate-bounce"
               style={{ animationDelay: "1s", animationDuration: "3.5s" }}
             />
           </div>
-          <div className="absolute bottom-24 right-20 text-[#283593]/40 animate-pulse">
+          <div className="absolute bottom-24 right-20 text-[#8B1538]/40 animate-pulse">
             <Award
               className="h-6 w-6 animate-bounce"
               style={{ animationDelay: "1.5s", animationDuration: "2s" }}
             />
           </div>
-          <div className="absolute top-1/2 left-12 text-[#283593]/40 animate-pulse">
+          <div className="absolute top-1/2 left-12 text-[#8B1538]/40 animate-pulse">
             <GraduationCap
               className="h-5 w-5 animate-bounce"
               style={{ animationDelay: "2s", animationDuration: "4s" }}
@@ -254,7 +251,7 @@ export default function SignInPage() {
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8">
           <Button
             variant="ghost"
-            className="text-gray-600 hover:text-[#283593]/70 hover:bg-gray-100 transition-colors duration-200 text-xs sm:text-sm"
+            className="text-gray-600 hover:text-[#8B1538]/70 hover:bg-gray-100 transition-colors duration-200 text-xs sm:text-sm"
             onClick={handleBackToHome}
           >
             <ArrowLeft className="h-4 w-4 mr-1 sm:mr-2" />
@@ -267,14 +264,16 @@ export default function SignInPage() {
           {/* Logo and Header */}
           <div className="mb-4 sm:mb-6">
             <div className="flex items-center mb-4 justify-center sm:justify-start">
-              <div className="bg-[#283593] p-3 rounded-xl shadow-lg">
-                <GraduationCap className="h-8 w-8 text-white" />
-              </div>
+              <img 
+                src="/ayii-logo.png" 
+                alt="AYii University" 
+                className="h-28 w-auto"
+              />
             </div>
             <h1 className="text-3xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2 text-center sm:text-left">
-              AYii University <span className="text-[#283593]">Portal</span>
+              AYii University <span className="text-[#8B1538]">Portal</span>
             </h1>
-            <p className="text-sm text-center sm:text-left bg-gradient-to-r from-[#283593] via-[#f76f26] to-[#283593] bg-clip-text text-transparent">
+            <p className="text-sm text-center sm:text-left bg-gradient-to-r from-[#8B1538] via-[#C41E3A] to-[#8B1538] bg-clip-text text-transparent">
               Sign in to your account
             </p>
           </div>
@@ -296,7 +295,7 @@ export default function SignInPage() {
                           <Input
                             type="email"
                             placeholder="Email address"
-                            className="h-11 sm:h-12 bg-gray-50 border-gray-200 text-gray-800 placeholder:text-gray-500 focus:border-[#283593] focus:ring-[#283593] rounded-lg transition-colors duration-200 text-sm pr-12"
+                            className="h-11 sm:h-12 bg-gray-50 border-gray-200 text-gray-800 placeholder:text-gray-500 focus:border-[#8B1538] focus:ring-[#8B1538] rounded-lg transition-colors duration-200 text-sm pr-12"
                             {...field}
                           />
                           <Mail className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
@@ -317,7 +316,7 @@ export default function SignInPage() {
                           <Input
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
-                            className="h-11 sm:h-12 bg-gray-50 border-gray-200 text-gray-800 placeholder:text-gray-500 focus:border-[#283593] focus:ring-[#283593] rounded-lg pr-16 sm:pr-20 transition-colors duration-200 text-sm"
+                            className="h-11 sm:h-12 bg-gray-50 border-gray-200 text-gray-800 placeholder:text-gray-500 focus:border-[#8B1538] focus:ring-[#8B1538] rounded-lg pr-16 sm:pr-20 transition-colors duration-200 text-sm"
                             {...field}
                           />
                           <Lock className="absolute right-10 sm:right-12 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
@@ -352,7 +351,7 @@ export default function SignInPage() {
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className="border-gray-300 data-[state=checked]:bg-[#283593] data-[state=checked]:border-[#283593] mt-0.5"
+                            className="border-gray-300 data-[state=checked]:bg-[#8B1538] data-[state=checked]:border-[#8B1538] mt-0.5"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -367,7 +366,7 @@ export default function SignInPage() {
                   <Button
                     type="button"
                     variant="link"
-                    className="text-[#283593] hover:text-[#283593]/55 p-0 h-auto font-normal text-xs sm:text-sm justify-start sm:justify-center ml-0"
+                    className="text-[#8B1538] hover:text-[#8B1538]/55 p-0 h-auto font-normal text-xs sm:text-sm justify-start sm:justify-center ml-0"
                     onClick={handleForgotPassword}
                   >
                     Forgot password?
@@ -376,7 +375,7 @@ export default function SignInPage() {
 
                 <Button
                   type="submit"
-                  className="w-full h-10 sm:h-12 bg-gradient-to-r from-[#283593] via-black to-[#283593] hover:bg-[#283593]/85 text-white font-semibold rounded-sm shadow-lg transition-all duration-200 text-sm sm:text-sm"
+                  className="w-full h-10 sm:h-12 bg-gradient-to-r from-[#5A0F23] via-[#8B1538] to-[#5A0F23] hover:from-[#8B1538] hover:to-[#8B1538] text-white font-semibold rounded-sm shadow-lg transition-all duration-200 text-sm sm:text-sm"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -431,7 +430,7 @@ export default function SignInPage() {
 
       {/* Mobile Background */}
       <div className="lg:hidden absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#283593]/5 via-green-50 to-[#283593]/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8B1538]/5 via-rose-50 to-[#8B1538]/10"></div>
       </div>
     </div>
   );

@@ -20,8 +20,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-
-import { AppLogoIcon } from '@/components/icons'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -113,7 +111,7 @@ export function ResetPassword() {
       <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
         <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
           <div className="p-8 pb-6 text-center">
-            <AppLogoIcon className="h-10 mx-auto fill-current text-black sm:h-12" />
+            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto mx-auto" />
             <h1 className="mb-1 mt-4 text-xl font-semibold">Session Expired</h1>
             <p className="text-sm text-muted-foreground mb-6">
               Please request a new password reset code.
@@ -132,7 +130,7 @@ export function ResetPassword() {
       <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
         <div className="p-8 pb-6">
           <Link href="/" aria-label="go home">
-            <AppLogoIcon className="h-10 fill-current text-black sm:h-12" />
+            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto" />
           </Link>
           <h1 className="mb-1 mt-4 text-xl font-semibold">Reset your password</h1>
           <p className="text-sm text-muted-foreground">

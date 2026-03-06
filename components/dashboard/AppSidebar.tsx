@@ -113,7 +113,7 @@ export function AppSidebar({ user, schools = [], ...props }: AppSidebarProps) {
                       {item.badge && (typeof item.badge === 'number' ? item.badge > 0 : true) && (
                         <Badge
                           variant="secondary"
-                          className="h-5 px-2 text-xs bg-gradient-to-r from-primary to-primary/90 text-white border-0 font-medium"
+                          className="h-5 px-2 text-xs bg-red-100 text-red-700 hover:bg-red-200 border-0 font-bold"
                         >
                           {item.badge}
                         </Badge>
@@ -142,10 +142,10 @@ export function AppSidebar({ user, schools = [], ...props }: AppSidebarProps) {
                                 {subItem.title}
                               </span>
                               {subItem.badge && (typeof subItem.badge === 'number' ? subItem.badge > 0 : true) && (
-                                <Badge
-                                  variant="secondary"
-                                  className="h-4 px-1.5 text-xs bg-gradient-to-r from-primary to-primary/90 text-white border-0 font-medium flex-shrink-0"
-                                >
+                                  <Badge
+                                    variant="secondary"
+                                    className="h-4 px-1.5 text-xs bg-red-100 text-red-700 hover:bg-red-200 border-0 font-bold flex-shrink-0"
+                                  >
                                   {subItem.badge}
                                 </Badge>
                               )}
@@ -192,7 +192,7 @@ export function AppSidebar({ user, schools = [], ...props }: AppSidebarProps) {
                         >
                           <Badge
                             variant="secondary"
-                            className="h-5 px-2 text-xs bg-gradient-to-r from-primary to-primary/90 text-white border-0 font-medium"
+                            className="h-5 px-2 text-xs bg-red-100 text-red-700 group-data-[active=true]:bg-white group-data-[active=true]:text-red-700 hover:bg-red-200 border-0 font-bold shadow-none"
                           >
                             {item.badge}
                           </Badge>

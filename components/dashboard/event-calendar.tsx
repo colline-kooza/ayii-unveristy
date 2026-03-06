@@ -55,7 +55,7 @@ export function EventCalendar() {
   }
 
   const events = [
-    { id: 1, title: "Staff Meeting", time: "09:00 AM", color: "bg-blue-500" },
+    { id: 1, title: "Staff Meeting", time: "09:00 AM", color: "bg-red-500" },
     { id: 2, title: "Parents Day", time: "02:00 PM", color: "bg-orange-500" },
     { id: 3, title: "Exam Prep", time: "10:30 AM", color: "bg-green-500" },
   ];

@@ -41,15 +41,15 @@ const programs = [
 export default function AcademicPrograms() {
   return (
     <section className="py-24 lg:py-32 bg-white overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-3xl -mr-64 -mt-64" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-50/50 rounded-full blur-3xl -ml-64 -mb-64" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-50/50 rounded-full blur-3xl -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-red-50/50 rounded-full blur-3xl -ml-64 -mb-64" />
 
       <div className="container mx-auto px-6 lg:px-24 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <Badge className="mb-6 bg-[#283593]/5 text-[#283593] border-0 text-[10px] font-black uppercase tracking-[0.3em] px-6 py-2 rounded-full">
             Institutional Programs
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-gray-900 mb-5 leading-tight">
+          <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-black mb-5 leading-tight">
             Premier Academic <br />
             <span className="text-[#283593]">Excellence</span>
           </h2>
@@ -61,7 +61,7 @@ export default function AcademicPrograms() {
         <div className="grid lg:grid-cols-3 gap-8">
           {programs.map((program, idx) => (
             <div key={idx} className="group relative h-[500px]">
-               <div className="absolute inset-0 bg-gray-900 rounded-[3rem] overflow-hidden">
+               <div className="absolute inset-0 bg-black rounded-[3rem] overflow-hidden">
                  <img 
                    src={program.image}
                    alt={program.title}
@@ -102,7 +102,7 @@ export default function AcademicPrograms() {
 
         <div className="mt-20 text-center">
            <Link href="/courses">
-              <Button className="h-16 px-12 bg-gray-900 hover:bg-[#283593] text-white rounded-[1.5rem] shadow-2xl shadow-gray-300 transition-all hover:scale-105 active:scale-95 gap-3 text-[12px] font-black uppercase tracking-[0.2em]">
+              <Button className="h-16 px-12 bg-black hover:bg-[#283593] text-white rounded-[1.5rem] shadow-2xl shadow-gray-300 transition-all hover:scale-105 active:scale-95 gap-3 text-[12px] font-black uppercase tracking-[0.2em]">
                  Explore Full Catalog <ChevronRight className="h-5 w-5" />
               </Button>
            </Link>

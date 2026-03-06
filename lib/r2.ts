@@ -22,7 +22,6 @@ export type R2Folder =
   | "submissions"
   | "past-papers"
   | "journals"
-  | "newspapers"
   | "avatars";
 
 export function generateR2Key(folder: R2Folder, filename: string): string {

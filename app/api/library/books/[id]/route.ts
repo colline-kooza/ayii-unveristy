@@ -6,11 +6,11 @@ import { z } from "zod";
 
 const updateBookSchema = z.object({
   title: z.string().min(1).optional(),
-  author: z.string().min(1).optional(),
+  publisher: z.string().min(1).optional(),
   category: z.string().min(1).optional(),
   description: z.string().optional(),
   coverImage: z.string().optional(),
-  fileKey: z.string().optional(),
+  link: z.string().url("Must be a valid URL").optional(),
 });
 
 export async function PATCH(

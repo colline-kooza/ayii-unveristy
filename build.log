@@ -1,0 +1,26 @@
+
+> elearning@0.1.0 build G:\PROJECTS\CODELABS-PROJECTS\elearning
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 25.3s
+  Running TypeScript ...
+Failed to compile.
+
+./app/dashboard/lecturer/assignments/page.tsx:82:42
+Type error: Argument of type '{ courseId: string; id: string; }' is not assignable to parameter of type '{ courseId: string; assignmentId: string; }'.
+  Property 'assignmentId' is missing in type '{ courseId: string; id: string; }' but required in type '{ courseId: string; assignmentId: string; }'.
+
+[0m [90m 80 |[39m   [36mconst[39m confirmDelete [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 81 |[39m     [36mif[39m (assignmentToDelete) {
+[31m[1m>[22m[39m[90m 82 |[39m       [36mawait[39m deleteAssignment[33m.[39mmutateAsync(assignmentToDelete)[33m;[39m
+ [90m    |[39m                                          [31m[1m^[22m[39m
+ [90m 83 |[39m       setDeleteModalOpen([36mfalse[39m)[33m;[39m
+ [90m 84 |[39m       setAssignmentToDelete([36mnull[39m)[33m;[39m
+ [90m 85 |[39m     }[0m
+Next.js build worker exited with code: 1 and signal: null
+ ELIFECYCLE  Command failed with exit code 1.

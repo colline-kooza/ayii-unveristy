@@ -177,14 +177,14 @@ const Categories: React.FC = () => {
         {/* Search and Filter Controls */}
         <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-center">
           <div className="relative w-full md:w-96 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#8B1538] transition-colors" />
             <input
               type="text"
               placeholder="Search categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               disabled={isLoading}
-              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-50 focus:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-rose-50 focus:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div className="flex gap-3 w-full md:w-auto">
@@ -241,7 +241,7 @@ const Categories: React.FC = () => {
                               }}
                             />
                           </div>
-                          <span className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                          <span className="font-bold text-slate-900 group-hover:text-[#8B1538] transition-colors">
                             {cat.name}
                           </span>
                         </div>
@@ -270,7 +270,7 @@ const Categories: React.FC = () => {
                       </td>
                       <td className="px-8 py-5 text-right">
                         <div className="flex justify-end gap-1">
-                          <button className="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-white rounded-xl transition-all shadow-sm hover:shadow-md border border-transparent hover:border-slate-100">
+                          <button className="p-2.5 text-slate-400 hover:text-[#8B1538] hover:bg-white rounded-xl transition-all shadow-sm hover:shadow-md border border-transparent hover:border-slate-100">
                             <Edit className="w-4 h-4" />
                           </button>
                           <DeleteCategoryButton
@@ -309,7 +309,7 @@ const Categories: React.FC = () => {
               <button
                 disabled={page === 1}
                 onClick={() => setPage((p) => p - 1)}
-                className="p-2 text-slate-400 hover:text-indigo-600 disabled:opacity-30 transition-all disabled:cursor-not-allowed"
+                className="p-2 text-slate-400 hover:text-[#8B1538] disabled:opacity-30 transition-all disabled:cursor-not-allowed"
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -324,7 +324,7 @@ const Categories: React.FC = () => {
                     onClick={() => setPage(i + 1)}
                     className={`w-8 h-8 rounded-xl text-xs font-black transition-all ${
                       page === i + 1
-                        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-100"
+                        ? "bg-[#8B1538] text-white shadow-lg shadow-rose-100"
                         : "text-slate-500 hover:bg-slate-200"
                     }`}
                   >
@@ -341,7 +341,7 @@ const Categories: React.FC = () => {
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage((p) => p + 1)}
-                className="p-2 text-slate-400 hover:text-indigo-600 disabled:opacity-30 transition-all disabled:cursor-not-allowed"
+                className="p-2 text-slate-400 hover:text-[#8B1538] disabled:opacity-30 transition-all disabled:cursor-not-allowed"
                 aria-label="Next page"
               >
                 <ChevronRight className="w-5 h-5" />

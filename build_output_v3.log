@@ -1,0 +1,108 @@
+
+> elearning@0.1.0 build G:\PROJECTS\CODELABS-PROJECTS\elearning
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 24.4s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/39) ...
+  Generating static pages using 7 workers (9/39) 
+  Generating static pages using 7 workers (19/39) 
+  Generating static pages using 7 workers (29/39) 
+✓ Generating static pages using 7 workers (39/39) in 1065.6ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/admin/lecturers
+├ ƒ /api/admin/lecturers/[id]
+├ ƒ /api/admin/stats
+├ ƒ /api/admin/students
+├ ƒ /api/admin/students/[id]
+├ ƒ /api/admin/students/[id]/status
+├ ƒ /api/admin/students/bulk
+├ ƒ /api/admissions
+├ ƒ /api/admissions/[id]/review
+├ ƒ /api/assignments/[assignmentId]/submit
+├ ƒ /api/auth/[...all]
+├ ƒ /api/courses
+├ ƒ /api/courses/[courseId]/enroll
+├ ƒ /api/courses/public
+├ ƒ /api/lecturer/assignments/[assignmentId]/submissions
+├ ƒ /api/lecturer/courses
+├ ƒ /api/lecturer/courses/[courseId]
+├ ƒ /api/lecturer/courses/[courseId]/assignments
+├ ƒ /api/lecturer/courses/[courseId]/assignments/[assignmentId]
+├ ƒ /api/lecturer/submissions/[submissionId]/grade
+├ ƒ /api/lectures
+├ ƒ /api/lectures/[id]/status
+├ ƒ /api/library/books
+├ ƒ /api/library/books/[id]
+├ ƒ /api/library/journals
+├ ƒ /api/library/journals/[id]
+├ ƒ /api/library/past-papers
+├ ƒ /api/library/past-papers/[id]
+├ ƒ /api/messages
+├ ƒ /api/messages/conversations
+├ ƒ /api/messages/conversations/[partnerId]
+├ ƒ /api/notifications
+├ ƒ /api/notifications/read-all
+├ ƒ /api/r2/delete
+├ ƒ /api/r2/upload
+├ ƒ /api/s3/delete
+├ ƒ /api/s3/upload
+├ ƒ /api/students/submissions
+├ ƒ /api/upload/download
+├ ƒ /api/upload/presign
+├ ƒ /api/users/me
+├ ƒ /api/users/me/password
+├ ƒ /api/users/search
+├ ƒ /apply/[courseId]
+├ ○ /auth/change-password
+├ ○ /auth/forgot-password
+├ ○ /auth/profile
+├ ○ /auth/reset-password
+├ ○ /auth/sign-in
+├ ○ /auth/verify-email
+├ ○ /categories
+├ ○ /courses
+├ ƒ /dashboard
+├ ƒ /dashboard/admin/admissions
+├ ƒ /dashboard/admin/content
+├ ƒ /dashboard/admin/courses
+├ ƒ /dashboard/admin/overview
+├ ƒ /dashboard/admin/uploads
+├ ƒ /dashboard/admin/users/lecturers
+├ ƒ /dashboard/admin/users/students
+├ ƒ /dashboard/lecturer
+├ ƒ /dashboard/lecturer/assignments
+├ ƒ /dashboard/lecturer/live-classes
+├ ƒ /dashboard/lecturer/my-courses
+├ ƒ /dashboard/lecturer/submissions
+├ ƒ /dashboard/library
+├ ƒ /dashboard/library/books
+├ ƒ /dashboard/library/journals
+├ ƒ /dashboard/library/past-papers
+├ ƒ /dashboard/messages
+├ ƒ /dashboard/notifications
+├ ƒ /dashboard/profile
+├ ƒ /dashboard/settings
+├ ƒ /dashboard/student
+├ ƒ /dashboard/student/courses
+├ ƒ /dashboard/student/live-classes
+├ ƒ /dashboard/student/submissions
+├ ○ /file-storage
+└ ƒ /profile
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

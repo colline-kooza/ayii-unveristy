@@ -8,28 +8,28 @@ export default function LearningFeatures() {
       title: "Resources",
       description:
         "Access past papers, lecture notes, and videos tailored for your specific course units.",
-      color: "bg-blue-50 text-[#283593]",
+      color: "bg-rose-50 text-[#8B1538]",
     },
     {
       icon: MessageSquare,
       title: "Q&A Forum",
       description:
         "Ask questions and get verified answers from your peers and lecturers across departments.",
-      color: "bg-orange-50 text-[#F4A800]",
+      color: "bg-orange-50 text-[#C41E3A]",
     },
     {
       icon: Brain,
       title: "Quizzes",
       description:
         "Test your knowledge with unit-specific quizzes designed by lecturers to help you prepare.",
-      color: "bg-blue-50 text-[#283593]",
+      color: "bg-rose-50 text-[#8B1538]",
     },
     {
       icon: Bell,
       title: "Announcements",
       description:
         "Stay updated with important campus events, course changes, and university news.",
-      color: "bg-purple-50 text-purple-600",
+      color: "bg-rose-50 text-[#8B1538]",
     },
   ];
 

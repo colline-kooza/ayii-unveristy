@@ -30,7 +30,7 @@ export function QueryErrorDisplay({
             />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+        <h3 className="text-xl font-semibold text-black mb-2">{title}</h3>
         <p className="text-gray-600 mb-4">
           {error.message || "Failed to load data. Please try again."}
         </p>

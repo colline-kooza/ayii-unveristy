@@ -10,11 +10,9 @@ import {
   FileText, 
   ShieldCheck,
   Loader2,
-  Upload,
-  AlertCircle,
+    AlertCircle,
   Sparkles,
-  Search,
-  ChevronRight
+  
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,7 +151,7 @@ export default function ApplicationFormPage() {
       
       <main className="pb-32">
         {/* Dynamic Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 pt-32 pb-48 text-white">
+        <section className="relative overflow-hidden bg-gradient-to-b from-black via-black to-gray-950 pt-32 pb-48 text-white">
           <div className="absolute inset-0 opacity-20 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
           <div className="container relative z-10 mx-auto px-6 lg:px-12 text-center">
             <motion.div
@@ -166,7 +164,7 @@ export default function ApplicationFormPage() {
               </Badge>
               <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-8 leading-[0.9]">
                 Initiate Your <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary/80 animate-gradient-x">Academic Ascent</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-400 to-primary/80 animate-gradient-x">Academic Ascent</span>
               </h1>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-2xl">
@@ -211,7 +209,7 @@ export default function ApplicationFormPage() {
                   <div className="text-center">
                     <p className={cn(
                       "text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-500",
-                      idx === currentStep ? "text-gray-900" : "text-gray-400"
+                      idx === currentStep ? "text-black" : "text-gray-400"
                     )}>
                       {step.title}
                     </p>
@@ -239,7 +237,7 @@ export default function ApplicationFormPage() {
                           <User className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <h2 className="text-2xl font-black text-gray-900 tracking-tight">Identity Synthesis</h2>
+                          <h2 className="text-2xl font-black text-black tracking-tight">Identity Synthesis</h2>
                           <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Digital Registry Protocol</p>
                         </div>
                       </div>
@@ -295,7 +293,7 @@ export default function ApplicationFormPage() {
                           <BookOpen className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <h2 className="text-2xl font-black text-gray-900 tracking-tight">Academic Base</h2>
+                          <h2 className="text-2xl font-black text-black tracking-tight">Academic Base</h2>
                           <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Heritage Qualification Verification</p>
                         </div>
                       </div>
@@ -351,7 +349,7 @@ export default function ApplicationFormPage() {
                           <FileText className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <h2 className="text-2xl font-black text-gray-900 tracking-tight">Institutional Artifacts</h2>
+                          <h2 className="text-2xl font-black text-black tracking-tight">Institutional Artifacts</h2>
                           <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Document Shield Synchronization</p>
                         </div>
                       </div>
@@ -414,7 +412,7 @@ export default function ApplicationFormPage() {
                          <motion.div 
                            initial={{ scale: 0 }}
                            animate={{ scale: 1 }}
-                           className="mx-auto h-24 w-24 rounded-[2rem] bg-gray-900 flex items-center justify-center mb-8 shadow-2xl shadow-gray-400/40"
+                           className="mx-auto h-24 w-24 rounded-[2rem] bg-black flex items-center justify-center mb-8 shadow-2xl shadow-gray-400/40"
                          >
                            <ShieldCheck className="h-10 w-10 text-white" />
                          </motion.div>
@@ -426,7 +424,7 @@ export default function ApplicationFormPage() {
                       </div>
                       
                       <div>
-                        <h2 className="text-3xl font-black text-gray-900 mb-3 tracking-tighter">Final Synthesis Audit</h2>
+                        <h2 className="text-3xl font-black text-black mb-3 tracking-tighter">Final Synthesis Audit</h2>
                         <p className="text-[13px] font-bold text-gray-400 uppercase tracking-widest max-w-md mx-auto">
                           Perform a rigorous audit of your parameters before institutional synchronization.
                         </p>
@@ -435,11 +433,11 @@ export default function ApplicationFormPage() {
                       <div className="grid gap-6 max-w-xl mx-auto text-left p-10 bg-gray-50/50 rounded-[2.5rem] border border-gray-100">
                         <div className="flex justify-between items-center group cursor-default">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-primary transition-colors">Digital Identity</span>
-                          <span className="text-[13px] font-black text-gray-900 uppercase">{formData.fullName}</span>
+                          <span className="text-[13px] font-black text-black uppercase">{formData.fullName}</span>
                         </div>
                         <div className="flex justify-between items-center group cursor-default">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-primary transition-colors">Communication Route</span>
-                          <span className="text-[13px] font-black text-gray-900">{formData.email}</span>
+                          <span className="text-[13px] font-black text-black">{formData.email}</span>
                         </div>
                         <div className="flex justify-between items-center group cursor-default">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-primary transition-colors">Institutional Choice</span>
@@ -460,7 +458,7 @@ export default function ApplicationFormPage() {
                       variant="ghost" 
                       onClick={handleBack}
                       disabled={currentStep === 0 || loading}
-                      className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 gap-3 h-14 px-10 rounded-2xl transition-all hover:bg-gray-50"
+                      className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-black gap-3 h-14 px-10 rounded-2xl transition-all hover:bg-gray-50"
                     >
                       <ArrowLeft className="h-4 w-4" /> Previous Protocol
                     </Button>
@@ -468,7 +466,7 @@ export default function ApplicationFormPage() {
                     {currentStep < steps.length - 1 ? (
                       <Button 
                         onClick={handleNext}
-                        className="bg-gray-900 hover:bg-primary text-white text-[11px] font-black uppercase tracking-[0.2em] gap-3 h-14 px-12 rounded-2xl shadow-xl shadow-gray-200 transition-all hover:scale-[1.02] active:scale-95 group"
+                        className="bg-black hover:bg-primary text-white text-[11px] font-black uppercase tracking-[0.2em] gap-3 h-14 px-12 rounded-2xl shadow-xl shadow-gray-200 transition-all hover:scale-[1.02] active:scale-95 group"
                       >
                         Advance Component <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Button>

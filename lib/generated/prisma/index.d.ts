@@ -79,11 +79,6 @@ export type PastPaper = $Result.DefaultSelection<Prisma.$PastPaperPayload>
  */
 export type Journal = $Result.DefaultSelection<Prisma.$JournalPayload>
 /**
- * Model Newspaper
- * 
- */
-export type Newspaper = $Result.DefaultSelection<Prisma.$NewspaperPayload>
-/**
  * Model Book
  * 
  */
@@ -447,16 +442,6 @@ export class PrismaClient<
     * ```
     */
   get journal(): Prisma.JournalDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.newspaper`: Exposes CRUD operations for the **Newspaper** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Newspapers
-    * const newspapers = await prisma.newspaper.findMany()
-    * ```
-    */
-  get newspaper(): Prisma.NewspaperDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.book`: Exposes CRUD operations for the **Book** model.
@@ -934,7 +919,6 @@ export namespace Prisma {
     Notification: 'Notification',
     PastPaper: 'PastPaper',
     Journal: 'Journal',
-    Newspaper: 'Newspaper',
     Book: 'Book',
     AuditLog: 'AuditLog',
     AdmissionApplication: 'AdmissionApplication'
@@ -953,7 +937,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "course" | "enrollment" | "assignment" | "submission" | "liveLecture" | "message" | "notification" | "pastPaper" | "journal" | "newspaper" | "book" | "auditLog" | "admissionApplication"
+      modelProps: "user" | "session" | "account" | "verification" | "course" | "enrollment" | "assignment" | "submission" | "liveLecture" | "message" | "notification" | "pastPaper" | "journal" | "book" | "auditLog" | "admissionApplication"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1919,80 +1903,6 @@ export namespace Prisma {
           }
         }
       }
-      Newspaper: {
-        payload: Prisma.$NewspaperPayload<ExtArgs>
-        fields: Prisma.NewspaperFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.NewspaperFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.NewspaperFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          findFirst: {
-            args: Prisma.NewspaperFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.NewspaperFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          findMany: {
-            args: Prisma.NewspaperFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>[]
-          }
-          create: {
-            args: Prisma.NewspaperCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          createMany: {
-            args: Prisma.NewspaperCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.NewspaperCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>[]
-          }
-          delete: {
-            args: Prisma.NewspaperDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          update: {
-            args: Prisma.NewspaperUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          deleteMany: {
-            args: Prisma.NewspaperDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.NewspaperUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.NewspaperUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>[]
-          }
-          upsert: {
-            args: Prisma.NewspaperUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NewspaperPayload>
-          }
-          aggregate: {
-            args: Prisma.NewspaperAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateNewspaper>
-          }
-          groupBy: {
-            args: Prisma.NewspaperGroupByArgs<ExtArgs>
-            result: $Utils.Optional<NewspaperGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.NewspaperCountArgs<ExtArgs>
-            result: $Utils.Optional<NewspaperCountAggregateOutputType> | number
-          }
-        }
-      }
       Book: {
         payload: Prisma.$BookPayload<ExtArgs>
         fields: Prisma.BookFieldRefs
@@ -2336,7 +2246,6 @@ export namespace Prisma {
     notification?: NotificationOmit
     pastPaper?: PastPaperOmit
     journal?: JournalOmit
-    newspaper?: NewspaperOmit
     book?: BookOmit
     auditLog?: AuditLogOmit
     admissionApplication?: AdmissionApplicationOmit
@@ -2432,7 +2341,6 @@ export namespace Prisma {
     notifications: number
     uploadedPapers: number
     submittedJournals: number
-    uploadedNewspapers: number
     uploadedBooks: number
     auditLogs: number
     auditTargets: number
@@ -2451,7 +2359,6 @@ export namespace Prisma {
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
     uploadedPapers?: boolean | UserCountOutputTypeCountUploadedPapersArgs
     submittedJournals?: boolean | UserCountOutputTypeCountSubmittedJournalsArgs
-    uploadedNewspapers?: boolean | UserCountOutputTypeCountUploadedNewspapersArgs
     uploadedBooks?: boolean | UserCountOutputTypeCountUploadedBooksArgs
     auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
     auditTargets?: boolean | UserCountOutputTypeCountAuditTargetsArgs
@@ -2550,13 +2457,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSubmittedJournalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: JournalWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountUploadedNewspapersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NewspaperWhereInput
   }
 
   /**
@@ -2938,7 +2838,6 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     uploadedPapers?: boolean | User$uploadedPapersArgs<ExtArgs>
     submittedJournals?: boolean | User$submittedJournalsArgs<ExtArgs>
-    uploadedNewspapers?: boolean | User$uploadedNewspapersArgs<ExtArgs>
     uploadedBooks?: boolean | User$uploadedBooksArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
     auditTargets?: boolean | User$auditTargetsArgs<ExtArgs>
@@ -3016,7 +2915,6 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     uploadedPapers?: boolean | User$uploadedPapersArgs<ExtArgs>
     submittedJournals?: boolean | User$submittedJournalsArgs<ExtArgs>
-    uploadedNewspapers?: boolean | User$uploadedNewspapersArgs<ExtArgs>
     uploadedBooks?: boolean | User$uploadedBooksArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
     auditTargets?: boolean | User$auditTargetsArgs<ExtArgs>
@@ -3040,7 +2938,6 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       uploadedPapers: Prisma.$PastPaperPayload<ExtArgs>[]
       submittedJournals: Prisma.$JournalPayload<ExtArgs>[]
-      uploadedNewspapers: Prisma.$NewspaperPayload<ExtArgs>[]
       uploadedBooks: Prisma.$BookPayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
       auditTargets: Prisma.$AuditLogPayload<ExtArgs>[]
@@ -3468,7 +3365,6 @@ export namespace Prisma {
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     uploadedPapers<T extends User$uploadedPapersArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedPapersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PastPaperPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submittedJournals<T extends User$submittedJournalsArgs<ExtArgs> = {}>(args?: Subset<T, User$submittedJournalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JournalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    uploadedNewspapers<T extends User$uploadedNewspapersArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedNewspapersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     uploadedBooks<T extends User$uploadedBooksArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedBooksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditLogs<T extends User$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditTargets<T extends User$auditTargetsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditTargetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4190,30 +4086,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: JournalScalarFieldEnum | JournalScalarFieldEnum[]
-  }
-
-  /**
-   * User.uploadedNewspapers
-   */
-  export type User$uploadedNewspapersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    where?: NewspaperWhereInput
-    orderBy?: NewspaperOrderByWithRelationInput | NewspaperOrderByWithRelationInput[]
-    cursor?: NewspaperWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NewspaperScalarFieldEnum | NewspaperScalarFieldEnum[]
   }
 
   /**
@@ -16500,6 +16372,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     abstract: string | null
+    doi: string | null
     fileKey: string | null
     submittedById: string | null
     status: $Enums.JournalStatus | null
@@ -16513,6 +16386,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     abstract: string | null
+    doi: string | null
     fileKey: string | null
     submittedById: string | null
     status: $Enums.JournalStatus | null
@@ -16527,6 +16401,7 @@ export namespace Prisma {
     title: number
     abstract: number
     authors: number
+    doi: number
     fileKey: number
     submittedById: number
     status: number
@@ -16542,6 +16417,7 @@ export namespace Prisma {
     id?: true
     title?: true
     abstract?: true
+    doi?: true
     fileKey?: true
     submittedById?: true
     status?: true
@@ -16555,6 +16431,7 @@ export namespace Prisma {
     id?: true
     title?: true
     abstract?: true
+    doi?: true
     fileKey?: true
     submittedById?: true
     status?: true
@@ -16569,6 +16446,7 @@ export namespace Prisma {
     title?: true
     abstract?: true
     authors?: true
+    doi?: true
     fileKey?: true
     submittedById?: true
     status?: true
@@ -16656,6 +16534,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors: string[]
+    doi: string | null
     fileKey: string
     submittedById: string
     status: $Enums.JournalStatus
@@ -16687,6 +16566,7 @@ export namespace Prisma {
     title?: boolean
     abstract?: boolean
     authors?: boolean
+    doi?: boolean
     fileKey?: boolean
     submittedById?: boolean
     status?: boolean
@@ -16702,6 +16582,7 @@ export namespace Prisma {
     title?: boolean
     abstract?: boolean
     authors?: boolean
+    doi?: boolean
     fileKey?: boolean
     submittedById?: boolean
     status?: boolean
@@ -16717,6 +16598,7 @@ export namespace Prisma {
     title?: boolean
     abstract?: boolean
     authors?: boolean
+    doi?: boolean
     fileKey?: boolean
     submittedById?: boolean
     status?: boolean
@@ -16732,6 +16614,7 @@ export namespace Prisma {
     title?: boolean
     abstract?: boolean
     authors?: boolean
+    doi?: boolean
     fileKey?: boolean
     submittedById?: boolean
     status?: boolean
@@ -16741,7 +16624,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type JournalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "abstract" | "authors" | "fileKey" | "submittedById" | "status" | "rejectionReason" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["journal"]>
+  export type JournalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "abstract" | "authors" | "doi" | "fileKey" | "submittedById" | "status" | "rejectionReason" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["journal"]>
   export type JournalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     submittedBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -16762,6 +16645,7 @@ export namespace Prisma {
       title: string
       abstract: string
       authors: string[]
+      doi: string | null
       fileKey: string
       submittedById: string
       status: $Enums.JournalStatus
@@ -17197,6 +17081,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Journal", 'String'>
     readonly abstract: FieldRef<"Journal", 'String'>
     readonly authors: FieldRef<"Journal", 'String[]'>
+    readonly doi: FieldRef<"Journal", 'String'>
     readonly fileKey: FieldRef<"Journal", 'String'>
     readonly submittedById: FieldRef<"Journal", 'String'>
     readonly status: FieldRef<"Journal", 'JournalStatus'>
@@ -17619,1090 +17504,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Newspaper
-   */
-
-  export type AggregateNewspaper = {
-    _count: NewspaperCountAggregateOutputType | null
-    _min: NewspaperMinAggregateOutputType | null
-    _max: NewspaperMaxAggregateOutputType | null
-  }
-
-  export type NewspaperMinAggregateOutputType = {
-    id: string | null
-    headline: string | null
-    edition: string | null
-    publishedDate: Date | null
-    fileKey: string | null
-    uploadedById: string | null
-    createdAt: Date | null
-  }
-
-  export type NewspaperMaxAggregateOutputType = {
-    id: string | null
-    headline: string | null
-    edition: string | null
-    publishedDate: Date | null
-    fileKey: string | null
-    uploadedById: string | null
-    createdAt: Date | null
-  }
-
-  export type NewspaperCountAggregateOutputType = {
-    id: number
-    headline: number
-    edition: number
-    publishedDate: number
-    fileKey: number
-    uploadedById: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type NewspaperMinAggregateInputType = {
-    id?: true
-    headline?: true
-    edition?: true
-    publishedDate?: true
-    fileKey?: true
-    uploadedById?: true
-    createdAt?: true
-  }
-
-  export type NewspaperMaxAggregateInputType = {
-    id?: true
-    headline?: true
-    edition?: true
-    publishedDate?: true
-    fileKey?: true
-    uploadedById?: true
-    createdAt?: true
-  }
-
-  export type NewspaperCountAggregateInputType = {
-    id?: true
-    headline?: true
-    edition?: true
-    publishedDate?: true
-    fileKey?: true
-    uploadedById?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type NewspaperAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Newspaper to aggregate.
-     */
-    where?: NewspaperWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Newspapers to fetch.
-     */
-    orderBy?: NewspaperOrderByWithRelationInput | NewspaperOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: NewspaperWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Newspapers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Newspapers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Newspapers
-    **/
-    _count?: true | NewspaperCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: NewspaperMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: NewspaperMaxAggregateInputType
-  }
-
-  export type GetNewspaperAggregateType<T extends NewspaperAggregateArgs> = {
-        [P in keyof T & keyof AggregateNewspaper]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateNewspaper[P]>
-      : GetScalarType<T[P], AggregateNewspaper[P]>
-  }
-
-
-
-
-  export type NewspaperGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NewspaperWhereInput
-    orderBy?: NewspaperOrderByWithAggregationInput | NewspaperOrderByWithAggregationInput[]
-    by: NewspaperScalarFieldEnum[] | NewspaperScalarFieldEnum
-    having?: NewspaperScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: NewspaperCountAggregateInputType | true
-    _min?: NewspaperMinAggregateInputType
-    _max?: NewspaperMaxAggregateInputType
-  }
-
-  export type NewspaperGroupByOutputType = {
-    id: string
-    headline: string
-    edition: string
-    publishedDate: Date
-    fileKey: string
-    uploadedById: string
-    createdAt: Date
-    _count: NewspaperCountAggregateOutputType | null
-    _min: NewspaperMinAggregateOutputType | null
-    _max: NewspaperMaxAggregateOutputType | null
-  }
-
-  type GetNewspaperGroupByPayload<T extends NewspaperGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<NewspaperGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof NewspaperGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], NewspaperGroupByOutputType[P]>
-            : GetScalarType<T[P], NewspaperGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type NewspaperSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    headline?: boolean
-    edition?: boolean
-    publishedDate?: boolean
-    fileKey?: boolean
-    uploadedById?: boolean
-    createdAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["newspaper"]>
-
-  export type NewspaperSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    headline?: boolean
-    edition?: boolean
-    publishedDate?: boolean
-    fileKey?: boolean
-    uploadedById?: boolean
-    createdAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["newspaper"]>
-
-  export type NewspaperSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    headline?: boolean
-    edition?: boolean
-    publishedDate?: boolean
-    fileKey?: boolean
-    uploadedById?: boolean
-    createdAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["newspaper"]>
-
-  export type NewspaperSelectScalar = {
-    id?: boolean
-    headline?: boolean
-    edition?: boolean
-    publishedDate?: boolean
-    fileKey?: boolean
-    uploadedById?: boolean
-    createdAt?: boolean
-  }
-
-  export type NewspaperOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "headline" | "edition" | "publishedDate" | "fileKey" | "uploadedById" | "createdAt", ExtArgs["result"]["newspaper"]>
-  export type NewspaperInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type NewspaperIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type NewspaperIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $NewspaperPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Newspaper"
-    objects: {
-      uploadedBy: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      headline: string
-      edition: string
-      publishedDate: Date
-      fileKey: string
-      uploadedById: string
-      createdAt: Date
-    }, ExtArgs["result"]["newspaper"]>
-    composites: {}
-  }
-
-  type NewspaperGetPayload<S extends boolean | null | undefined | NewspaperDefaultArgs> = $Result.GetResult<Prisma.$NewspaperPayload, S>
-
-  type NewspaperCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<NewspaperFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: NewspaperCountAggregateInputType | true
-    }
-
-  export interface NewspaperDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Newspaper'], meta: { name: 'Newspaper' } }
-    /**
-     * Find zero or one Newspaper that matches the filter.
-     * @param {NewspaperFindUniqueArgs} args - Arguments to find a Newspaper
-     * @example
-     * // Get one Newspaper
-     * const newspaper = await prisma.newspaper.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends NewspaperFindUniqueArgs>(args: SelectSubset<T, NewspaperFindUniqueArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Newspaper that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {NewspaperFindUniqueOrThrowArgs} args - Arguments to find a Newspaper
-     * @example
-     * // Get one Newspaper
-     * const newspaper = await prisma.newspaper.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends NewspaperFindUniqueOrThrowArgs>(args: SelectSubset<T, NewspaperFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Newspaper that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperFindFirstArgs} args - Arguments to find a Newspaper
-     * @example
-     * // Get one Newspaper
-     * const newspaper = await prisma.newspaper.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends NewspaperFindFirstArgs>(args?: SelectSubset<T, NewspaperFindFirstArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Newspaper that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperFindFirstOrThrowArgs} args - Arguments to find a Newspaper
-     * @example
-     * // Get one Newspaper
-     * const newspaper = await prisma.newspaper.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends NewspaperFindFirstOrThrowArgs>(args?: SelectSubset<T, NewspaperFindFirstOrThrowArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Newspapers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Newspapers
-     * const newspapers = await prisma.newspaper.findMany()
-     * 
-     * // Get first 10 Newspapers
-     * const newspapers = await prisma.newspaper.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const newspaperWithIdOnly = await prisma.newspaper.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends NewspaperFindManyArgs>(args?: SelectSubset<T, NewspaperFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Newspaper.
-     * @param {NewspaperCreateArgs} args - Arguments to create a Newspaper.
-     * @example
-     * // Create one Newspaper
-     * const Newspaper = await prisma.newspaper.create({
-     *   data: {
-     *     // ... data to create a Newspaper
-     *   }
-     * })
-     * 
-     */
-    create<T extends NewspaperCreateArgs>(args: SelectSubset<T, NewspaperCreateArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Newspapers.
-     * @param {NewspaperCreateManyArgs} args - Arguments to create many Newspapers.
-     * @example
-     * // Create many Newspapers
-     * const newspaper = await prisma.newspaper.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends NewspaperCreateManyArgs>(args?: SelectSubset<T, NewspaperCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Newspapers and returns the data saved in the database.
-     * @param {NewspaperCreateManyAndReturnArgs} args - Arguments to create many Newspapers.
-     * @example
-     * // Create many Newspapers
-     * const newspaper = await prisma.newspaper.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Newspapers and only return the `id`
-     * const newspaperWithIdOnly = await prisma.newspaper.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends NewspaperCreateManyAndReturnArgs>(args?: SelectSubset<T, NewspaperCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Newspaper.
-     * @param {NewspaperDeleteArgs} args - Arguments to delete one Newspaper.
-     * @example
-     * // Delete one Newspaper
-     * const Newspaper = await prisma.newspaper.delete({
-     *   where: {
-     *     // ... filter to delete one Newspaper
-     *   }
-     * })
-     * 
-     */
-    delete<T extends NewspaperDeleteArgs>(args: SelectSubset<T, NewspaperDeleteArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Newspaper.
-     * @param {NewspaperUpdateArgs} args - Arguments to update one Newspaper.
-     * @example
-     * // Update one Newspaper
-     * const newspaper = await prisma.newspaper.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends NewspaperUpdateArgs>(args: SelectSubset<T, NewspaperUpdateArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Newspapers.
-     * @param {NewspaperDeleteManyArgs} args - Arguments to filter Newspapers to delete.
-     * @example
-     * // Delete a few Newspapers
-     * const { count } = await prisma.newspaper.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends NewspaperDeleteManyArgs>(args?: SelectSubset<T, NewspaperDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Newspapers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Newspapers
-     * const newspaper = await prisma.newspaper.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends NewspaperUpdateManyArgs>(args: SelectSubset<T, NewspaperUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Newspapers and returns the data updated in the database.
-     * @param {NewspaperUpdateManyAndReturnArgs} args - Arguments to update many Newspapers.
-     * @example
-     * // Update many Newspapers
-     * const newspaper = await prisma.newspaper.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Newspapers and only return the `id`
-     * const newspaperWithIdOnly = await prisma.newspaper.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends NewspaperUpdateManyAndReturnArgs>(args: SelectSubset<T, NewspaperUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Newspaper.
-     * @param {NewspaperUpsertArgs} args - Arguments to update or create a Newspaper.
-     * @example
-     * // Update or create a Newspaper
-     * const newspaper = await prisma.newspaper.upsert({
-     *   create: {
-     *     // ... data to create a Newspaper
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Newspaper we want to update
-     *   }
-     * })
-     */
-    upsert<T extends NewspaperUpsertArgs>(args: SelectSubset<T, NewspaperUpsertArgs<ExtArgs>>): Prisma__NewspaperClient<$Result.GetResult<Prisma.$NewspaperPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Newspapers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperCountArgs} args - Arguments to filter Newspapers to count.
-     * @example
-     * // Count the number of Newspapers
-     * const count = await prisma.newspaper.count({
-     *   where: {
-     *     // ... the filter for the Newspapers we want to count
-     *   }
-     * })
-    **/
-    count<T extends NewspaperCountArgs>(
-      args?: Subset<T, NewspaperCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], NewspaperCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Newspaper.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends NewspaperAggregateArgs>(args: Subset<T, NewspaperAggregateArgs>): Prisma.PrismaPromise<GetNewspaperAggregateType<T>>
-
-    /**
-     * Group by Newspaper.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NewspaperGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends NewspaperGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: NewspaperGroupByArgs['orderBy'] }
-        : { orderBy?: NewspaperGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, NewspaperGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNewspaperGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Newspaper model
-   */
-  readonly fields: NewspaperFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Newspaper.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__NewspaperClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    uploadedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Newspaper model
-   */
-  interface NewspaperFieldRefs {
-    readonly id: FieldRef<"Newspaper", 'String'>
-    readonly headline: FieldRef<"Newspaper", 'String'>
-    readonly edition: FieldRef<"Newspaper", 'String'>
-    readonly publishedDate: FieldRef<"Newspaper", 'DateTime'>
-    readonly fileKey: FieldRef<"Newspaper", 'String'>
-    readonly uploadedById: FieldRef<"Newspaper", 'String'>
-    readonly createdAt: FieldRef<"Newspaper", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Newspaper findUnique
-   */
-  export type NewspaperFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter, which Newspaper to fetch.
-     */
-    where: NewspaperWhereUniqueInput
-  }
-
-  /**
-   * Newspaper findUniqueOrThrow
-   */
-  export type NewspaperFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter, which Newspaper to fetch.
-     */
-    where: NewspaperWhereUniqueInput
-  }
-
-  /**
-   * Newspaper findFirst
-   */
-  export type NewspaperFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter, which Newspaper to fetch.
-     */
-    where?: NewspaperWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Newspapers to fetch.
-     */
-    orderBy?: NewspaperOrderByWithRelationInput | NewspaperOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Newspapers.
-     */
-    cursor?: NewspaperWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Newspapers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Newspapers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Newspapers.
-     */
-    distinct?: NewspaperScalarFieldEnum | NewspaperScalarFieldEnum[]
-  }
-
-  /**
-   * Newspaper findFirstOrThrow
-   */
-  export type NewspaperFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter, which Newspaper to fetch.
-     */
-    where?: NewspaperWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Newspapers to fetch.
-     */
-    orderBy?: NewspaperOrderByWithRelationInput | NewspaperOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Newspapers.
-     */
-    cursor?: NewspaperWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Newspapers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Newspapers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Newspapers.
-     */
-    distinct?: NewspaperScalarFieldEnum | NewspaperScalarFieldEnum[]
-  }
-
-  /**
-   * Newspaper findMany
-   */
-  export type NewspaperFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter, which Newspapers to fetch.
-     */
-    where?: NewspaperWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Newspapers to fetch.
-     */
-    orderBy?: NewspaperOrderByWithRelationInput | NewspaperOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Newspapers.
-     */
-    cursor?: NewspaperWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Newspapers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Newspapers.
-     */
-    skip?: number
-    distinct?: NewspaperScalarFieldEnum | NewspaperScalarFieldEnum[]
-  }
-
-  /**
-   * Newspaper create
-   */
-  export type NewspaperCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Newspaper.
-     */
-    data: XOR<NewspaperCreateInput, NewspaperUncheckedCreateInput>
-  }
-
-  /**
-   * Newspaper createMany
-   */
-  export type NewspaperCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Newspapers.
-     */
-    data: NewspaperCreateManyInput | NewspaperCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Newspaper createManyAndReturn
-   */
-  export type NewspaperCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * The data used to create many Newspapers.
-     */
-    data: NewspaperCreateManyInput | NewspaperCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Newspaper update
-   */
-  export type NewspaperUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Newspaper.
-     */
-    data: XOR<NewspaperUpdateInput, NewspaperUncheckedUpdateInput>
-    /**
-     * Choose, which Newspaper to update.
-     */
-    where: NewspaperWhereUniqueInput
-  }
-
-  /**
-   * Newspaper updateMany
-   */
-  export type NewspaperUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Newspapers.
-     */
-    data: XOR<NewspaperUpdateManyMutationInput, NewspaperUncheckedUpdateManyInput>
-    /**
-     * Filter which Newspapers to update
-     */
-    where?: NewspaperWhereInput
-    /**
-     * Limit how many Newspapers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Newspaper updateManyAndReturn
-   */
-  export type NewspaperUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * The data used to update Newspapers.
-     */
-    data: XOR<NewspaperUpdateManyMutationInput, NewspaperUncheckedUpdateManyInput>
-    /**
-     * Filter which Newspapers to update
-     */
-    where?: NewspaperWhereInput
-    /**
-     * Limit how many Newspapers to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Newspaper upsert
-   */
-  export type NewspaperUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Newspaper to update in case it exists.
-     */
-    where: NewspaperWhereUniqueInput
-    /**
-     * In case the Newspaper found by the `where` argument doesn't exist, create a new Newspaper with this data.
-     */
-    create: XOR<NewspaperCreateInput, NewspaperUncheckedCreateInput>
-    /**
-     * In case the Newspaper was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<NewspaperUpdateInput, NewspaperUncheckedUpdateInput>
-  }
-
-  /**
-   * Newspaper delete
-   */
-  export type NewspaperDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-    /**
-     * Filter which Newspaper to delete.
-     */
-    where: NewspaperWhereUniqueInput
-  }
-
-  /**
-   * Newspaper deleteMany
-   */
-  export type NewspaperDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Newspapers to delete
-     */
-    where?: NewspaperWhereInput
-    /**
-     * Limit how many Newspapers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Newspaper without action
-   */
-  export type NewspaperDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Newspaper
-     */
-    select?: NewspaperSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Newspaper
-     */
-    omit?: NewspaperOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NewspaperInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Book
    */
 
@@ -18715,11 +17516,11 @@ export namespace Prisma {
   export type BookMinAggregateOutputType = {
     id: string | null
     title: string | null
-    author: string | null
+    publisher: string | null
     category: string | null
     description: string | null
     coverImage: string | null
-    fileKey: string | null
+    link: string | null
     uploadedById: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -18728,11 +17529,11 @@ export namespace Prisma {
   export type BookMaxAggregateOutputType = {
     id: string | null
     title: string | null
-    author: string | null
+    publisher: string | null
     category: string | null
     description: string | null
     coverImage: string | null
-    fileKey: string | null
+    link: string | null
     uploadedById: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -18741,11 +17542,11 @@ export namespace Prisma {
   export type BookCountAggregateOutputType = {
     id: number
     title: number
-    author: number
+    publisher: number
     category: number
     description: number
     coverImage: number
-    fileKey: number
+    link: number
     uploadedById: number
     createdAt: number
     updatedAt: number
@@ -18756,11 +17557,11 @@ export namespace Prisma {
   export type BookMinAggregateInputType = {
     id?: true
     title?: true
-    author?: true
+    publisher?: true
     category?: true
     description?: true
     coverImage?: true
-    fileKey?: true
+    link?: true
     uploadedById?: true
     createdAt?: true
     updatedAt?: true
@@ -18769,11 +17570,11 @@ export namespace Prisma {
   export type BookMaxAggregateInputType = {
     id?: true
     title?: true
-    author?: true
+    publisher?: true
     category?: true
     description?: true
     coverImage?: true
-    fileKey?: true
+    link?: true
     uploadedById?: true
     createdAt?: true
     updatedAt?: true
@@ -18782,11 +17583,11 @@ export namespace Prisma {
   export type BookCountAggregateInputType = {
     id?: true
     title?: true
-    author?: true
+    publisher?: true
     category?: true
     description?: true
     coverImage?: true
-    fileKey?: true
+    link?: true
     uploadedById?: true
     createdAt?: true
     updatedAt?: true
@@ -18868,11 +17669,11 @@ export namespace Prisma {
   export type BookGroupByOutputType = {
     id: string
     title: string
-    author: string
+    publisher: string
     category: string
     description: string | null
     coverImage: string | null
-    fileKey: string
+    link: string
     uploadedById: string
     createdAt: Date
     updatedAt: Date
@@ -18898,11 +17699,11 @@ export namespace Prisma {
   export type BookSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    author?: boolean
+    publisher?: boolean
     category?: boolean
     description?: boolean
     coverImage?: boolean
-    fileKey?: boolean
+    link?: boolean
     uploadedById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -18912,11 +17713,11 @@ export namespace Prisma {
   export type BookSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    author?: boolean
+    publisher?: boolean
     category?: boolean
     description?: boolean
     coverImage?: boolean
-    fileKey?: boolean
+    link?: boolean
     uploadedById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -18926,11 +17727,11 @@ export namespace Prisma {
   export type BookSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    author?: boolean
+    publisher?: boolean
     category?: boolean
     description?: boolean
     coverImage?: boolean
-    fileKey?: boolean
+    link?: boolean
     uploadedById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -18940,17 +17741,17 @@ export namespace Prisma {
   export type BookSelectScalar = {
     id?: boolean
     title?: boolean
-    author?: boolean
+    publisher?: boolean
     category?: boolean
     description?: boolean
     coverImage?: boolean
-    fileKey?: boolean
+    link?: boolean
     uploadedById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "category" | "description" | "coverImage" | "fileKey" | "uploadedById" | "createdAt" | "updatedAt", ExtArgs["result"]["book"]>
+  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "publisher" | "category" | "description" | "coverImage" | "link" | "uploadedById" | "createdAt" | "updatedAt", ExtArgs["result"]["book"]>
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -18969,11 +17770,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      author: string
+      publisher: string
       category: string
       description: string | null
       coverImage: string | null
-      fileKey: string
+      link: string
       uploadedById: string
       createdAt: Date
       updatedAt: Date
@@ -19403,11 +18204,11 @@ export namespace Prisma {
   interface BookFieldRefs {
     readonly id: FieldRef<"Book", 'String'>
     readonly title: FieldRef<"Book", 'String'>
-    readonly author: FieldRef<"Book", 'String'>
+    readonly publisher: FieldRef<"Book", 'String'>
     readonly category: FieldRef<"Book", 'String'>
     readonly description: FieldRef<"Book", 'String'>
     readonly coverImage: FieldRef<"Book", 'String'>
-    readonly fileKey: FieldRef<"Book", 'String'>
+    readonly link: FieldRef<"Book", 'String'>
     readonly uploadedById: FieldRef<"Book", 'String'>
     readonly createdAt: FieldRef<"Book", 'DateTime'>
     readonly updatedAt: FieldRef<"Book", 'DateTime'>
@@ -22265,6 +21066,7 @@ export namespace Prisma {
     title: 'title',
     abstract: 'abstract',
     authors: 'authors',
+    doi: 'doi',
     fileKey: 'fileKey',
     submittedById: 'submittedById',
     status: 'status',
@@ -22277,27 +21079,14 @@ export namespace Prisma {
   export type JournalScalarFieldEnum = (typeof JournalScalarFieldEnum)[keyof typeof JournalScalarFieldEnum]
 
 
-  export const NewspaperScalarFieldEnum: {
-    id: 'id',
-    headline: 'headline',
-    edition: 'edition',
-    publishedDate: 'publishedDate',
-    fileKey: 'fileKey',
-    uploadedById: 'uploadedById',
-    createdAt: 'createdAt'
-  };
-
-  export type NewspaperScalarFieldEnum = (typeof NewspaperScalarFieldEnum)[keyof typeof NewspaperScalarFieldEnum]
-
-
   export const BookScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    author: 'author',
+    publisher: 'publisher',
     category: 'category',
     description: 'description',
     coverImage: 'coverImage',
-    fileKey: 'fileKey',
+    link: 'link',
     uploadedById: 'uploadedById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -22600,7 +21389,6 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     uploadedPapers?: PastPaperListRelationFilter
     submittedJournals?: JournalListRelationFilter
-    uploadedNewspapers?: NewspaperListRelationFilter
     uploadedBooks?: BookListRelationFilter
     auditLogs?: AuditLogListRelationFilter
     auditTargets?: AuditLogListRelationFilter
@@ -22635,7 +21423,6 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     uploadedPapers?: PastPaperOrderByRelationAggregateInput
     submittedJournals?: JournalOrderByRelationAggregateInput
-    uploadedNewspapers?: NewspaperOrderByRelationAggregateInput
     uploadedBooks?: BookOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
     auditTargets?: AuditLogOrderByRelationAggregateInput
@@ -22673,7 +21460,6 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     uploadedPapers?: PastPaperListRelationFilter
     submittedJournals?: JournalListRelationFilter
-    uploadedNewspapers?: NewspaperListRelationFilter
     uploadedBooks?: BookListRelationFilter
     auditLogs?: AuditLogListRelationFilter
     auditTargets?: AuditLogListRelationFilter
@@ -23517,6 +22303,7 @@ export namespace Prisma {
     title?: StringFilter<"Journal"> | string
     abstract?: StringFilter<"Journal"> | string
     authors?: StringNullableListFilter<"Journal">
+    doi?: StringNullableFilter<"Journal"> | string | null
     fileKey?: StringFilter<"Journal"> | string
     submittedById?: StringFilter<"Journal"> | string
     status?: EnumJournalStatusFilter<"Journal"> | $Enums.JournalStatus
@@ -23532,6 +22319,7 @@ export namespace Prisma {
     title?: SortOrder
     abstract?: SortOrder
     authors?: SortOrder
+    doi?: SortOrderInput | SortOrder
     fileKey?: SortOrder
     submittedById?: SortOrder
     status?: SortOrder
@@ -23550,6 +22338,7 @@ export namespace Prisma {
     title?: StringFilter<"Journal"> | string
     abstract?: StringFilter<"Journal"> | string
     authors?: StringNullableListFilter<"Journal">
+    doi?: StringNullableFilter<"Journal"> | string | null
     fileKey?: StringFilter<"Journal"> | string
     submittedById?: StringFilter<"Journal"> | string
     status?: EnumJournalStatusFilter<"Journal"> | $Enums.JournalStatus
@@ -23565,6 +22354,7 @@ export namespace Prisma {
     title?: SortOrder
     abstract?: SortOrder
     authors?: SortOrder
+    doi?: SortOrderInput | SortOrder
     fileKey?: SortOrder
     submittedById?: SortOrder
     status?: SortOrder
@@ -23585,6 +22375,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Journal"> | string
     abstract?: StringWithAggregatesFilter<"Journal"> | string
     authors?: StringNullableListFilter<"Journal">
+    doi?: StringNullableWithAggregatesFilter<"Journal"> | string | null
     fileKey?: StringWithAggregatesFilter<"Journal"> | string
     submittedById?: StringWithAggregatesFilter<"Journal"> | string
     status?: EnumJournalStatusWithAggregatesFilter<"Journal"> | $Enums.JournalStatus
@@ -23594,82 +22385,17 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Journal"> | Date | string
   }
 
-  export type NewspaperWhereInput = {
-    AND?: NewspaperWhereInput | NewspaperWhereInput[]
-    OR?: NewspaperWhereInput[]
-    NOT?: NewspaperWhereInput | NewspaperWhereInput[]
-    id?: StringFilter<"Newspaper"> | string
-    headline?: StringFilter<"Newspaper"> | string
-    edition?: StringFilter<"Newspaper"> | string
-    publishedDate?: DateTimeFilter<"Newspaper"> | Date | string
-    fileKey?: StringFilter<"Newspaper"> | string
-    uploadedById?: StringFilter<"Newspaper"> | string
-    createdAt?: DateTimeFilter<"Newspaper"> | Date | string
-    uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type NewspaperOrderByWithRelationInput = {
-    id?: SortOrder
-    headline?: SortOrder
-    edition?: SortOrder
-    publishedDate?: SortOrder
-    fileKey?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-    uploadedBy?: UserOrderByWithRelationInput
-  }
-
-  export type NewspaperWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: NewspaperWhereInput | NewspaperWhereInput[]
-    OR?: NewspaperWhereInput[]
-    NOT?: NewspaperWhereInput | NewspaperWhereInput[]
-    headline?: StringFilter<"Newspaper"> | string
-    edition?: StringFilter<"Newspaper"> | string
-    publishedDate?: DateTimeFilter<"Newspaper"> | Date | string
-    fileKey?: StringFilter<"Newspaper"> | string
-    uploadedById?: StringFilter<"Newspaper"> | string
-    createdAt?: DateTimeFilter<"Newspaper"> | Date | string
-    uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
-
-  export type NewspaperOrderByWithAggregationInput = {
-    id?: SortOrder
-    headline?: SortOrder
-    edition?: SortOrder
-    publishedDate?: SortOrder
-    fileKey?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-    _count?: NewspaperCountOrderByAggregateInput
-    _max?: NewspaperMaxOrderByAggregateInput
-    _min?: NewspaperMinOrderByAggregateInput
-  }
-
-  export type NewspaperScalarWhereWithAggregatesInput = {
-    AND?: NewspaperScalarWhereWithAggregatesInput | NewspaperScalarWhereWithAggregatesInput[]
-    OR?: NewspaperScalarWhereWithAggregatesInput[]
-    NOT?: NewspaperScalarWhereWithAggregatesInput | NewspaperScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Newspaper"> | string
-    headline?: StringWithAggregatesFilter<"Newspaper"> | string
-    edition?: StringWithAggregatesFilter<"Newspaper"> | string
-    publishedDate?: DateTimeWithAggregatesFilter<"Newspaper"> | Date | string
-    fileKey?: StringWithAggregatesFilter<"Newspaper"> | string
-    uploadedById?: StringWithAggregatesFilter<"Newspaper"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Newspaper"> | Date | string
-  }
-
   export type BookWhereInput = {
     AND?: BookWhereInput | BookWhereInput[]
     OR?: BookWhereInput[]
     NOT?: BookWhereInput | BookWhereInput[]
     id?: StringFilter<"Book"> | string
     title?: StringFilter<"Book"> | string
-    author?: StringFilter<"Book"> | string
+    publisher?: StringFilter<"Book"> | string
     category?: StringFilter<"Book"> | string
     description?: StringNullableFilter<"Book"> | string | null
     coverImage?: StringNullableFilter<"Book"> | string | null
-    fileKey?: StringFilter<"Book"> | string
+    link?: StringFilter<"Book"> | string
     uploadedById?: StringFilter<"Book"> | string
     createdAt?: DateTimeFilter<"Book"> | Date | string
     updatedAt?: DateTimeFilter<"Book"> | Date | string
@@ -23679,11 +22405,11 @@ export namespace Prisma {
   export type BookOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    author?: SortOrder
+    publisher?: SortOrder
     category?: SortOrder
     description?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
-    fileKey?: SortOrder
+    link?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23696,11 +22422,11 @@ export namespace Prisma {
     OR?: BookWhereInput[]
     NOT?: BookWhereInput | BookWhereInput[]
     title?: StringFilter<"Book"> | string
-    author?: StringFilter<"Book"> | string
+    publisher?: StringFilter<"Book"> | string
     category?: StringFilter<"Book"> | string
     description?: StringNullableFilter<"Book"> | string | null
     coverImage?: StringNullableFilter<"Book"> | string | null
-    fileKey?: StringFilter<"Book"> | string
+    link?: StringFilter<"Book"> | string
     uploadedById?: StringFilter<"Book"> | string
     createdAt?: DateTimeFilter<"Book"> | Date | string
     updatedAt?: DateTimeFilter<"Book"> | Date | string
@@ -23710,11 +22436,11 @@ export namespace Prisma {
   export type BookOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    author?: SortOrder
+    publisher?: SortOrder
     category?: SortOrder
     description?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
-    fileKey?: SortOrder
+    link?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23729,11 +22455,11 @@ export namespace Prisma {
     NOT?: BookScalarWhereWithAggregatesInput | BookScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Book"> | string
     title?: StringWithAggregatesFilter<"Book"> | string
-    author?: StringWithAggregatesFilter<"Book"> | string
+    publisher?: StringWithAggregatesFilter<"Book"> | string
     category?: StringWithAggregatesFilter<"Book"> | string
     description?: StringNullableWithAggregatesFilter<"Book"> | string | null
     coverImage?: StringNullableWithAggregatesFilter<"Book"> | string | null
-    fileKey?: StringWithAggregatesFilter<"Book"> | string
+    link?: StringWithAggregatesFilter<"Book"> | string
     uploadedById?: StringWithAggregatesFilter<"Book"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Book"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Book"> | Date | string
@@ -23926,7 +22652,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -23961,7 +22686,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -23996,7 +22720,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -24031,7 +22754,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -24930,6 +23652,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     status?: $Enums.JournalStatus
     rejectionReason?: string | null
@@ -24944,6 +23667,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     submittedById: string
     status?: $Enums.JournalStatus
@@ -24958,6 +23682,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24972,6 +23697,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     submittedById?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
@@ -24986,6 +23712,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     submittedById: string
     status?: $Enums.JournalStatus
@@ -25000,6 +23727,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25013,6 +23741,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     submittedById?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
@@ -25022,83 +23751,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type NewspaperCreateInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    createdAt?: Date | string
-    uploadedBy: UserCreateNestedOneWithoutUploadedNewspapersInput
-  }
-
-  export type NewspaperUncheckedCreateInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    uploadedById: string
-    createdAt?: Date | string
-  }
-
-  export type NewspaperUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uploadedBy?: UserUpdateOneRequiredWithoutUploadedNewspapersNestedInput
-  }
-
-  export type NewspaperUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NewspaperCreateManyInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    uploadedById: string
-    createdAt?: Date | string
-  }
-
-  export type NewspaperUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NewspaperUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type BookCreateInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     createdAt?: Date | string
     updatedAt?: Date | string
     uploadedBy: UserCreateNestedOneWithoutUploadedBooksInput
@@ -25107,11 +23767,11 @@ export namespace Prisma {
   export type BookUncheckedCreateInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     uploadedById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25120,11 +23780,11 @@ export namespace Prisma {
   export type BookUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploadedBy?: UserUpdateOneRequiredWithoutUploadedBooksNestedInput
@@ -25133,11 +23793,11 @@ export namespace Prisma {
   export type BookUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     uploadedById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25146,11 +23806,11 @@ export namespace Prisma {
   export type BookCreateManyInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     uploadedById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25159,11 +23819,11 @@ export namespace Prisma {
   export type BookUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25171,11 +23831,11 @@ export namespace Prisma {
   export type BookUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     uploadedById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25479,12 +24139,6 @@ export namespace Prisma {
     none?: JournalWhereInput
   }
 
-  export type NewspaperListRelationFilter = {
-    every?: NewspaperWhereInput
-    some?: NewspaperWhereInput
-    none?: NewspaperWhereInput
-  }
-
   export type BookListRelationFilter = {
     every?: BookWhereInput
     some?: BookWhereInput
@@ -25543,10 +24197,6 @@ export namespace Prisma {
   }
 
   export type JournalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NewspaperOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26260,6 +24910,7 @@ export namespace Prisma {
     title?: SortOrder
     abstract?: SortOrder
     authors?: SortOrder
+    doi?: SortOrder
     fileKey?: SortOrder
     submittedById?: SortOrder
     status?: SortOrder
@@ -26273,6 +24924,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     abstract?: SortOrder
+    doi?: SortOrder
     fileKey?: SortOrder
     submittedById?: SortOrder
     status?: SortOrder
@@ -26286,6 +24938,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     abstract?: SortOrder
+    doi?: SortOrder
     fileKey?: SortOrder
     submittedById?: SortOrder
     status?: SortOrder
@@ -26305,44 +24958,14 @@ export namespace Prisma {
     _max?: NestedEnumJournalStatusFilter<$PrismaModel>
   }
 
-  export type NewspaperCountOrderByAggregateInput = {
-    id?: SortOrder
-    headline?: SortOrder
-    edition?: SortOrder
-    publishedDate?: SortOrder
-    fileKey?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type NewspaperMaxOrderByAggregateInput = {
-    id?: SortOrder
-    headline?: SortOrder
-    edition?: SortOrder
-    publishedDate?: SortOrder
-    fileKey?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type NewspaperMinOrderByAggregateInput = {
-    id?: SortOrder
-    headline?: SortOrder
-    edition?: SortOrder
-    publishedDate?: SortOrder
-    fileKey?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-  }
-
   export type BookCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    author?: SortOrder
+    publisher?: SortOrder
     category?: SortOrder
     description?: SortOrder
     coverImage?: SortOrder
-    fileKey?: SortOrder
+    link?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -26351,11 +24974,11 @@ export namespace Prisma {
   export type BookMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    author?: SortOrder
+    publisher?: SortOrder
     category?: SortOrder
     description?: SortOrder
     coverImage?: SortOrder
-    fileKey?: SortOrder
+    link?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -26364,11 +24987,11 @@ export namespace Prisma {
   export type BookMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    author?: SortOrder
+    publisher?: SortOrder
     category?: SortOrder
     description?: SortOrder
     coverImage?: SortOrder
-    fileKey?: SortOrder
+    link?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -26598,13 +25221,6 @@ export namespace Prisma {
     connect?: JournalWhereUniqueInput | JournalWhereUniqueInput[]
   }
 
-  export type NewspaperCreateNestedManyWithoutUploadedByInput = {
-    create?: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput> | NewspaperCreateWithoutUploadedByInput[] | NewspaperUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: NewspaperCreateOrConnectWithoutUploadedByInput | NewspaperCreateOrConnectWithoutUploadedByInput[]
-    createMany?: NewspaperCreateManyUploadedByInputEnvelope
-    connect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-  }
-
   export type BookCreateNestedManyWithoutUploadedByInput = {
     create?: XOR<BookCreateWithoutUploadedByInput, BookUncheckedCreateWithoutUploadedByInput> | BookCreateWithoutUploadedByInput[] | BookUncheckedCreateWithoutUploadedByInput[]
     connectOrCreate?: BookCreateOrConnectWithoutUploadedByInput | BookCreateOrConnectWithoutUploadedByInput[]
@@ -26708,13 +25324,6 @@ export namespace Prisma {
     connectOrCreate?: JournalCreateOrConnectWithoutSubmittedByInput | JournalCreateOrConnectWithoutSubmittedByInput[]
     createMany?: JournalCreateManySubmittedByInputEnvelope
     connect?: JournalWhereUniqueInput | JournalWhereUniqueInput[]
-  }
-
-  export type NewspaperUncheckedCreateNestedManyWithoutUploadedByInput = {
-    create?: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput> | NewspaperCreateWithoutUploadedByInput[] | NewspaperUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: NewspaperCreateOrConnectWithoutUploadedByInput | NewspaperCreateOrConnectWithoutUploadedByInput[]
-    createMany?: NewspaperCreateManyUploadedByInputEnvelope
-    connect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
   }
 
   export type BookUncheckedCreateNestedManyWithoutUploadedByInput = {
@@ -26930,20 +25539,6 @@ export namespace Prisma {
     deleteMany?: JournalScalarWhereInput | JournalScalarWhereInput[]
   }
 
-  export type NewspaperUpdateManyWithoutUploadedByNestedInput = {
-    create?: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput> | NewspaperCreateWithoutUploadedByInput[] | NewspaperUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: NewspaperCreateOrConnectWithoutUploadedByInput | NewspaperCreateOrConnectWithoutUploadedByInput[]
-    upsert?: NewspaperUpsertWithWhereUniqueWithoutUploadedByInput | NewspaperUpsertWithWhereUniqueWithoutUploadedByInput[]
-    createMany?: NewspaperCreateManyUploadedByInputEnvelope
-    set?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    disconnect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    delete?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    connect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    update?: NewspaperUpdateWithWhereUniqueWithoutUploadedByInput | NewspaperUpdateWithWhereUniqueWithoutUploadedByInput[]
-    updateMany?: NewspaperUpdateManyWithWhereWithoutUploadedByInput | NewspaperUpdateManyWithWhereWithoutUploadedByInput[]
-    deleteMany?: NewspaperScalarWhereInput | NewspaperScalarWhereInput[]
-  }
-
   export type BookUpdateManyWithoutUploadedByNestedInput = {
     create?: XOR<BookCreateWithoutUploadedByInput, BookUncheckedCreateWithoutUploadedByInput> | BookCreateWithoutUploadedByInput[] | BookUncheckedCreateWithoutUploadedByInput[]
     connectOrCreate?: BookCreateOrConnectWithoutUploadedByInput | BookCreateOrConnectWithoutUploadedByInput[]
@@ -27152,20 +25747,6 @@ export namespace Prisma {
     update?: JournalUpdateWithWhereUniqueWithoutSubmittedByInput | JournalUpdateWithWhereUniqueWithoutSubmittedByInput[]
     updateMany?: JournalUpdateManyWithWhereWithoutSubmittedByInput | JournalUpdateManyWithWhereWithoutSubmittedByInput[]
     deleteMany?: JournalScalarWhereInput | JournalScalarWhereInput[]
-  }
-
-  export type NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput = {
-    create?: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput> | NewspaperCreateWithoutUploadedByInput[] | NewspaperUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: NewspaperCreateOrConnectWithoutUploadedByInput | NewspaperCreateOrConnectWithoutUploadedByInput[]
-    upsert?: NewspaperUpsertWithWhereUniqueWithoutUploadedByInput | NewspaperUpsertWithWhereUniqueWithoutUploadedByInput[]
-    createMany?: NewspaperCreateManyUploadedByInputEnvelope
-    set?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    disconnect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    delete?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    connect?: NewspaperWhereUniqueInput | NewspaperWhereUniqueInput[]
-    update?: NewspaperUpdateWithWhereUniqueWithoutUploadedByInput | NewspaperUpdateWithWhereUniqueWithoutUploadedByInput[]
-    updateMany?: NewspaperUpdateManyWithWhereWithoutUploadedByInput | NewspaperUpdateManyWithWhereWithoutUploadedByInput[]
-    deleteMany?: NewspaperScalarWhereInput | NewspaperScalarWhereInput[]
   }
 
   export type BookUncheckedUpdateManyWithoutUploadedByNestedInput = {
@@ -27679,20 +26260,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSubmittedJournalsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmittedJournalsInput, UserUpdateWithoutSubmittedJournalsInput>, UserUncheckedUpdateWithoutSubmittedJournalsInput>
-  }
-
-  export type UserCreateNestedOneWithoutUploadedNewspapersInput = {
-    create?: XOR<UserCreateWithoutUploadedNewspapersInput, UserUncheckedCreateWithoutUploadedNewspapersInput>
-    connectOrCreate?: UserCreateOrConnectWithoutUploadedNewspapersInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutUploadedNewspapersNestedInput = {
-    create?: XOR<UserCreateWithoutUploadedNewspapersInput, UserUncheckedCreateWithoutUploadedNewspapersInput>
-    connectOrCreate?: UserCreateOrConnectWithoutUploadedNewspapersInput
-    upsert?: UserUpsertWithoutUploadedNewspapersInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUploadedNewspapersInput, UserUpdateWithoutUploadedNewspapersInput>, UserUncheckedUpdateWithoutUploadedNewspapersInput>
   }
 
   export type UserCreateNestedOneWithoutUploadedBooksInput = {
@@ -28444,6 +27011,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     status?: $Enums.JournalStatus
     rejectionReason?: string | null
@@ -28457,6 +27025,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     status?: $Enums.JournalStatus
     rejectionReason?: string | null
@@ -28475,42 +27044,14 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type NewspaperCreateWithoutUploadedByInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    createdAt?: Date | string
-  }
-
-  export type NewspaperUncheckedCreateWithoutUploadedByInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    createdAt?: Date | string
-  }
-
-  export type NewspaperCreateOrConnectWithoutUploadedByInput = {
-    where: NewspaperWhereUniqueInput
-    create: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput>
-  }
-
-  export type NewspaperCreateManyUploadedByInputEnvelope = {
-    data: NewspaperCreateManyUploadedByInput | NewspaperCreateManyUploadedByInput[]
-    skipDuplicates?: boolean
-  }
-
   export type BookCreateWithoutUploadedByInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28518,11 +27059,11 @@ export namespace Prisma {
   export type BookUncheckedCreateWithoutUploadedByInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28932,6 +27473,7 @@ export namespace Prisma {
     title?: StringFilter<"Journal"> | string
     abstract?: StringFilter<"Journal"> | string
     authors?: StringNullableListFilter<"Journal">
+    doi?: StringNullableFilter<"Journal"> | string | null
     fileKey?: StringFilter<"Journal"> | string
     submittedById?: StringFilter<"Journal"> | string
     status?: EnumJournalStatusFilter<"Journal"> | $Enums.JournalStatus
@@ -28939,35 +27481,6 @@ export namespace Prisma {
     approvedAt?: DateTimeNullableFilter<"Journal"> | Date | string | null
     createdAt?: DateTimeFilter<"Journal"> | Date | string
     updatedAt?: DateTimeFilter<"Journal"> | Date | string
-  }
-
-  export type NewspaperUpsertWithWhereUniqueWithoutUploadedByInput = {
-    where: NewspaperWhereUniqueInput
-    update: XOR<NewspaperUpdateWithoutUploadedByInput, NewspaperUncheckedUpdateWithoutUploadedByInput>
-    create: XOR<NewspaperCreateWithoutUploadedByInput, NewspaperUncheckedCreateWithoutUploadedByInput>
-  }
-
-  export type NewspaperUpdateWithWhereUniqueWithoutUploadedByInput = {
-    where: NewspaperWhereUniqueInput
-    data: XOR<NewspaperUpdateWithoutUploadedByInput, NewspaperUncheckedUpdateWithoutUploadedByInput>
-  }
-
-  export type NewspaperUpdateManyWithWhereWithoutUploadedByInput = {
-    where: NewspaperScalarWhereInput
-    data: XOR<NewspaperUpdateManyMutationInput, NewspaperUncheckedUpdateManyWithoutUploadedByInput>
-  }
-
-  export type NewspaperScalarWhereInput = {
-    AND?: NewspaperScalarWhereInput | NewspaperScalarWhereInput[]
-    OR?: NewspaperScalarWhereInput[]
-    NOT?: NewspaperScalarWhereInput | NewspaperScalarWhereInput[]
-    id?: StringFilter<"Newspaper"> | string
-    headline?: StringFilter<"Newspaper"> | string
-    edition?: StringFilter<"Newspaper"> | string
-    publishedDate?: DateTimeFilter<"Newspaper"> | Date | string
-    fileKey?: StringFilter<"Newspaper"> | string
-    uploadedById?: StringFilter<"Newspaper"> | string
-    createdAt?: DateTimeFilter<"Newspaper"> | Date | string
   }
 
   export type BookUpsertWithWhereUniqueWithoutUploadedByInput = {
@@ -28992,11 +27505,11 @@ export namespace Prisma {
     NOT?: BookScalarWhereInput | BookScalarWhereInput[]
     id?: StringFilter<"Book"> | string
     title?: StringFilter<"Book"> | string
-    author?: StringFilter<"Book"> | string
+    publisher?: StringFilter<"Book"> | string
     category?: StringFilter<"Book"> | string
     description?: StringNullableFilter<"Book"> | string | null
     coverImage?: StringNullableFilter<"Book"> | string | null
-    fileKey?: StringFilter<"Book"> | string
+    link?: StringFilter<"Book"> | string
     uploadedById?: StringFilter<"Book"> | string
     createdAt?: DateTimeFilter<"Book"> | Date | string
     updatedAt?: DateTimeFilter<"Book"> | Date | string
@@ -29075,7 +27588,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -29109,7 +27621,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -29159,7 +27670,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -29193,7 +27703,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -29227,7 +27736,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -29261,7 +27769,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -29311,7 +27818,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -29345,7 +27851,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -29379,7 +27884,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -29413,7 +27917,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -29585,7 +28088,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -29619,7 +28121,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -29735,7 +28236,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -29769,7 +28269,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -29856,7 +28355,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -29890,7 +28388,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30004,7 +28501,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -30038,7 +28534,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -30159,7 +28654,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -30193,7 +28687,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30272,7 +28765,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -30306,7 +28798,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -30391,7 +28882,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -30425,7 +28915,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30496,7 +28985,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -30530,7 +29018,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -30623,7 +29110,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -30657,7 +29143,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30691,7 +29176,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -30725,7 +29209,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -30764,7 +29247,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -30798,7 +29280,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -30848,7 +29329,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -30882,7 +29362,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30927,7 +29406,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -30961,7 +29439,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -30995,7 +29472,6 @@ export namespace Prisma {
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -31029,7 +29505,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -31079,7 +29554,6 @@ export namespace Prisma {
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -31113,7 +29587,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -31147,7 +29620,6 @@ export namespace Prisma {
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -31181,7 +29653,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -31231,7 +29702,6 @@ export namespace Prisma {
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -31265,7 +29735,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -31299,7 +29768,6 @@ export namespace Prisma {
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
@@ -31333,7 +29801,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
@@ -31383,7 +29850,6 @@ export namespace Prisma {
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
@@ -31417,159 +29883,6 @@ export namespace Prisma {
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
-    uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
-    auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
-    auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
-  }
-
-  export type UserCreateWithoutUploadedNewspapersInput = {
-    id?: string
-    email: string
-    name?: string | null
-    emailVerified?: boolean
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    role?: $Enums.UserRole
-    registrationNumber?: string | null
-    isTemporaryPassword?: boolean
-    status?: $Enums.UserStatus
-    suspensionReason?: string | null
-    department?: string | null
-    bio?: string | null
-    program?: string | null
-    employeeId?: string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    taughtCourses?: CourseCreateNestedManyWithoutLecturerInput
-    enrollments?: EnrollmentCreateNestedManyWithoutStudentInput
-    assignments?: AssignmentCreateNestedManyWithoutCreatedByInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    liveLectures?: LiveLectureCreateNestedManyWithoutLecturerInput
-    sentMessages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
-    submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
-    auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
-    auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
-  }
-
-  export type UserUncheckedCreateWithoutUploadedNewspapersInput = {
-    id?: string
-    email: string
-    name?: string | null
-    emailVerified?: boolean
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    role?: $Enums.UserRole
-    registrationNumber?: string | null
-    isTemporaryPassword?: boolean
-    status?: $Enums.UserStatus
-    suspensionReason?: string | null
-    department?: string | null
-    bio?: string | null
-    program?: string | null
-    employeeId?: string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    taughtCourses?: CourseUncheckedCreateNestedManyWithoutLecturerInput
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutStudentInput
-    assignments?: AssignmentUncheckedCreateNestedManyWithoutCreatedByInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    liveLectures?: LiveLectureUncheckedCreateNestedManyWithoutLecturerInput
-    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
-    submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
-    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
-    auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
-  }
-
-  export type UserCreateOrConnectWithoutUploadedNewspapersInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutUploadedNewspapersInput, UserUncheckedCreateWithoutUploadedNewspapersInput>
-  }
-
-  export type UserUpsertWithoutUploadedNewspapersInput = {
-    update: XOR<UserUpdateWithoutUploadedNewspapersInput, UserUncheckedUpdateWithoutUploadedNewspapersInput>
-    create: XOR<UserCreateWithoutUploadedNewspapersInput, UserUncheckedCreateWithoutUploadedNewspapersInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutUploadedNewspapersInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutUploadedNewspapersInput, UserUncheckedUpdateWithoutUploadedNewspapersInput>
-  }
-
-  export type UserUpdateWithoutUploadedNewspapersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    registrationNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    isTemporaryPassword?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    program?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    taughtCourses?: CourseUpdateManyWithoutLecturerNestedInput
-    enrollments?: EnrollmentUpdateManyWithoutStudentNestedInput
-    assignments?: AssignmentUpdateManyWithoutCreatedByNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    liveLectures?: LiveLectureUpdateManyWithoutLecturerNestedInput
-    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
-    submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
-    auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
-    auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutUploadedNewspapersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    registrationNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    isTemporaryPassword?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    suspensionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    program?: NullableStringFieldUpdateOperationsInput | string | null
-    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    taughtCourses?: CourseUncheckedUpdateManyWithoutLecturerNestedInput
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
-    assignments?: AssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    liveLectures?: LiveLectureUncheckedUpdateManyWithoutLecturerNestedInput
-    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
-    submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
@@ -31604,7 +29917,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
   }
@@ -31638,7 +29950,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
   }
@@ -31688,7 +29999,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
   }
@@ -31722,7 +30032,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
   }
@@ -31756,7 +30065,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditTargets?: AuditLogCreateNestedManyWithoutTargetUserInput
   }
@@ -31790,7 +30098,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditTargets?: AuditLogUncheckedCreateNestedManyWithoutTargetUserInput
   }
@@ -31829,7 +30136,6 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutAdminInput
   }
@@ -31863,7 +30169,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     uploadedPapers?: PastPaperUncheckedCreateNestedManyWithoutUploadedByInput
     submittedJournals?: JournalUncheckedCreateNestedManyWithoutSubmittedByInput
-    uploadedNewspapers?: NewspaperUncheckedCreateNestedManyWithoutUploadedByInput
     uploadedBooks?: BookUncheckedCreateNestedManyWithoutUploadedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutAdminInput
   }
@@ -31913,7 +30218,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditTargets?: AuditLogUpdateManyWithoutTargetUserNestedInput
   }
@@ -31947,7 +30251,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditTargets?: AuditLogUncheckedUpdateManyWithoutTargetUserNestedInput
   }
@@ -31992,7 +30295,6 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutAdminNestedInput
   }
@@ -32026,7 +30328,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     uploadedPapers?: PastPaperUncheckedUpdateManyWithoutUploadedByNestedInput
     submittedJournals?: JournalUncheckedUpdateManyWithoutSubmittedByNestedInput
-    uploadedNewspapers?: NewspaperUncheckedUpdateManyWithoutUploadedByNestedInput
     uploadedBooks?: BookUncheckedUpdateManyWithoutUploadedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutAdminNestedInput
   }
@@ -32223,6 +30524,7 @@ export namespace Prisma {
     title: string
     abstract: string
     authors?: JournalCreateauthorsInput | string[]
+    doi?: string | null
     fileKey: string
     status?: $Enums.JournalStatus
     rejectionReason?: string | null
@@ -32231,23 +30533,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type NewspaperCreateManyUploadedByInput = {
-    id?: string
-    headline: string
-    edition: string
-    publishedDate: Date | string
-    fileKey: string
-    createdAt?: Date | string
-  }
-
   export type BookCreateManyUploadedByInput = {
     id?: string
     title: string
-    author: string
+    publisher: string
     category: string
     description?: string | null
     coverImage?: string | null
-    fileKey: string
+    link: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -32606,6 +30899,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32619,6 +30913,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32632,6 +30927,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     abstract?: StringFieldUpdateOperationsInput | string
     authors?: JournalUpdateauthorsInput | string[]
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     fileKey?: StringFieldUpdateOperationsInput | string
     status?: EnumJournalStatusFieldUpdateOperationsInput | $Enums.JournalStatus
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32640,41 +30936,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type NewspaperUpdateWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NewspaperUncheckedUpdateWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NewspaperUncheckedUpdateManyWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    headline?: StringFieldUpdateOperationsInput | string
-    edition?: StringFieldUpdateOperationsInput | string
-    publishedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileKey?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type BookUpdateWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32682,11 +30951,11 @@ export namespace Prisma {
   export type BookUncheckedUpdateWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32694,11 +30963,11 @@ export namespace Prisma {
   export type BookUncheckedUpdateManyWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
+    publisher?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
-    fileKey?: StringFieldUpdateOperationsInput | string
+    link?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

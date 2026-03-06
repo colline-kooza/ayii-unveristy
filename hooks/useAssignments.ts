@@ -18,6 +18,17 @@ export function useAssignments(courseId: string) {
   });
 }
 
+// ── Student's global assignments (All Enrolled Courses) ──
+export function useMyAssignments() {
+  return useQuery({
+    queryKey: [...queryKeys.assignments.lists(), "my-global"],
+    queryFn: async () => {
+      const { data } = await apiClient.get("/students/assignments");
+      return data;
+    },
+  });
+}
+
 export function useCreateAssignment() {
   const queryClient = useQueryClient();
 
@@ -36,7 +47,7 @@ export function useCreateAssignment() {
       );
       return { data, courseId };
     },
-    onSuccess: ({ data: newAssignment, courseId }) => {
+    onSuccess: ({ data: newAssignment, courseId }: any) => {
       queryClient.setQueryData<any>(
         queryKeys.assignments.byCourse(courseId),
         (old: any) => {
@@ -48,7 +59,7 @@ export function useCreateAssignment() {
         description: "All enrolled students have been notified.",
       });
     },
-    onError: (error) =>
+    onError: (error: any) =>
       toast.error("Failed to post assignment", {
         description: getErrorMessage(error),
       }),
@@ -74,13 +85,13 @@ export function useUpdateAssignment() {
       );
       return { data, courseId };
     },
-    onSuccess: ({ courseId }) => {
+    onSuccess: ({ courseId }: any) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.assignments.byCourse(courseId),
       });
       toast.success("Assignment updated successfully");
     },
-    onError: (error) =>
+    onError: (error: any) =>
       toast.error("Update failed", { description: getErrorMessage(error) }),
   });
 }
@@ -101,13 +112,13 @@ export function useDeleteAssignment() {
       );
       return { courseId };
     },
-    onSuccess: ({ courseId }) => {
+    onSuccess: ({ courseId }: any) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.assignments.byCourse(courseId),
       });
       toast.success("Assignment deleted");
     },
-    onError: (error) =>
+    onError: (error: any) =>
       toast.error("Deletion failed", { description: getErrorMessage(error) }),
   });
 }
@@ -145,13 +156,13 @@ export function useGradeSubmission() {
       );
       return data;
     },
-    onSuccess: (_, { assignmentId }) => {
+    onSuccess: (_: any, { assignmentId }: any) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.submissions.byAssignment(assignmentId),
       });
       toast.success("Grade submitted");
     },
-    onError: (error) =>
+    onError: (error: any) =>
       toast.error("Grading failed", { description: getErrorMessage(error) }),
   });
 }
@@ -174,13 +185,14 @@ export function useSubmitAssignment() {
       );
       return { data, assignmentId };
     },
-    onSuccess: (_, { assignmentId }) => {
+    onSuccess: (_: any, { assignmentId }: any) => {
+      // Invalidate the student's assignments list so submit count + state refresh
       queryClient.invalidateQueries({
-        queryKey: queryKeys.submissions.mine(assignmentId),
+        queryKey: [...queryKeys.assignments.lists(), "my-global"],
       });
       toast.success("Assignment submitted successfully!");
     },
-    onError: (error) =>
+    onError: (error: any) =>
       toast.error("Submission failed", { description: getErrorMessage(error) }),
   });
 }

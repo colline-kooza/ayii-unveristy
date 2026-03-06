@@ -83,7 +83,7 @@ export function MobileBottomNav({ role, unreadNotifications = 0, unreadMessages 
                   whileTap={{ scale: 0.9 }}
                   className={`p-2 rounded-xl transition-colors ${
                     isActive
-                      ? "bg-blue-600 text-white"
+                      ? "bg-red-600 text-white"
                       : "text-gray-600 group-hover:bg-gray-100"
                   }`}
                 >
@@ -97,7 +97,7 @@ export function MobileBottomNav({ role, unreadNotifications = 0, unreadMessages 
               </div>
               <span
                 className={`text-xs mt-1 font-medium ${
-                  isActive ? "text-blue-600" : "text-gray-600"
+                  isActive ? "text-red-600" : "text-gray-600"
                 }`}
               >
                 {item.label}

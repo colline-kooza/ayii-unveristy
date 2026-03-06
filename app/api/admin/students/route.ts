@@ -51,6 +51,7 @@ export async function GET(req: NextRequest) {
         registrationNumber: true,
         department: true,
         program: true,
+        image: true,
         status: true,
         suspensionReason: true,
         createdAt: true,
@@ -75,6 +76,7 @@ const createStudentSchema = z.object({
   registrationNumber: z.string().optional(), // Now optional for auto-generation
   department: z.string().min(1),
   program: z.string().optional(),
+  image: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {

@@ -13,14 +13,19 @@ const uploadRequestSchema = z.object({
 
 function constructCloudflareR2Url(
   key: string,
-  publicDevUrl: string,
+  bucketId: string,
   customDomain?: string
 ): string {
   if (customDomain) {
-    return `${customDomain}/${encodeURIComponent(key)}`;
+    // Remove trailing slash if present
+    const domain = customDomain.endsWith("/")
+      ? customDomain.slice(0, -1)
+      : customDomain;
+    return `${domain}/${key}`;
   }
-  // R2 public URL format (requires public access setup)
-  return `${publicDevUrl}/${encodeURIComponent(key)}`;
+  // R2 public URL format
+  const cleanBucketId = bucketId.trim();
+  return `https://pub-${cleanBucketId}.r2.dev/${key}`;
 }
 
 export async function POST(request: Request) {
@@ -30,7 +35,7 @@ export async function POST(request: Request) {
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: "Invalid request body" },
+        { error: "Invalid request body", details: validation.error },
         { status: 400 }
       );
     }
@@ -46,12 +51,13 @@ export async function POST(request: Request) {
     });
 
     const presignedUrl = await getSignedUrl(r2Client, command, {
-      expiresIn: 3600, // URL expires in 1 hour
+      expiresIn: 3600,
     });
 
-    const key = uniqueKey;
-    const publicDevUrl = process.env.CLOUDFLARE_R2_PUBLIC_DEV_URL!;
-    const publicUrl = constructCloudflareR2Url(key, publicDevUrl);
+    const bucketId = process.env.CLOUDFLARE_R2_BUCKET_ID!;
+    const customDomain = process.env.CLOUDFLARE_R2_PUBLIC_DOMAIN; // Optional
+
+    const publicUrl = constructCloudflareR2Url(uniqueKey, bucketId, customDomain);
 
     return NextResponse.json({
       presignedUrl,
