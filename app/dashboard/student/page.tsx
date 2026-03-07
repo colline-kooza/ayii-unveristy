@@ -7,7 +7,7 @@ import {
   Clock,
   CheckCircle2,
   FileText,
-  CreditCard,
+
   Target,
   Trophy,
   ArrowUpRight,
@@ -297,20 +297,7 @@ export default function StudentDashboard() {
               </CardContent>
             </Card>
 
-            {/* Fee Quick Pay */}
-            <Card className="bg-linear-to-br from-purple-600 to-primary border-none shadow-lg text-white h-fit">
-              <CardHeader className="py-4">
-                 <div className="flex items-center justify-between">
-                    <CreditCard className="h-6 w-6 text-white/40" />
-                    <Badge className="bg-white/20 text-white border-0 text-xs">Term 2</Badge>
-                 </div>
-                 <CardTitle className="pt-2 text-white text-base">Balance: $2,450.00</CardTitle>
-                 <CardDescription className="text-white/70 text-xs">Payment deadline in 12 days</CardDescription>
-              </CardHeader>
-              <CardContent className="p-4 pt-0">
-                 <Button className="w-full h-9 text-sm bg-white text-primary font-semibold hover:bg-white/90">Pay Now</Button>
-              </CardContent>
-            </Card>
+
           </div>
         </div>
       </div>

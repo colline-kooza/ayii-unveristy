@@ -35,11 +35,6 @@ export function getNavigationForRole(
           icon: LayoutDashboard,
         },
         {
-          title: "All Dashboards",
-          url: "/dashboard/all-roles",
-          icon: LayoutDashboard,
-        },
-        {
           title: "Users",
           url: "/dashboard/admin/users",
           icon: Users,
