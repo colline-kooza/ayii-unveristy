@@ -70,19 +70,23 @@ export default function Header() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Link href="/auth/sign-in">
-              <Button
-                variant="ghost"
-                className="text-white/90 hover:text-white hover:bg-white/10 h-8 px-4 text-sm"
-              >
+            <Button
+              variant="ghost"
+              className="text-white/90 hover:text-white hover:bg-white/10 h-8 px-4 text-sm"
+              asChild
+            >
+              <Link href="/auth/sign-in">
                 Sign In
-              </Button>
-            </Link>
-            <Link href="/courses">
-              <Button className="bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-8 px-4 text-sm font-semibold rounded-lg shadow-lg shadow-[#C41E3A]/20 transition-all">
+              </Link>
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-8 px-4 text-sm font-semibold rounded-lg shadow-lg shadow-[#C41E3A]/20 transition-all"
+              asChild
+            >
+              <Link href="/courses">
                 Get Started
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -118,23 +122,27 @@ export default function Header() {
               ))}
 
               <div className="flex flex-col space-y-2 pt-3 mt-2 border-t border-white/10">
-                <Link
-                  href="/auth/sign-in"
-                  onClick={() => setMobileMenuOpen(false)}
+                <Button
+                  variant="outline"
+                  className="w-full border-white/20 text-white hover:bg-white/10 h-9 text-sm"
+                  asChild
                 >
-                  <Button
-                    variant="outline"
-                    className="w-full border-white/20 text-white hover:bg-white/10 h-9 text-sm"
+                  <Link
+                    href="/auth/sign-in"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign In
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
 
-                <Link href="/courses" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-9 text-sm">
+                <Button 
+                  className="w-full bg-gradient-to-r from-[#C41E3A] to-[#E63946] hover:from-[#E63946] hover:to-[#FF6B7A] text-white h-9 text-sm"
+                  asChild
+                >
+                  <Link href="/courses" onClick={() => setMobileMenuOpen(false)}>
                     Get Started
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

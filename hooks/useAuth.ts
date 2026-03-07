@@ -5,6 +5,7 @@ import { apiClient, getErrorMessage } from "@/lib/api";
 import { queryKeys } from "@/lib/queryKeys";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 // ── Current user profile ──────────────────
 export function useMe() {
@@ -61,7 +62,16 @@ export function useSignOut() {
 
   return useMutation({
     mutationFn: async () => {
-      await apiClient.post("/auth/sign-out");
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Signed out successfully");
+          },
+          onError: (ctx) => {
+            toast.error(ctx.error.message || "Failed to sign out");
+          },
+        },
+      });
     },
     onSuccess: () => {
       queryClient.clear();

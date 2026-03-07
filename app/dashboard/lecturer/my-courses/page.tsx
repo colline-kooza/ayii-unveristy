@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,26 +11,22 @@ import { useMyCoursesLecturer, useCourses } from "@/hooks/useCourses";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { CreateCourseModal } from "@/components/shared/modals/CreateCourseModal";
-import { CourseDetailModal } from "@/components/shared/modals/CourseDetailModal";
 
 export default function LecturerMyCoursesPage() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const { data: myCourses, isLoading: loadingMyCourses } = useMyCoursesLecturer();
   const { data: allCourses, isLoading: loadingAll } = useCourses({ search });
   
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [detailModalOpen, setDetailModalOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<any>(null);
 
   const openCourseDetail = (course: any) => {
-    setSelectedCourse(course);
-    setDetailModalOpen(true);
+    router.push(`/dashboard/lecturer/courses/${course.id}`);
   };
 
   const CourseCard = ({ course, isOwned }: { course: any; isOwned: boolean }) => (
     <Card
-      className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden hover:ring-2 hover:ring-primary/10 transition-all cursor-pointer group"
-      onClick={() => openCourseDetail(course)}
+      className="border-none shadow-xl shadow-gray-200/40 bg-white rounded-[1.5rem] overflow-hidden hover:ring-2 hover:ring-primary/10 transition-all group"
     >
       <div className="h-2.5 bg-primary/20 group-hover:h-3.5 transition-all"></div>
       <CardHeader className="p-6">
@@ -45,8 +42,8 @@ export default function LecturerMyCoursesPage() {
            </Badge>
         )}
       </CardHeader>
-      <CardContent className="px-6 pb-6">
-        <p className="text-[13px] font-bold text-gray-500 mb-6 line-clamp-2 leading-relaxed">
+      <CardContent className="px-6 pb-6 space-y-4">
+        <p className="text-[13px] font-bold text-gray-500 line-clamp-2 leading-relaxed">
           {course.description || "No metadata description provided for this academic unit."}
         </p>
         <div className="flex items-center justify-between">
@@ -63,6 +60,12 @@ export default function LecturerMyCoursesPage() {
             )}
           </div>
         </div>
+        <Button
+          className="w-full h-10 rounded-xl bg-primary hover:bg-primary-600 text-white font-bold text-[10px] uppercase tracking-wide shadow-lg shadow-primary/20 transition-all"
+          onClick={() => openCourseDetail(course)}
+        >
+          View Details
+        </Button>
       </CardContent>
     </Card>
   );
@@ -168,14 +171,6 @@ export default function LecturerMyCoursesPage() {
       </Tabs>
 
       <CreateCourseModal open={createModalOpen} onOpenChange={setCreateModalOpen} />
-      {selectedCourse && (
-        <CourseDetailModal 
-          open={detailModalOpen} 
-          onOpenChange={setDetailModalOpen} 
-          course={selectedCourse}
-          isEnrolled={myCourses?.some((mc: any) => mc.id === selectedCourse.id)}
-        />
-      )}
     </div>
   );
 }

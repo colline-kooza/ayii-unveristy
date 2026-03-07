@@ -1,7 +1,7 @@
 "use client";
 
 import { useJournals, useDeleteJournal } from "@/hooks/useLibrary";
-import { ResourceCard } from "@/components/dashboard/library/ResourceCard";
+import { JournalCard } from "@/components/dashboard/library/JournalCard";
 import { ResourceGridSkeleton } from "@/components/dashboard/library/ResourceCardSkeleton";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { BookOpen } from "lucide-react";
@@ -20,6 +20,7 @@ interface Journal {
   doi?: string;
   status: string;
   fileKey: string;
+  createdAt: string;
 }
 
 export default function JournalsPage() {
@@ -53,12 +54,11 @@ export default function JournalsPage() {
   return (
     <>
       {journals?.data?.length ? (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {journals.data.map((journal: Journal) => (
-            <ResourceCard
+            <JournalCard
               key={journal.id}
-              resource={journal}
-              type="journal"
+              journal={journal}
               isAdmin={isAdmin}
               onEdit={(j: Journal) => { setEditingAsset(j); setModalOpen(true); }}
               onDelete={handleDelete}
@@ -69,11 +69,10 @@ export default function JournalsPage() {
         <EmptyState
           icon={BookOpen}
           title="No journals found"
-          description="Scholarly articles coming soon."
+          description={search ? "Try adjusting your search criteria" : "No scholarly articles available yet. Check back soon for new publications."}
         />
       )}
 
-      {/* Edit modal (Create is handled by the layout's Add Resource button) */}
       <LibraryAssetModal
         open={modalOpen}
         onOpenChange={(open) => {

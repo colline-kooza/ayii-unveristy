@@ -4,6 +4,34 @@ import { prisma } from "@/lib/prisma";
 import { UserRole } from "@/lib/generated/prisma";
 import { z } from "zod";
 
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { error } = await requireAuth();
+  if (error) return error;
+  const { id } = await params;
+
+  const journal = await prisma.journal.findUnique({
+    where: { id },
+    include: {
+      submittedBy: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  if (!journal) {
+    return NextResponse.json({ error: "Journal not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(journal);
+}
+
 const updateJournalSchema = z.object({
   title: z.string().min(1).optional(),
   abstract: z.string().min(1).optional(),

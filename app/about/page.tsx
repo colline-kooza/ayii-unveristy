@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/frontend/Header";
 import Footer from "@/components/frontend/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +41,7 @@ export default function AboutPage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-linear-to-b from-black to-gray-800 py-20 text-white lg:py-20 ">
+        <section className="relative overflow-hidden bg-linear-to-b from-black to-gray-800 py-20 text-white lg:py-30 ">
           <div className="container relative z-10 mx-auto px-6 lg:px-12">
             <div className="max-w-3xl">
               <Badge className="mb-4 bg-red-600/20 text-red-400 border-red-500/30 text-xs font-semibold px-4 py-1">

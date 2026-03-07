@@ -42,6 +42,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <Toaster
         position="top-right"
         richColors
+        expand={true}
+        duration={4000}
+        closeButton
       />
       {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />

@@ -71,7 +71,7 @@ export default function PublicCoursesPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800 py-16 text-white lg:py-20 mt-14">
+        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800 py-16 text-white lg:py-30 ">
           <div className="container relative z-10 mx-auto px-6 lg:px-12 text-center">
             <Badge className="mb-4 bg-red-600/20 text-red-400 border-red-500/30 text-xs font-semibold px-4 py-1">
               Course Catalog 2026

@@ -47,8 +47,7 @@ export default function StudentCoursesPage() {
       whileHover={{ y: -5 }}
     >
       <Card 
-        className="group relative overflow-hidden rounded-[2rem] border-0 shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-white min-h-[340px] flex flex-col cursor-pointer"
-        onClick={() => router.push(`/dashboard/student/courses/${course.id}`)}
+        className="group relative overflow-hidden rounded-[2rem] border-0 shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-white min-h-[340px] flex flex-col"
       >
         <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
         
@@ -88,24 +87,39 @@ export default function StudentCoursesPage() {
             </div>
           </div>
 
-          {isEnrolled ? (
+          <div className="flex gap-2">
             <Button
               variant="outline"
-              className="w-full h-12 rounded-2xl border-gray-100 font-black text-[11px] uppercase tracking-widest text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all italic"
-              onClick={(e) => handleUnenroll(e, course.id)}
-              disabled={unenroll.isPending}
+              className="flex-1 h-12 rounded-2xl border-gray-200 font-black text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all italic"
+              onClick={() => router.push(`/dashboard/student/courses/${course.id}`)}
             >
-              Already Enrolled
+              View Details
             </Button>
-          ) : (
-            <Button
-              className="w-full h-12 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-[11px] uppercase tracking-[0.15em] shadow-xl shadow-primary/20 transition-all italic"
-              onClick={(e) => handleEnroll(e, course.id)}
-              disabled={enroll.isPending}
-            >
-              Enroll in Course
-            </Button>
-          )}
+            {isEnrolled ? (
+              <Button
+                variant="outline"
+                className="flex-1 h-12 rounded-2xl border-gray-100 font-black text-[11px] uppercase tracking-widest text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all italic"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleUnenroll(e, course.id);
+                }}
+                disabled={unenroll.isPending}
+              >
+                Unenroll
+              </Button>
+            ) : (
+              <Button
+                className="flex-1 h-12 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-[11px] uppercase tracking-[0.15em] shadow-xl shadow-primary/20 transition-all italic"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEnroll(e, course.id);
+                }}
+                disabled={enroll.isPending}
+              >
+                Enroll
+              </Button>
+            )}
+          </div>
         </CardContent>
       </Card>
     </motion.div>

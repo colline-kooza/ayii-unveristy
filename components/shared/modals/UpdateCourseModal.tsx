@@ -14,8 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUpdateCourse } from "@/hooks/useCourses";
 import { SelectInput } from "@/components/shared/SelectInput";
+import { RichTextEditor } from "@/components/editor/RichTextEditor";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { BookOpen, Code, Building, FileText, Check, Loader2 } from "lucide-react";
 
@@ -23,6 +25,7 @@ const courseSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string().optional(),
   department: z.string().min(1, "Department is required"),
+  outline: z.string().optional(),
 });
 
 type CourseFormValues = z.infer<typeof courseSchema>;
@@ -33,6 +36,7 @@ interface Course {
   description?: string;
   unitCode: string;
   department: string;
+  outline?: string;
 }
 
 interface UpdateCourseModalProps {
@@ -80,6 +84,7 @@ export function UpdateCourseModal({
         title: course.title,
         description: course.description || "",
         department: course.department,
+        outline: course.outline || "",
       });
     }
   }, [course, reset]);
@@ -101,7 +106,7 @@ export function UpdateCourseModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-[900px] max-h-[90vh] p-0 overflow-hidden">
         <div className="bg-gradient-to-br from-[#8B1538] to-[#6B1329] p-6 text-white">
             <DialogHeader>
                 <DialogTitle className="text-lg font-bold flex items-center gap-3">
@@ -116,70 +121,98 @@ export function UpdateCourseModal({
             </DialogHeader>
         </div>
 
-        <ScrollArea className="max-h-[80vh]">
-          <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-            {/* Unit Code Display (Read-only) */}
-            <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
-                  <Code className="h-5 w-5 text-red-700" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-red-900 uppercase tracking-wide">Unit Code</p>
-                  <code className="text-sm font-bold text-red-700">{course.unitCode}</code>
-                </div>
-              </div>
-              <p className="text-xs text-red-600 mt-2">Unit codes cannot be modified after creation</p>
-            </div>
+        <ScrollArea className="max-h-[calc(90vh-180px)]">
+          <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+            <Tabs defaultValue="basic" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="basic">Basic Info</TabsTrigger>
+                <TabsTrigger value="outline">Course Outline</TabsTrigger>
+              </TabsList>
 
-            {/* Course Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title" className="text-xs font-semibold text-gray-700 flex items-center gap-2">
-                <BookOpen className="h-3 w-3 text-red-500" /> Course Title
-              </Label>
-              <Input 
-                id="title" 
-                {...register("title")} 
-                placeholder="e.g. Advanced Machine Learning" 
-                className="h-11" 
-              />
-              {errors.title && <p className="text-xs text-red-600 font-medium">{errors.title.message}</p>}
-            </div>
+              <TabsContent value="basic" className="space-y-6">
+                {/* Unit Code Display (Read-only) */}
+                <div className="p-4 bg-red-50 border border-red-100 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
+                      <Code className="h-5 w-5 text-red-700" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-red-900 uppercase tracking-wide">Unit Code</p>
+                      <code className="text-sm font-bold text-red-700">{course.unitCode}</code>
+                    </div>
+                  </div>
+                  <p className="text-xs text-red-600 mt-2">Unit codes cannot be modified after creation</p>
+                </div>
 
-            {/* Department */}
-            <div className="space-y-2">
-              <Controller
-                name="department"
-                control={control}
-                render={({ field }) => (
-                  <SelectInput
-                    label="Department"
-                    options={DEPARTMENTS}
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    placeholder="Select department..."
+                {/* Course Title */}
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-xs font-semibold text-gray-700 flex items-center gap-2">
+                    <BookOpen className="h-3 w-3 text-red-500" /> Course Title
+                  </Label>
+                  <Input 
+                    id="title" 
+                    {...register("title")} 
+                    placeholder="e.g. Advanced Machine Learning" 
+                    className="h-11" 
                   />
-                )}
-              />
-              {errors.department && <p className="text-xs text-red-600 font-medium">{errors.department.message}</p>}
-            </div>
+                  {errors.title && <p className="text-xs text-red-600 font-medium">{errors.title.message}</p>}
+                </div>
 
-            {/* Description */}
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-xs font-semibold text-gray-700 flex items-center gap-2">
-                <FileText className="h-3 w-3 text-red-500" /> Course Description
-              </Label>
-              <Textarea 
-                id="description" 
-                {...register("description")} 
-                placeholder="Provide a detailed description of the course content, objectives, and learning outcomes..."
-                className="min-h-[120px] resize-none"
-              />
-              {errors.description && <p className="text-xs text-red-600 font-medium">{errors.description.message}</p>}
-            </div>
+                {/* Department */}
+                <div className="space-y-2">
+                  <Controller
+                    name="department"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInput
+                        label="Department"
+                        options={DEPARTMENTS}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        placeholder="Select department..."
+                      />
+                    )}
+                  />
+                  {errors.department && <p className="text-xs text-red-600 font-medium">{errors.department.message}</p>}
+                </div>
+
+                {/* Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-xs font-semibold text-gray-700 flex items-center gap-2">
+                    <FileText className="h-3 w-3 text-red-500" /> Course Description
+                  </Label>
+                  <Textarea 
+                    id="description" 
+                    {...register("description")} 
+                    placeholder="Provide a detailed description of the course content, objectives, and learning outcomes..."
+                    className="min-h-[120px] resize-none"
+                  />
+                  {errors.description && <p className="text-xs text-red-600 font-medium">{errors.description.message}</p>}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="outline" className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-xs font-semibold text-gray-700">Course Outline</Label>
+                  <p className="text-xs text-gray-500">Create a detailed course outline with objectives, topics, schedule, and grading criteria</p>
+                  <Controller
+                    name="outline"
+                    control={control}
+                    render={({ field }) => (
+                      <RichTextEditor
+                        value={field.value || ""}
+                        onChange={field.onChange}
+                        placeholder="Create your course outline here..."
+                        minHeight="400px"
+                      />
+                    )}
+                  />
+                </div>
+              </TabsContent>
+            </Tabs>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between pt-6 pb-4 border-t gap-4">
+            <div className="flex items-center justify-between pt-6 pb-4 border-t gap-4 mt-6">
               <Button 
                 type="button" 
                 variant="ghost" 

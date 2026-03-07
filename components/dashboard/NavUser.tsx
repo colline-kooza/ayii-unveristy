@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
 import { getAvatarUrl } from "@/lib/avatarUtils";
+import { useSignOut } from "@/hooks/useAuth";
 
 interface NavUserProps {
   user: {
@@ -33,9 +34,10 @@ interface NavUserProps {
 export function NavUser({ user }: NavUserProps) {
   const { isMobile } = useSidebar();
   const router = useRouter();
+  const signOut = useSignOut();
 
   const handleLogout = () => {
-    router.push("/auth/sign-in");
+    signOut.mutate();
   };
 
   return (
@@ -101,9 +103,9 @@ export function NavUser({ user }: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} disabled={signOut.isPending}>
               <LogOut />
-              Log out
+              {signOut.isPending ? "Logging out..." : "Log out"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

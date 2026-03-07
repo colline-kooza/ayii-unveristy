@@ -21,6 +21,10 @@ apiClient.interceptors.response.use(
     const message = error.response?.data?.error;
 
     if (status === 401) {
+      if (error.config?.url === "/users/me") {
+        return Promise.reject(error);
+      }
+      
       // Not authenticated → redirect to sign-in
       if (typeof window !== "undefined") {
         window.location.href = "/auth/sign-in";

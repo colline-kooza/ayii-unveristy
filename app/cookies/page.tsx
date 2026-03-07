@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/frontend/Header";
 import Footer from "@/components/frontend/Footer";
 import { Badge } from "@/components/ui/badge";

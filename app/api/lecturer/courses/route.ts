@@ -26,11 +26,15 @@ const createCourseSchema = z.object({
   description: z.string().optional(),
   unitCode: z.string().min(2).toUpperCase(),
   department: z.string().min(1),
+  outline: z.string().optional(),
   lecturerId: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
-  const { error, session } = await requireAuth([UserRole.LECTURER, UserRole.ADMIN]);
+  const { error, session } = await requireAuth([
+    UserRole.LECTURER,
+    UserRole.ADMIN,
+  ]);
   if (error) return error;
   const user = session!.user as any;
 
@@ -54,18 +58,23 @@ export async function POST(req: NextRequest) {
   // Verify target lecturer exists and is a LECTURER
   if (user.role === UserRole.ADMIN && data.lecturerId) {
     const target = await prisma.user.findFirst({
-        where: { id: data.lecturerId, role: UserRole.LECTURER }
+      where: { id: data.lecturerId, role: UserRole.LECTURER },
     });
-    if (!target) return NextResponse.json({ error: "Invalid lecturer ID" }, { status: 422 });
+    if (!target)
+      return NextResponse.json(
+        { error: "Invalid lecturer ID" },
+        { status: 422 },
+      );
   }
 
   const course = await prisma.course.create({
-    data: { 
-        title: data.title,
-        unitCode: data.unitCode,
-        department: data.department,
-        description: data.description,
-        lecturerId: targetLecturerId 
+    data: {
+      title: data.title,
+      unitCode: data.unitCode,
+      department: data.department,
+      description: data.description,
+      outline: data.outline,
+      lecturerId: targetLecturerId,
     },
     include: { _count: { select: { enrollments: true, assignments: true } } },
   });

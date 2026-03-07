@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useSignOut } from "@/hooks/useAuth";
 
 interface NavbarProps {
   onSearch?: (query: string) => void;
@@ -27,6 +28,7 @@ export function Navbar({ onSearch, searchResults = [], user }: NavbarProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
   const { data: notifications } = useNotifications({ unreadOnly: true });
+  const signOut = useSignOut();
 
   const unreadCount = notifications?.data?.length || 0;
 
@@ -36,6 +38,10 @@ export function Navbar({ onSearch, searchResults = [], user }: NavbarProps) {
     if (onSearch) {
       onSearch(value);
     }
+  };
+
+  const handleLogout = () => {
+    signOut.mutate();
   };
 
   return (
@@ -122,8 +128,9 @@ export function Navbar({ onSearch, searchResults = [], user }: NavbarProps) {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push("/auth/sign-in")}>
-              Log out
+            <DropdownMenuItem onClick={handleLogout} disabled={signOut.isPending}>
+              <LogOut className="mr-2 h-4 w-4" />
+              {signOut.isPending ? "Logging out..." : "Log out"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

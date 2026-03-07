@@ -7,9 +7,19 @@ const PUBLIC_PATHS = [
   "/auth/forgot-password",
   "/auth/reset-password",
   "/auth/verify-email",
+  "/auth/change-password",
+  "/auth/profile",
   "/api/auth",
   "/courses",
   "/apply",
+  "/about",
+  "/contact",
+  "/faq",
+  "/help",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/admissions",
 ];
 
 export async function middleware(request: NextRequest) {
@@ -17,7 +27,8 @@ export async function middleware(request: NextRequest) {
 
   // Allow public paths and API routes
   if (
-    PUBLIC_PATHS.some((p) => pathname.startsWith(p)) ||
+    pathname === "/" ||
+    PUBLIC_PATHS.filter((p) => p !== "/").some((p) => pathname.startsWith(p)) ||
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
     pathname.includes(".")

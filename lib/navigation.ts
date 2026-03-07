@@ -35,6 +35,11 @@ export function getNavigationForRole(
           icon: LayoutDashboard,
         },
         {
+          title: "All Dashboards",
+          url: "/dashboard/all-roles",
+          icon: LayoutDashboard,
+        },
+        {
           title: "Users",
           url: "/dashboard/admin/users",
           icon: Users,
@@ -110,6 +115,11 @@ export function getNavigationForRole(
           icon: LayoutDashboard,
         },
         {
+          title: "All Dashboards",
+          url: "/dashboard/all-roles",
+          icon: LayoutDashboard,
+        },
+        {
           title: "My Courses",
           url: "/dashboard/lecturer/my-courses",
           icon: BookOpen,
@@ -174,6 +184,11 @@ export function getNavigationForRole(
         {
           title: "Overview",
           url: "/dashboard/student",
+          icon: LayoutDashboard,
+        },
+        {
+          title: "All Dashboards",
+          url: "/dashboard/all-roles",
           icon: LayoutDashboard,
         },
         {

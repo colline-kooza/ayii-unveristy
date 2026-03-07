@@ -8,7 +8,10 @@ export async function GET(
   _: NextRequest,
   { params }: { params: Promise<{ courseId: string }> },
 ) {
-  const { error, session } = await requireAuth([UserRole.LECTURER, UserRole.ADMIN]);
+  const { error, session } = await requireAuth([
+    UserRole.LECTURER,
+    UserRole.ADMIN,
+  ]);
   if (error) return error;
   const user = session!.user as any;
   const { courseId } = await params;
@@ -18,7 +21,10 @@ export async function GET(
     include: {
       lecturer: { select: { id: true, name: true, email: true, image: true } },
       _count: { select: { enrollments: true, assignments: true } },
-      liveLectures: { where: { status: "LIVE" }, select: { id: true, meetingUrl: true } },
+      liveLectures: {
+        where: { status: "LIVE" },
+        select: { id: true, meetingUrl: true },
+      },
     },
   });
 
@@ -37,13 +43,17 @@ const updateSchema = z.object({
   title: z.string().min(3).optional(),
   description: z.string().optional(),
   department: z.string().min(1).optional(),
+  outline: z.string().optional(),
 });
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ courseId: string }> },
 ) {
-  const { error, session } = await requireAuth([UserRole.LECTURER, UserRole.ADMIN]);
+  const { error, session } = await requireAuth([
+    UserRole.LECTURER,
+    UserRole.ADMIN,
+  ]);
   if (error) return error;
   const user = session!.user as any;
   const { courseId } = await params;
@@ -87,6 +97,9 @@ export async function DELETE(
     await prisma.course.delete({ where: { id: courseId } });
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to delete course" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete course" },
+      { status: 500 },
+    );
   }
 }

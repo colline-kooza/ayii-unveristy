@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, MoreVertical, BookOpen, Eye, Edit, Trash2, GraduationCap, Clock } from "lucide-react";
+import { Plus, Search, MoreVertical, BookOpen, Eye, Edit, Trash2 } from "lucide-react";
 import { useCourses, useDeleteCourse } from "@/hooks/useCourses";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Pagination } from "@/components/shared/Pagination";
@@ -12,7 +13,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -32,10 +32,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 import { CreateCourseModal } from "@/components/shared/modals/CreateCourseModal";
 import { UpdateCourseModal } from "@/components/shared/modals/UpdateCourseModal";
-import { ViewCourseModal } from "@/components/shared/modals/ViewCourseModal";
 import { ConfirmDeleteModal } from "@/components/shared/modals/ConfirmDeleteModal";
 
 interface Course {
@@ -59,16 +57,15 @@ export default function AdminCoursesPage() {
   const [search, setSearch] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [courseToDelete, setCourseToDelete] = useState<string | null>(null);
+  const router = useRouter();
   const { data, isLoading } = useCourses({ page, search });
   const deleteCourse = useDeleteCourse();
 
-  const handleView = (course: Course) => {
-    setSelectedCourse(course);
-    setIsViewModalOpen(true);
+  const handleView = (courseId: string) => {
+    router.push(`/dashboard/admin/courses/${courseId}`);
   };
 
   const handleEdit = (course: Course) => {
@@ -202,7 +199,7 @@ export default function AdminCoursesPage() {
                              <DropdownMenuSeparator className="bg-gray-50" />
                              <DropdownMenuItem 
                                className="cursor-pointer gap-2 focus:bg-red-50 focus:text-red-700 rounded-md"
-                               onClick={() => handleView(course)}
+                               onClick={() => handleView(course.id)}
                              >
                                <Eye className="h-4 w-4 opacity-70" /> <span>Course Details</span>
                              </DropdownMenuItem>
@@ -247,11 +244,6 @@ export default function AdminCoursesPage() {
         open={isCreateModalOpen}
         onOpenChange={setIsCreateModalOpen}
         isAdmin={true}
-      />
-      <ViewCourseModal
-        open={isViewModalOpen}
-        onOpenChange={setIsViewModalOpen}
-        course={selectedCourse}
       />
       <UpdateCourseModal
         open={isEditModalOpen}

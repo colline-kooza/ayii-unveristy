@@ -29,7 +29,7 @@ export function LogoutButton({
       fetchOptions: {
         onSuccess: () => {
           toast.success("Logged out successfully")
-          router.push("/auth/sign-in")
+          window.location.href = "/auth/sign-in"
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "Failed to logout")

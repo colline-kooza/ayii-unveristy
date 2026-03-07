@@ -83,9 +83,9 @@ export function EventCalendar() {
           </span>
         </div>
         <div className="grid grid-cols-7 gap-1 text-center mb-2">
-          {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-            <span key={d} className="text-[10px] font-bold text-muted-foreground uppercase">
-              {d}
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, index) => (
+            <span key={`day-${index}-${d}`} className="text-[10px] font-bold text-muted-foreground uppercase">
+              {d.charAt(0)}
             </span>
           ))}
         </div>
