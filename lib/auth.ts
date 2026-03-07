@@ -8,6 +8,12 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_URL!,
 
+  // Trust requests coming from our own app URL.
+  // This is critical on hosting platforms to prevent CORS/cookie rejections.
+  trustedOrigins: process.env.BETTER_AUTH_URL
+    ? [process.env.BETTER_AUTH_URL]
+    : ["http://localhost:3000"],
+
   emailAndPassword: {
     enabled: true,
   },
@@ -18,6 +24,7 @@ export const auth = betterAuth({
       maxAge: 60 * 60 * 24 * 7, // 7 days
     },
   },
+
 
   user: {
     additionalFields: {

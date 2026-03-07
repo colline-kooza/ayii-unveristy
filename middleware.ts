@@ -36,8 +36,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for session cookie (Better Auth uses better-auth.session_token)
-  const sessionToken = request.cookies.get("better-auth.session_token");
+  // Check for session cookie.
+  // Better Auth can store the token under multiple cookie names depending on the version and environment:
+  // - "better-auth.session_token"        → standard HTTP
+  // - "better-auth.session_token.0"      → split cookie (large tokens)
+  // - "__Secure-better-auth.session_token" → HTTPS/secure environments
+  const sessionToken =
+    request.cookies.get("better-auth.session_token") ||
+    request.cookies.get("better-auth.session_token.0") ||
+    request.cookies.get("__Secure-better-auth.session_token") ||
+    request.cookies.get("__Secure-better-auth.session_token.0");
 
   // Not authenticated - redirect to sign-in
   if (!sessionToken) {
