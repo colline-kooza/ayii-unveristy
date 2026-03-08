@@ -10,8 +10,50 @@ import { apiClient, getErrorMessage } from "@/lib/api";
 import { queryKeys } from "@/lib/queryKeys";
 import { toast } from "sonner";
 
+export interface Message {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  sentAt: string;
+  isRead: boolean;
+  _optimistic?: boolean;
+  sender?: {
+    id: string;
+    name: string;
+    image?: string | null;
+    role: string;
+  };
+}
+
+export interface ThreadPage {
+  data: Message[];
+  meta: {
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
+}
+
+export interface InfiniteThreadData {
+  pages: ThreadPage[];
+  pageParams: number[];
+}
+
+export interface Conversation {
+  id: string;
+  partner: {
+    id: string;
+    name: string;
+    image?: string | null;
+    role: string;
+  };
+  lastMessage: Message;
+  unreadCount: number;
+}
+
 export function useConversations() {
-  return useQuery({
+  return useQuery<Conversation[]>({
     queryKey: queryKeys.messages.conversations,
     queryFn: async () => {
       const { data } = await apiClient.get("/messages/conversations");
@@ -53,7 +95,7 @@ export function useSendMessage() {
       const me = queryClient.getQueryData<any>(["me"]);
 
       // Optimistic: append message to thread immediately
-      const tempMessage = {
+      const tempMessage: Message = {
         id: `temp-${Date.now()}`,
         senderId: me?.id || "temp-user",
         receiverId,
@@ -71,9 +113,9 @@ export function useSendMessage() {
           : undefined,
       };
 
-      queryClient.setQueryData<any>(
+      queryClient.setQueryData<InfiniteThreadData>(
         queryKeys.messages.thread(receiverId),
-        (old: any) => {
+        (old) => {
           if (!old) return old;
           const pages = old.pages;
           const lastPage = pages[pages.length - 1];
@@ -92,15 +134,15 @@ export function useSendMessage() {
     onError: (error, _, ctx) => {
       // Rollback optimistic message
       if (ctx?.receiverId) {
-        queryClient.setQueryData<any>(
+        queryClient.setQueryData<InfiniteThreadData>(
           queryKeys.messages.thread(ctx.receiverId),
-          (old: any) => {
+          (old) => {
             if (!old) return old;
             return {
               ...old,
-              pages: old.pages.map((page: any) => ({
+              pages: old.pages.map((page) => ({
                 ...page,
-                data: page.data.filter((m: any) => !m._optimistic),
+                data: page.data.filter((m) => !m._optimistic),
               })),
             };
           },

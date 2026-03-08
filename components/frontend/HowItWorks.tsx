@@ -1,36 +1,28 @@
-import React from "react";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 
 export default function HowItWorks() {
-  const steps = [
-    {
-      number: "01",
-      title: "Register",
-      description:
-        "Create your account with  AYii University and course details to get personalized content.",
+  const { data } = useQuery({
+    queryKey: ["cms", "homepage", "howItWorks"],
+    queryFn: async () => {
+      const res = await fetch("/api/cms/homepage/howItWorks");
+      if (!res.ok) throw new Error("Failed to fetch");
+      return res.json();
     },
-    {
-      number: "02",
-      title: "Browse",
-      description:
-        "Find resources, join discussions, and take quizzes specifically for your course units.",
-    },
-    {
-      number: "03",
-      title: "Learn",
-      description:
-        "Download materials, get answers from lecturers, and ace your exams with confidence.",
-    },
-  ];
+  });
+
+  if (!data) return null;
 
   return (
     <section className="relative w-full px-4 md:px-12 lg:px-24 py-24 bg-[#F5F7FA]">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-extrabold tracking-tighter sm:text-3xl text-[#283593] mb-4">
-            Get started in 3 simple steps
+            {data.heading || "Get started in 3 simple steps"}
           </h2>
           <p className="text-lg text-slate-500 max-w-[800px] mx-auto font-medium">
-            Join the community and start improving your grades today.
+            {data.subheading || "Join the community and start improving your grades today."}
           </p>
         </div>
 
@@ -39,9 +31,9 @@ export default function HowItWorks() {
           <div className="hidden lg:block absolute top-12 left-[15%] right-[15%] h-0.5 border-t-2 border-dashed border-red-200" />
 
           <div className="grid gap-12 lg:grid-cols-3">
-            {steps.map((step, index) => (
+            {data.steps?.map((step: any, index: number) => (
               <div
-                key={index}
+                key={step.id || index}
                 className="relative flex flex-col items-center text-center group"
               >
                 <div className="w-24 h-24 rounded-full bg-white border-4 border-red-50 flex items-center justify-center mb-6 shadow-xl group-hover:border-[#F4A800] transition-colors z-10">

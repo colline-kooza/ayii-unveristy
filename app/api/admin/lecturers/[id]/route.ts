@@ -18,7 +18,7 @@ export async function PATCH(
 ) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const admin = session!.user as any;
+  const admin = session!.user;
   const { id } = await params;
 
   const validated = await validateBody(req, updateLecturerSchema);
@@ -72,7 +72,7 @@ export async function DELETE(
 ) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const admin = session!.user as any;
+  const admin = session!.user;
   const { id } = await params;
 
   const target = await prisma.user.findUnique({ 

@@ -18,7 +18,8 @@ import {
   ShieldCheck,
   Calendar,
   CheckCircle2,
-  XCircle
+  XCircle,
+  LucideIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +29,18 @@ interface ViewLecturerProfileModalProps {
   lecturer: Lecturer | null;
 }
 
+const InfoRow = ({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) => (
+  <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+    <div className="h-9 w-9 rounded-lg bg-rose-50 flex items-center justify-center flex-shrink-0">
+      <Icon className="h-4 w-4 text-[#8B1538]" />
+    </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</p>
+      <p className="text-sm font-semibold text-black mt-0.5 break-words">{value}</p>
+    </div>
+  </div>
+);
+
 export function ViewLecturerProfileModal({
   open,
   onOpenChange,
@@ -35,17 +48,6 @@ export function ViewLecturerProfileModal({
 }: ViewLecturerProfileModalProps) {
   if (!lecturer) return null;
 
-  const InfoRow = ({ icon: Icon, label, value }: { icon: any; label: string; value: string }) => (
-    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-      <div className="h-9 w-9 rounded-lg bg-rose-50 flex items-center justify-center flex-shrink-0">
-        <Icon className="h-4 w-4 text-[#8B1538]" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</p>
-        <p className="text-sm font-semibold text-black mt-0.5 break-words">{value}</p>
-      </div>
-    </div>
-  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

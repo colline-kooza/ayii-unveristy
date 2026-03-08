@@ -68,7 +68,7 @@ export default function ContactPage() {
               Contact <span className="text-red-400">Us</span>
             </h1>
             <p className="max-w-2xl mx-auto text-sm text-gray-300">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
             </p>
           </div>
         </section>

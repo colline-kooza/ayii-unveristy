@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { AuthUser } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
 
 export default function DashboardOverviewPage() {
@@ -10,7 +11,7 @@ export default function DashboardOverviewPage() {
 
   useEffect(() => {
     if (!isPending && session?.user) {
-      const role = (session.user as any).role;
+      const role = (session.user as AuthUser).role;
       
       // Route to role-specific detailed page
       switch (role) {

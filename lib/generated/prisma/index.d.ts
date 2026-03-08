@@ -98,6 +98,11 @@ export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
  * 
  */
 export type AdmissionApplication = $Result.DefaultSelection<Prisma.$AdmissionApplicationPayload>
+/**
+ * Model CmsContent
+ * 
+ */
+export type CmsContent = $Result.DefaultSelection<Prisma.$CmsContentPayload>
 
 /**
  * Enums
@@ -504,6 +509,16 @@ export class PrismaClient<
     * ```
     */
   get admissionApplication(): Prisma.AdmissionApplicationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cmsContent`: Exposes CRUD operations for the **CmsContent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CmsContents
+    * const cmsContents = await prisma.cmsContent.findMany()
+    * ```
+    */
+  get cmsContent(): Prisma.CmsContentDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -954,7 +969,8 @@ export namespace Prisma {
     Journal: 'Journal',
     Book: 'Book',
     AuditLog: 'AuditLog',
-    AdmissionApplication: 'AdmissionApplication'
+    AdmissionApplication: 'AdmissionApplication',
+    CmsContent: 'CmsContent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -970,7 +986,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "course" | "courseResource" | "enrollment" | "assignment" | "submission" | "liveLecture" | "message" | "notification" | "pastPaper" | "journal" | "book" | "auditLog" | "admissionApplication"
+      modelProps: "user" | "session" | "account" | "verification" | "course" | "courseResource" | "enrollment" | "assignment" | "submission" | "liveLecture" | "message" | "notification" | "pastPaper" | "journal" | "book" | "auditLog" | "admissionApplication" | "cmsContent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2232,6 +2248,80 @@ export namespace Prisma {
           }
         }
       }
+      CmsContent: {
+        payload: Prisma.$CmsContentPayload<ExtArgs>
+        fields: Prisma.CmsContentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CmsContentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CmsContentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          findFirst: {
+            args: Prisma.CmsContentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CmsContentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          findMany: {
+            args: Prisma.CmsContentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>[]
+          }
+          create: {
+            args: Prisma.CmsContentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          createMany: {
+            args: Prisma.CmsContentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CmsContentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>[]
+          }
+          delete: {
+            args: Prisma.CmsContentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          update: {
+            args: Prisma.CmsContentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CmsContentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CmsContentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CmsContentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>[]
+          }
+          upsert: {
+            args: Prisma.CmsContentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CmsContentPayload>
+          }
+          aggregate: {
+            args: Prisma.CmsContentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCmsContent>
+          }
+          groupBy: {
+            args: Prisma.CmsContentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CmsContentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CmsContentCountArgs<ExtArgs>
+            result: $Utils.Optional<CmsContentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2357,6 +2447,7 @@ export namespace Prisma {
     book?: BookOmit
     auditLog?: AuditLogOmit
     admissionApplication?: AdmissionApplicationOmit
+    cmsContent?: CmsContentOmit
   }
 
   /* Types for Logging */
@@ -22216,6 +22307,1010 @@ export namespace Prisma {
 
 
   /**
+   * Model CmsContent
+   */
+
+  export type AggregateCmsContent = {
+    _count: CmsContentCountAggregateOutputType | null
+    _min: CmsContentMinAggregateOutputType | null
+    _max: CmsContentMaxAggregateOutputType | null
+  }
+
+  export type CmsContentMinAggregateOutputType = {
+    id: string | null
+    page: string | null
+    section: string | null
+    updatedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type CmsContentMaxAggregateOutputType = {
+    id: string | null
+    page: string | null
+    section: string | null
+    updatedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type CmsContentCountAggregateOutputType = {
+    id: number
+    page: number
+    section: number
+    content: number
+    updatedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CmsContentMinAggregateInputType = {
+    id?: true
+    page?: true
+    section?: true
+    updatedAt?: true
+    createdAt?: true
+  }
+
+  export type CmsContentMaxAggregateInputType = {
+    id?: true
+    page?: true
+    section?: true
+    updatedAt?: true
+    createdAt?: true
+  }
+
+  export type CmsContentCountAggregateInputType = {
+    id?: true
+    page?: true
+    section?: true
+    content?: true
+    updatedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CmsContentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CmsContent to aggregate.
+     */
+    where?: CmsContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CmsContents to fetch.
+     */
+    orderBy?: CmsContentOrderByWithRelationInput | CmsContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CmsContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CmsContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CmsContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CmsContents
+    **/
+    _count?: true | CmsContentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CmsContentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CmsContentMaxAggregateInputType
+  }
+
+  export type GetCmsContentAggregateType<T extends CmsContentAggregateArgs> = {
+        [P in keyof T & keyof AggregateCmsContent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCmsContent[P]>
+      : GetScalarType<T[P], AggregateCmsContent[P]>
+  }
+
+
+
+
+  export type CmsContentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CmsContentWhereInput
+    orderBy?: CmsContentOrderByWithAggregationInput | CmsContentOrderByWithAggregationInput[]
+    by: CmsContentScalarFieldEnum[] | CmsContentScalarFieldEnum
+    having?: CmsContentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CmsContentCountAggregateInputType | true
+    _min?: CmsContentMinAggregateInputType
+    _max?: CmsContentMaxAggregateInputType
+  }
+
+  export type CmsContentGroupByOutputType = {
+    id: string
+    page: string
+    section: string
+    content: JsonValue
+    updatedAt: Date
+    createdAt: Date
+    _count: CmsContentCountAggregateOutputType | null
+    _min: CmsContentMinAggregateOutputType | null
+    _max: CmsContentMaxAggregateOutputType | null
+  }
+
+  type GetCmsContentGroupByPayload<T extends CmsContentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CmsContentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CmsContentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CmsContentGroupByOutputType[P]>
+            : GetScalarType<T[P], CmsContentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CmsContentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    page?: boolean
+    section?: boolean
+    content?: boolean
+    updatedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cmsContent"]>
+
+  export type CmsContentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    page?: boolean
+    section?: boolean
+    content?: boolean
+    updatedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cmsContent"]>
+
+  export type CmsContentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    page?: boolean
+    section?: boolean
+    content?: boolean
+    updatedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cmsContent"]>
+
+  export type CmsContentSelectScalar = {
+    id?: boolean
+    page?: boolean
+    section?: boolean
+    content?: boolean
+    updatedAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type CmsContentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "page" | "section" | "content" | "updatedAt" | "createdAt", ExtArgs["result"]["cmsContent"]>
+
+  export type $CmsContentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CmsContent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      page: string
+      section: string
+      content: Prisma.JsonValue
+      updatedAt: Date
+      createdAt: Date
+    }, ExtArgs["result"]["cmsContent"]>
+    composites: {}
+  }
+
+  type CmsContentGetPayload<S extends boolean | null | undefined | CmsContentDefaultArgs> = $Result.GetResult<Prisma.$CmsContentPayload, S>
+
+  type CmsContentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CmsContentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CmsContentCountAggregateInputType | true
+    }
+
+  export interface CmsContentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CmsContent'], meta: { name: 'CmsContent' } }
+    /**
+     * Find zero or one CmsContent that matches the filter.
+     * @param {CmsContentFindUniqueArgs} args - Arguments to find a CmsContent
+     * @example
+     * // Get one CmsContent
+     * const cmsContent = await prisma.cmsContent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CmsContentFindUniqueArgs>(args: SelectSubset<T, CmsContentFindUniqueArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CmsContent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CmsContentFindUniqueOrThrowArgs} args - Arguments to find a CmsContent
+     * @example
+     * // Get one CmsContent
+     * const cmsContent = await prisma.cmsContent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CmsContentFindUniqueOrThrowArgs>(args: SelectSubset<T, CmsContentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CmsContent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentFindFirstArgs} args - Arguments to find a CmsContent
+     * @example
+     * // Get one CmsContent
+     * const cmsContent = await prisma.cmsContent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CmsContentFindFirstArgs>(args?: SelectSubset<T, CmsContentFindFirstArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CmsContent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentFindFirstOrThrowArgs} args - Arguments to find a CmsContent
+     * @example
+     * // Get one CmsContent
+     * const cmsContent = await prisma.cmsContent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CmsContentFindFirstOrThrowArgs>(args?: SelectSubset<T, CmsContentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CmsContents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CmsContents
+     * const cmsContents = await prisma.cmsContent.findMany()
+     * 
+     * // Get first 10 CmsContents
+     * const cmsContents = await prisma.cmsContent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cmsContentWithIdOnly = await prisma.cmsContent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CmsContentFindManyArgs>(args?: SelectSubset<T, CmsContentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CmsContent.
+     * @param {CmsContentCreateArgs} args - Arguments to create a CmsContent.
+     * @example
+     * // Create one CmsContent
+     * const CmsContent = await prisma.cmsContent.create({
+     *   data: {
+     *     // ... data to create a CmsContent
+     *   }
+     * })
+     * 
+     */
+    create<T extends CmsContentCreateArgs>(args: SelectSubset<T, CmsContentCreateArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CmsContents.
+     * @param {CmsContentCreateManyArgs} args - Arguments to create many CmsContents.
+     * @example
+     * // Create many CmsContents
+     * const cmsContent = await prisma.cmsContent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CmsContentCreateManyArgs>(args?: SelectSubset<T, CmsContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CmsContents and returns the data saved in the database.
+     * @param {CmsContentCreateManyAndReturnArgs} args - Arguments to create many CmsContents.
+     * @example
+     * // Create many CmsContents
+     * const cmsContent = await prisma.cmsContent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CmsContents and only return the `id`
+     * const cmsContentWithIdOnly = await prisma.cmsContent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CmsContentCreateManyAndReturnArgs>(args?: SelectSubset<T, CmsContentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CmsContent.
+     * @param {CmsContentDeleteArgs} args - Arguments to delete one CmsContent.
+     * @example
+     * // Delete one CmsContent
+     * const CmsContent = await prisma.cmsContent.delete({
+     *   where: {
+     *     // ... filter to delete one CmsContent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CmsContentDeleteArgs>(args: SelectSubset<T, CmsContentDeleteArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CmsContent.
+     * @param {CmsContentUpdateArgs} args - Arguments to update one CmsContent.
+     * @example
+     * // Update one CmsContent
+     * const cmsContent = await prisma.cmsContent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CmsContentUpdateArgs>(args: SelectSubset<T, CmsContentUpdateArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CmsContents.
+     * @param {CmsContentDeleteManyArgs} args - Arguments to filter CmsContents to delete.
+     * @example
+     * // Delete a few CmsContents
+     * const { count } = await prisma.cmsContent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CmsContentDeleteManyArgs>(args?: SelectSubset<T, CmsContentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CmsContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CmsContents
+     * const cmsContent = await prisma.cmsContent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CmsContentUpdateManyArgs>(args: SelectSubset<T, CmsContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CmsContents and returns the data updated in the database.
+     * @param {CmsContentUpdateManyAndReturnArgs} args - Arguments to update many CmsContents.
+     * @example
+     * // Update many CmsContents
+     * const cmsContent = await prisma.cmsContent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CmsContents and only return the `id`
+     * const cmsContentWithIdOnly = await prisma.cmsContent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CmsContentUpdateManyAndReturnArgs>(args: SelectSubset<T, CmsContentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CmsContent.
+     * @param {CmsContentUpsertArgs} args - Arguments to update or create a CmsContent.
+     * @example
+     * // Update or create a CmsContent
+     * const cmsContent = await prisma.cmsContent.upsert({
+     *   create: {
+     *     // ... data to create a CmsContent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CmsContent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CmsContentUpsertArgs>(args: SelectSubset<T, CmsContentUpsertArgs<ExtArgs>>): Prisma__CmsContentClient<$Result.GetResult<Prisma.$CmsContentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CmsContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentCountArgs} args - Arguments to filter CmsContents to count.
+     * @example
+     * // Count the number of CmsContents
+     * const count = await prisma.cmsContent.count({
+     *   where: {
+     *     // ... the filter for the CmsContents we want to count
+     *   }
+     * })
+    **/
+    count<T extends CmsContentCountArgs>(
+      args?: Subset<T, CmsContentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CmsContentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CmsContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CmsContentAggregateArgs>(args: Subset<T, CmsContentAggregateArgs>): Prisma.PrismaPromise<GetCmsContentAggregateType<T>>
+
+    /**
+     * Group by CmsContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CmsContentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CmsContentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CmsContentGroupByArgs['orderBy'] }
+        : { orderBy?: CmsContentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CmsContentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCmsContentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CmsContent model
+   */
+  readonly fields: CmsContentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CmsContent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CmsContentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CmsContent model
+   */
+  interface CmsContentFieldRefs {
+    readonly id: FieldRef<"CmsContent", 'String'>
+    readonly page: FieldRef<"CmsContent", 'String'>
+    readonly section: FieldRef<"CmsContent", 'String'>
+    readonly content: FieldRef<"CmsContent", 'Json'>
+    readonly updatedAt: FieldRef<"CmsContent", 'DateTime'>
+    readonly createdAt: FieldRef<"CmsContent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CmsContent findUnique
+   */
+  export type CmsContentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter, which CmsContent to fetch.
+     */
+    where: CmsContentWhereUniqueInput
+  }
+
+  /**
+   * CmsContent findUniqueOrThrow
+   */
+  export type CmsContentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter, which CmsContent to fetch.
+     */
+    where: CmsContentWhereUniqueInput
+  }
+
+  /**
+   * CmsContent findFirst
+   */
+  export type CmsContentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter, which CmsContent to fetch.
+     */
+    where?: CmsContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CmsContents to fetch.
+     */
+    orderBy?: CmsContentOrderByWithRelationInput | CmsContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CmsContents.
+     */
+    cursor?: CmsContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CmsContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CmsContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CmsContents.
+     */
+    distinct?: CmsContentScalarFieldEnum | CmsContentScalarFieldEnum[]
+  }
+
+  /**
+   * CmsContent findFirstOrThrow
+   */
+  export type CmsContentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter, which CmsContent to fetch.
+     */
+    where?: CmsContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CmsContents to fetch.
+     */
+    orderBy?: CmsContentOrderByWithRelationInput | CmsContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CmsContents.
+     */
+    cursor?: CmsContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CmsContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CmsContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CmsContents.
+     */
+    distinct?: CmsContentScalarFieldEnum | CmsContentScalarFieldEnum[]
+  }
+
+  /**
+   * CmsContent findMany
+   */
+  export type CmsContentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter, which CmsContents to fetch.
+     */
+    where?: CmsContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CmsContents to fetch.
+     */
+    orderBy?: CmsContentOrderByWithRelationInput | CmsContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CmsContents.
+     */
+    cursor?: CmsContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CmsContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CmsContents.
+     */
+    skip?: number
+    distinct?: CmsContentScalarFieldEnum | CmsContentScalarFieldEnum[]
+  }
+
+  /**
+   * CmsContent create
+   */
+  export type CmsContentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CmsContent.
+     */
+    data: XOR<CmsContentCreateInput, CmsContentUncheckedCreateInput>
+  }
+
+  /**
+   * CmsContent createMany
+   */
+  export type CmsContentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CmsContents.
+     */
+    data: CmsContentCreateManyInput | CmsContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CmsContent createManyAndReturn
+   */
+  export type CmsContentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * The data used to create many CmsContents.
+     */
+    data: CmsContentCreateManyInput | CmsContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CmsContent update
+   */
+  export type CmsContentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CmsContent.
+     */
+    data: XOR<CmsContentUpdateInput, CmsContentUncheckedUpdateInput>
+    /**
+     * Choose, which CmsContent to update.
+     */
+    where: CmsContentWhereUniqueInput
+  }
+
+  /**
+   * CmsContent updateMany
+   */
+  export type CmsContentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CmsContents.
+     */
+    data: XOR<CmsContentUpdateManyMutationInput, CmsContentUncheckedUpdateManyInput>
+    /**
+     * Filter which CmsContents to update
+     */
+    where?: CmsContentWhereInput
+    /**
+     * Limit how many CmsContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CmsContent updateManyAndReturn
+   */
+  export type CmsContentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * The data used to update CmsContents.
+     */
+    data: XOR<CmsContentUpdateManyMutationInput, CmsContentUncheckedUpdateManyInput>
+    /**
+     * Filter which CmsContents to update
+     */
+    where?: CmsContentWhereInput
+    /**
+     * Limit how many CmsContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CmsContent upsert
+   */
+  export type CmsContentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CmsContent to update in case it exists.
+     */
+    where: CmsContentWhereUniqueInput
+    /**
+     * In case the CmsContent found by the `where` argument doesn't exist, create a new CmsContent with this data.
+     */
+    create: XOR<CmsContentCreateInput, CmsContentUncheckedCreateInput>
+    /**
+     * In case the CmsContent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CmsContentUpdateInput, CmsContentUncheckedUpdateInput>
+  }
+
+  /**
+   * CmsContent delete
+   */
+  export type CmsContentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+    /**
+     * Filter which CmsContent to delete.
+     */
+    where: CmsContentWhereUniqueInput
+  }
+
+  /**
+   * CmsContent deleteMany
+   */
+  export type CmsContentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CmsContents to delete
+     */
+    where?: CmsContentWhereInput
+    /**
+     * Limit how many CmsContents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CmsContent without action
+   */
+  export type CmsContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CmsContent
+     */
+    select?: CmsContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CmsContent
+     */
+    omit?: CmsContentOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -22484,6 +23579,18 @@ export namespace Prisma {
   };
 
   export type AdmissionApplicationScalarFieldEnum = (typeof AdmissionApplicationScalarFieldEnum)[keyof typeof AdmissionApplicationScalarFieldEnum]
+
+
+  export const CmsContentScalarFieldEnum: {
+    id: 'id',
+    page: 'page',
+    section: 'section',
+    content: 'content',
+    updatedAt: 'updatedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type CmsContentScalarFieldEnum = (typeof CmsContentScalarFieldEnum)[keyof typeof CmsContentScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -24097,6 +25204,64 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"AdmissionApplication"> | Date | string
   }
 
+  export type CmsContentWhereInput = {
+    AND?: CmsContentWhereInput | CmsContentWhereInput[]
+    OR?: CmsContentWhereInput[]
+    NOT?: CmsContentWhereInput | CmsContentWhereInput[]
+    id?: StringFilter<"CmsContent"> | string
+    page?: StringFilter<"CmsContent"> | string
+    section?: StringFilter<"CmsContent"> | string
+    content?: JsonFilter<"CmsContent">
+    updatedAt?: DateTimeFilter<"CmsContent"> | Date | string
+    createdAt?: DateTimeFilter<"CmsContent"> | Date | string
+  }
+
+  export type CmsContentOrderByWithRelationInput = {
+    id?: SortOrder
+    page?: SortOrder
+    section?: SortOrder
+    content?: SortOrder
+    updatedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CmsContentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    page_section?: CmsContentPageSectionCompoundUniqueInput
+    AND?: CmsContentWhereInput | CmsContentWhereInput[]
+    OR?: CmsContentWhereInput[]
+    NOT?: CmsContentWhereInput | CmsContentWhereInput[]
+    page?: StringFilter<"CmsContent"> | string
+    section?: StringFilter<"CmsContent"> | string
+    content?: JsonFilter<"CmsContent">
+    updatedAt?: DateTimeFilter<"CmsContent"> | Date | string
+    createdAt?: DateTimeFilter<"CmsContent"> | Date | string
+  }, "id" | "page_section">
+
+  export type CmsContentOrderByWithAggregationInput = {
+    id?: SortOrder
+    page?: SortOrder
+    section?: SortOrder
+    content?: SortOrder
+    updatedAt?: SortOrder
+    createdAt?: SortOrder
+    _count?: CmsContentCountOrderByAggregateInput
+    _max?: CmsContentMaxOrderByAggregateInput
+    _min?: CmsContentMinOrderByAggregateInput
+  }
+
+  export type CmsContentScalarWhereWithAggregatesInput = {
+    AND?: CmsContentScalarWhereWithAggregatesInput | CmsContentScalarWhereWithAggregatesInput[]
+    OR?: CmsContentScalarWhereWithAggregatesInput[]
+    NOT?: CmsContentScalarWhereWithAggregatesInput | CmsContentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CmsContent"> | string
+    page?: StringWithAggregatesFilter<"CmsContent"> | string
+    section?: StringWithAggregatesFilter<"CmsContent"> | string
+    content?: JsonWithAggregatesFilter<"CmsContent">
+    updatedAt?: DateTimeWithAggregatesFilter<"CmsContent"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"CmsContent"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -25602,6 +26767,69 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CmsContentCreateInput = {
+    id?: string
+    page: string
+    section: string
+    content: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CmsContentUncheckedCreateInput = {
+    id?: string
+    page: string
+    section: string
+    content: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CmsContentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    section?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CmsContentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    section?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CmsContentCreateManyInput = {
+    id?: string
+    page: string
+    section: string
+    content: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CmsContentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    section?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CmsContentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    section?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -26807,6 +28035,36 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAdmissionStatusFilter<$PrismaModel>
     _max?: NestedEnumAdmissionStatusFilter<$PrismaModel>
+  }
+
+  export type CmsContentPageSectionCompoundUniqueInput = {
+    page: string
+    section: string
+  }
+
+  export type CmsContentCountOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    section?: SortOrder
+    content?: SortOrder
+    updatedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CmsContentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    section?: SortOrder
+    updatedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CmsContentMinOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    section?: SortOrder
+    updatedAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {

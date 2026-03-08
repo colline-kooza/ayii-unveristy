@@ -23,6 +23,32 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const TOOLBAR_CONFIG = [
+  { icon: Undo, command: "undo", label: "Undo" },
+  { icon: Redo, command: "redo", label: "Redo" },
+  { type: "separator", label: "Separator" },
+  { icon: Heading1, command: "formatBlock", value: "<h1>", label: "Heading 1" },
+  { icon: Heading2, command: "formatBlock", value: "<h2>", label: "Heading 2" },
+  { icon: Heading3, command: "formatBlock", value: "<h3>", label: "Heading 3" },
+  { type: "separator", label: "Separator" },
+  { icon: Bold, command: "bold", label: "Bold" },
+  { icon: Italic, command: "italic", label: "Italic" },
+  { icon: Underline, command: "underline", label: "Underline" },
+  { type: "separator", label: "Separator" },
+  { icon: AlignLeft, command: "justifyLeft", label: "Align Left" },
+  { icon: AlignCenter, command: "justifyCenter", label: "Align Center" },
+  { icon: AlignRight, command: "justifyRight", label: "Align Right" },
+  { type: "separator", label: "Separator" },
+  { icon: List, command: "insertUnorderedList", label: "Bullet List" },
+  { icon: ListOrdered, command: "insertOrderedList", label: "Numbered List" },
+  { type: "separator", label: "Separator" },
+  { icon: Quote, command: "formatBlock", value: "<blockquote>", label: "Quote" },
+  { icon: Code, command: "formatBlock", value: "<pre>", label: "Code Block" },
+  { type: "separator", label: "Separator" },
+  { icon: LinkIcon, action: "insertLink", label: "Insert Link" },
+  { icon: ImageIcon, action: "insertImage", label: "Insert Image" },
+];
+
 interface RichTextEditorProps {
   value: string;
   onChange: (value: string) => void;
@@ -41,17 +67,17 @@ export function RichTextEditor({
   const editorRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  const execCommand = useCallback((command: string, value?: string) => {
-    document.execCommand(command, false, value);
-    editorRef.current?.focus();
-    updateContent();
-  }, []);
-
   const updateContent = useCallback(() => {
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
   }, [onChange]);
+
+  const execCommand = useCallback((command: string, value?: string) => {
+    document.execCommand(command, false, value);
+    editorRef.current?.focus();
+    updateContent();
+  }, [updateContent]);
 
   const handleInput = useCallback(() => {
     updateContent();
@@ -78,37 +104,21 @@ export function RichTextEditor({
     }
   }, [value, isFocused]);
 
-  const toolbarButtons = [
-    { icon: Undo, command: "undo", label: "Undo" },
-    { icon: Redo, command: "redo", label: "Redo" },
-    { type: "separator" },
-    { icon: Heading1, command: "formatBlock", value: "<h1>", label: "Heading 1" },
-    { icon: Heading2, command: "formatBlock", value: "<h2>", label: "Heading 2" },
-    { icon: Heading3, command: "formatBlock", value: "<h3>", label: "Heading 3" },
-    { type: "separator" },
-    { icon: Bold, command: "bold", label: "Bold" },
-    { icon: Italic, command: "italic", label: "Italic" },
-    { icon: Underline, command: "underline", label: "Underline" },
-    { type: "separator" },
-    { icon: AlignLeft, command: "justifyLeft", label: "Align Left" },
-    { icon: AlignCenter, command: "justifyCenter", label: "Align Center" },
-    { icon: AlignRight, command: "justifyRight", label: "Align Right" },
-    { type: "separator" },
-    { icon: List, command: "insertUnorderedList", label: "Bullet List" },
-    { icon: ListOrdered, command: "insertOrderedList", label: "Numbered List" },
-    { type: "separator" },
-    { icon: Quote, command: "formatBlock", value: "<blockquote>", label: "Quote" },
-    { icon: Code, command: "formatBlock", value: "<pre>", label: "Code Block" },
-    { type: "separator" },
-    { icon: LinkIcon, action: insertLink, label: "Insert Link" },
-    { icon: ImageIcon, action: insertImage, label: "Insert Image" },
-  ];
+  const handleToolbarAction = (button: (typeof TOOLBAR_CONFIG)[0]) => {
+    if (button.action === "insertLink") {
+      insertLink();
+    } else if (button.action === "insertImage") {
+      insertImage();
+    } else if (button.command) {
+      execCommand(button.command, button.value);
+    }
+  };
 
   return (
     <div className={cn("border rounded-2xl overflow-hidden bg-white", className)}>
       {/* Toolbar */}
       <div className="border-b bg-gray-50 p-2 flex flex-wrap gap-1">
-        {toolbarButtons.map((button, index) => {
+        {TOOLBAR_CONFIG.map((button, index) => {
           if (button.type === "separator") {
             return <div key={index} className="w-px bg-gray-200 mx-1" />;
           }
@@ -121,13 +131,7 @@ export function RichTextEditor({
               variant="ghost"
               size="sm"
               className="h-8 w-8 p-0 hover:bg-gray-200"
-              onClick={() => {
-                if (button.action) {
-                  button.action();
-                } else {
-                  execCommand(button.command!, button.value);
-                }
-              }}
+              onClick={() => handleToolbarAction(button)}
               title={button.label}
             >
               <Icon className="h-4 w-4" />

@@ -3,16 +3,24 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { createAuthMiddleware } from "better-auth/api";
 import { prisma } from "@/lib/prisma";
 
+const getBaseURL = () => {
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+};
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   secret: process.env.BETTER_AUTH_SECRET!,
-  baseURL: process.env.BETTER_AUTH_URL!,
+  baseURL: getBaseURL(),
 
-  // Trust requests coming from our own app URL.
-  // This is critical on hosting platforms to prevent CORS/cookie rejections.
-  trustedOrigins: process.env.BETTER_AUTH_URL
-    ? [process.env.BETTER_AUTH_URL]
-    : ["http://localhost:3000"],
+  trustedOrigins: [
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.BETTER_AUTH_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+    "http://localhost:3000",
+  ].filter(Boolean) as string[],
 
   emailAndPassword: {
     enabled: true,

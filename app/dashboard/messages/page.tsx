@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Send, Search, Check, CheckCheck, Loader2, Plus, X, Smile, Paperclip, MoreVertical, Phone, Video, ArrowLeft } from "lucide-react";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { useConversations, useMessageThread, useSendMessage } from "@/hooks/useMessages";
+import { useConversations, useMessageThread, useSendMessage, Message, Conversation } from "@/hooks/useMessages";
 import { useMe } from "@/hooks/useAuth";
 import { useUserSearch } from "@/hooks/useUserSearch";
 import { getAvatarUrl } from "@/lib/avatarUtils";
@@ -30,7 +30,7 @@ export default function MessagesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [newMessageOpen, setNewMessageOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
-  const [selectedUserFromSearch, setSelectedUserFromSearch] = useState<any>(null);
+  const [selectedUserFromSearch, setSelectedUserFromSearch] = useState<any>(null); // Search user type is still any for now
   const [showMobileChat, setShowMobileChat] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,17 +41,17 @@ export default function MessagesPage() {
   const sendMessageMutation = useSendMessage();
   const { data: searchResults, isLoading: searchingUsers } = useUserSearch(userSearchQuery);
 
-  const messages = messagesData?.pages.flatMap(page => page.data) || [];
+  const messages = useMemo(() => messagesData?.pages.flatMap(page => page.data) || [], [messagesData]);
 
   // Get selected partner info - either from conversations or from search results
-  const selectedConversation = conversations?.find((conv: any) => conv.partner.id === selectedPartnerId);
+  const selectedConversation = conversations?.find((conv) => conv.partner.id === selectedPartnerId);
   const selectedPartner = selectedConversation?.partner || selectedUserFromSearch;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const filteredConversations = conversations?.filter((conv: any) =>
+  const filteredConversations = conversations?.filter((conv) =>
     conv.partner.name.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
 

@@ -348,9 +348,9 @@ function AboveFoldSection() {
       {/* LEFT: Quick access + stat cards */}
       <div className="col-span-12 lg:col-span-3 flex flex-col gap-3 h-full min-h-0">
         <div className="flex-shrink-0 flex flex-wrap gap-2">
-          <QuickAccessButton icon={GraduationCap} label="Add Students" showPlus link="/dashboard/students/new" iconBgColor="bg-[#E8DFFC]" iconColor="text-[#6b21a8]" />
-          <QuickAccessButton icon={BookOpen} label="Manage Courses" showPlus iconBgColor="bg-orange-100" iconColor="text-orange-600" />
-          <QuickAccessButton icon={BarChart3} label="Analytics" showPlus iconBgColor="bg-red-100" iconColor="text-red-600" />
+          <QuickAccessButton icon={GraduationCap} label="Add Students" showPlus link="/dashboard/admin/users/students" iconBgColor="bg-[#E8DFFC]" iconColor="text-[#6b21a8]" />
+          <QuickAccessButton icon={BookOpen} label="Manage Courses" showPlus link="/dashboard/admin/courses" iconBgColor="bg-orange-100" iconColor="text-orange-600" />
+          <QuickAccessButton icon={BarChart3} label="Library" showPlus link="/dashboard/library" iconBgColor="bg-red-100" iconColor="text-red-600" />
           {/* <QuickAccessButton icon={Users} label="Manage Staff" showPlus iconBgColor="bg-green-100" iconColor="text-green-600" />
           <QuickAccessButton icon={FileText} label="Resources" showPlus iconBgColor="bg-red-100" iconColor="text-red-600" /> */}
         </div>
@@ -895,7 +895,7 @@ export default function AdminDashboard() {
 
         {/* Row 1: Fees Overview | Applications Table | Admissions Pie */}
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 lg:col-span-3"><FeesOverviewCard data={mockFeesOverviewData} /></div>
+          <div className="col-span-12 lg:col-span-3"><SubjectPerformanceRadar /></div>
           <div className="col-span-12 lg:col-span-6"><RecentApplicationsTable data={mockRecentApplications} /></div>
           <div className="col-span-12 lg:col-span-3"><AdmissionsStatusChart data={mockAdmissionStatusData} /></div>
         </div>

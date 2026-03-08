@@ -17,6 +17,44 @@ interface CourseFilters {
   department?: string;
 }
 
+export interface Course {
+  id: string;
+  title: string;
+  unitCode: string;
+  department: string;
+  description?: string;
+  outline?: string;
+  isEnrolled?: boolean;
+  lecturerId?: string;
+  lecturer?: {
+    id: string;
+    name: string;
+    image?: string;
+  };
+  liveLectures?: {
+    id: string;
+    status: string;
+    meetingUrl?: string;
+    startedAt: string;
+    endedAt?: string;
+  }[];
+  _count?: {
+    enrollments: number;
+    assignments: number;
+    lectures: number;
+  };
+}
+
+export interface CourseResponse {
+  data: Course[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 // ── Browse all courses (student) ──────────
 export function useCourses(filters: CourseFilters = {}) {
   const params = new URLSearchParams();
@@ -26,7 +64,7 @@ export function useCourses(filters: CourseFilters = {}) {
   if (filters.search && filters.search.length >= 3)
     params.set("search", filters.search);
 
-  return useQuery({
+  return useQuery<CourseResponse>({
     queryKey: queryKeys.courses.all(filters),
     queryFn: async () => {
       const { data } = await apiClient.get(`/courses?${params.toString()}`);
@@ -38,7 +76,7 @@ export function useCourses(filters: CourseFilters = {}) {
 
 // ── Course detail ─────────────────────────
 export function useCourse(courseId: string) {
-  return useQuery({
+  return useQuery<Course>({
     queryKey: queryKeys.courses.detail(courseId),
     queryFn: async () => {
       const { data } = await apiClient.get(`/courses/${courseId}`);

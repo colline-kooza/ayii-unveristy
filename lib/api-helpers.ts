@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { ZodSchema } from "zod";
 import { UserRole, UserStatus } from "@/lib/generated/prisma";
+import { AuthUser } from "@/lib/auth";
 
 export async function getSession() {
   return auth.api.getSession({ headers: await headers() });
@@ -16,14 +17,14 @@ export async function requireAuth(allowedRoles?: UserRole[]) {
       session: null,
     };
   }
-  const user = session.user as any;
+  const user = session.user as AuthUser;
   if (user.status === UserStatus.SUSPENDED) {
     return {
       error: NextResponse.json({ error: "Account suspended" }, { status: 403 }),
       session: null,
     };
   }
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
+  if (allowedRoles && !(allowedRoles as string[]).includes(user.role)) {
     return {
       error: NextResponse.json({ error: "Forbidden" }, { status: 403 }),
       session: null,

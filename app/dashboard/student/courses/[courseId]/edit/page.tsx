@@ -79,7 +79,7 @@ export default function EditCoursePage() {
       <div className="p-6 lg:p-10">
         <div className="text-center">
           <h2 className="text-2xl font-bold">Access Denied</h2>
-          <p className="text-gray-600 mt-2">You don't have permission to edit this course</p>
+          <p className="text-gray-600 mt-2">You don&apos;t have permission to edit this course</p>
           <Button onClick={() => router.back()} className="mt-4">Go Back</Button>
         </div>
       </div>

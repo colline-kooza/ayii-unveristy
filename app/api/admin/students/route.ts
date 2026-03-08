@@ -5,7 +5,7 @@ import {
   generateTempPassword,
 } from "@/lib/api-helpers";
 import { prisma } from "@/lib/prisma";
-import { UserRole } from "@/lib/generated/prisma";
+import { UserRole, Prisma } from "@/lib/generated/prisma";
 import { sendWelcomeStudent } from "@/lib/email";
 import { hash } from "bcryptjs";
 import { z } from "zod";
@@ -21,18 +21,18 @@ export async function GET(req: NextRequest) {
   const search = searchParams.get("search") ?? "";
   const status = searchParams.get("status") ?? undefined;
 
-  const where = {
+  const where: Prisma.UserWhereInput = {
     role: UserRole.STUDENT,
     ...(status ? { status: status as any } : {}),
     ...(search.length >= 3
       ? {
           OR: [
-            { name: { contains: search, mode: "insensitive" as const } },
-            { email: { contains: search, mode: "insensitive" as const } },
+            { name: { contains: search, mode: "insensitive" } },
+            { email: { contains: search, mode: "insensitive" } },
             {
               registrationNumber: {
                 contains: search,
-                mode: "insensitive" as const,
+                mode: "insensitive",
               },
             },
           ],
@@ -82,7 +82,7 @@ const createStudentSchema = z.object({
 export async function POST(req: NextRequest) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const admin = session!.user as any;
+  const admin = session!.user;
 
   const validated = await validateBody(req, createStudentSchema);
   if ("validationError" in validated) return validated.validationError;

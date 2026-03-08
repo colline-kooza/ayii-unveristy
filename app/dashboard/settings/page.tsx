@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Bell, Lock, User, Globe, Shield, CreditCard, Loader2, Camera, Mail, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import { useMe, useUpdateProfile, useChangePassword } from "@/hooks/useAuth";
 import { R2ImageUpload } from "@/components/FormInputs/R2ImageUpload";
 import { FileCategory } from "@/types/files";
@@ -54,6 +55,11 @@ export default function SettingsPage() {
     },
   });
 
+  const watchedImage = useWatch({
+    control: profileForm.control,
+    name: "image",
+  });
+
   const passwordForm = useForm({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -75,7 +81,7 @@ export default function SettingsPage() {
     }
   }, [user, profileForm]);
 
-  const onUpdateProfile = async (data: any) => {
+  const onUpdateProfile = async (data: z.infer<typeof profileSchema>) => {
     try {
       await updateProfile.mutateAsync(data);
     } catch (err) {
@@ -83,7 +89,7 @@ export default function SettingsPage() {
     }
   };
 
-  const onChangePassword = async (data: any) => {
+  const onChangePassword = async (data: z.infer<typeof passwordSchema>) => {
     try {
       await changePassword.mutateAsync({
         currentPassword: data.currentPassword,
@@ -120,9 +126,11 @@ export default function SettingsPage() {
         {/* Minimal User Info */}
         <div className="flex items-center gap-3 px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm">
           <div className="h-8 w-8 rounded-lg overflow-hidden bg-rose-50 flex items-center justify-center border border-rose-100/50">
-            <img 
+            <Image 
               src={getAvatarUrl(user?.image, user?.name || 'User', 'user')} 
-              alt="" 
+              alt={user?.name || "Avatar"} 
+              width={32}
+              height={32}
               className="h-full w-full object-cover" 
             />
           </div>
@@ -173,7 +181,7 @@ export default function SettingsPage() {
                 <div className="p-1.5 bg-white rounded-2xl shadow-xl shadow-primary/5">
                   <div className="h-20 w-20 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shadow-inner">
                     <R2ImageUpload
-                      value={(profileForm.watch("image") as string) || ""}
+                      value={(watchedImage as string) || ""}
                       onChange={(val) => profileForm.setValue("image", val as string)}
                       category={FileCategory.GALLERY}
                       identifier="user-profile-image"

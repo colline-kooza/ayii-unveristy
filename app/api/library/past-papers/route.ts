@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     UserRole.ADMIN,
   ]);
   if (error) return error;
-  const user = session!.user as any;
+  const user = session!.user;
 
   const validated = await validateBody(req, createSchema);
   if ("validationError" in validated) return validated.validationError;

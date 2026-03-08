@@ -26,7 +26,7 @@ export default function NotFound() {
             Page Not Found
           </h1>
           <p className="text-lg text-gray-600 max-w-md mx-auto">
-            Oops! The page you're looking for seems to have wandered off. 
+            Oops! The page you&apos;re looking for seems to have wandered off. 
             It might have been moved, deleted, or never existed.
           </p>
         </div>

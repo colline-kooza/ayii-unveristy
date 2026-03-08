@@ -1,10 +1,11 @@
 "use client";
 
+import { PageSelector } from "@/components/admin/cms/page-selector";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, FileText, BookOpen, Newspaper, Trash2 } from "lucide-react";
+import { Plus, FileText, BookOpen, Trash2, Globe } from "lucide-react";
 import { usePastPapers, useJournals, useReviewJournal, useDeletePastPaper, useDeleteJournal } from "@/hooks/useLibrary";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { ConfirmDeleteModal } from "@/components/shared/modals/ConfirmDeleteModal";
@@ -73,7 +74,21 @@ export default function AdminContentPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-black">Content Management</h1>
-        <p className="text-gray-600 mt-1">Manage library resources and publications</p>
+        <p className="text-gray-600 mt-1">Manage library resources and website content</p>
+      </div>
+
+      {/* Website Content Section */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-lg font-bold text-black flex items-center gap-2">
+              <Globe className="w-5 h-5 text-teal" />
+              Website Content Editor
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">Edit homepage and other pages</p>
+          </div>
+        </div>
+        <PageSelector />
       </div>
 
       <Tabs defaultValue="journals" className="space-y-6">

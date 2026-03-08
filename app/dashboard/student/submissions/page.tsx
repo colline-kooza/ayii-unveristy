@@ -192,7 +192,7 @@ export default function StudentSubmissionsPage() {
             </div>
             <div className="space-y-1 px-6">
               <h3 className="text-base font-black italic text-gray-400 uppercase tracking-widest">No Submissions Yet</h3>
-              <p className="text-[11px] text-gray-300 font-bold italic">You haven't submitted any assignments yet. Enroll in courses to get started.</p>
+              <p className="text-[11px] text-gray-300 font-bold italic">You haven&apos;t submitted any assignments yet. Enroll in courses to get started.</p>
             </div>
             <Button 
               className="mt-4 bg-primary text-white rounded-2xl font-black h-11 px-8 text-xs italic tracking-widest shadow-xl shadow-primary/20"

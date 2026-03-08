@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const user = session!.user as any;
+  const user = session!.user;
 
   const validated = await validateBody(req, createBookSchema);
   if ("validationError" in validated) return validated.validationError;

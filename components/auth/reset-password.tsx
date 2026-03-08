@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -41,14 +42,12 @@ export function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [email, setEmail] = useState<string | null>(null)
-
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem("reset_email")
-    if (storedEmail) {
-      setEmail(storedEmail)
+  const [email] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem("reset_email")
     }
-  }, [])
+    return null
+  })
 
   const form = useForm<ResetPasswordOtpInput>({
     resolver: zodResolver(resetPasswordOtpSchema),
@@ -111,7 +110,13 @@ export function ResetPassword() {
       <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
         <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
           <div className="p-8 pb-6 text-center">
-            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto mx-auto" />
+            <Image 
+              src="/ayii-logo.png" 
+              alt="AYii University" 
+              width={96}
+              height={96}
+              className="h-24 w-auto mx-auto" 
+            />
             <h1 className="mb-1 mt-4 text-xl font-semibold">Session Expired</h1>
             <p className="text-sm text-muted-foreground mb-6">
               Please request a new password reset code.
@@ -130,7 +135,13 @@ export function ResetPassword() {
       <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
         <div className="p-8 pb-6">
           <Link href="/" aria-label="go home">
-            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto" />
+            <Image 
+              src="/ayii-logo.png" 
+              alt="AYii University" 
+              width={96}
+              height={96}
+              className="h-24 w-auto" 
+            />
           </Link>
           <h1 className="mb-1 mt-4 text-xl font-semibold">Reset your password</h1>
           <p className="text-sm text-muted-foreground">

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCreateStudent } from "@/hooks/useAdminStudents";
-import { useCourses } from "@/hooks/useCourses";
+import { useCourses, Course } from "@/hooks/useCourses";
 import { SimpleImageUpload } from "@/components/FormInputs/SimpleImageUpload";
 import { SelectInput } from "@/components/shared/SelectInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -67,7 +67,7 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
   const createStudent = useCreateStudent();
   const { data: coursesData } = useCourses({ limit: 100 });
 
-  const courseOptions = (coursesData?.data || []).map((c: any) => ({
+  const courseOptions = (coursesData?.data || []).map((c: Course) => ({
     value: c.id,
     label: `${c.unitCode} - ${c.title}`,
     description: c.department,
@@ -328,7 +328,7 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
                         <div>
                           <h4 className="text-xs font-semibold text-orange-900">Security Note</h4>
                           <p className="text-xs text-orange-700 mt-1">
-                            A temporary password will be automatically generated and sent to the student's email.
+                            A temporary password will be automatically generated and sent to the student&apos;s email.
                             They will be required to change it upon their first login.
                           </p>
                         </div>

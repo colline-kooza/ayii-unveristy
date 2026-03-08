@@ -184,7 +184,7 @@ export default function PublicCoursesPage() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
               <p className="text-sm text-gray-500 max-w-sm mx-auto">
-                Try adjusting your search criteria to find what you're looking for.
+                Try adjusting your search criteria to find what you&apos;re looking for.
               </p>
             </div>
           )}

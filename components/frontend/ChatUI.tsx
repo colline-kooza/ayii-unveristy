@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 const userAvatar =
   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop";
@@ -51,11 +52,15 @@ const MessageBubble: React.FC<{ message: Message; isVisible: boolean }> = ({
     >
       {message.type === "ai" ? (
         <div className="flex justify-start items-end gap-3">
-          <img
-            src={aiAvatar}
-            alt="AI Avatar"
-            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src={aiAvatar}
+              alt="AI Avatar"
+              width={32}
+              height={32}
+              className="object-cover"
+            />
+          </div>
           <div className="bg-[#283593] text-white px-6 py-4 rounded-3xl rounded-tl-sm shadow-xl max-w-xs flex flex-col gap-3 border border-white/10">
             <div className="text-sm font-medium leading-snug">
               {message.text}
@@ -89,11 +94,15 @@ const MessageBubble: React.FC<{ message: Message; isVisible: boolean }> = ({
               {message.text}
             </div>
           </div>
-          <img
-            src={userAvatar}
-            alt="User Avatar"
-            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src={userAvatar}
+              alt="User Avatar"
+              width={32}
+              height={32}
+              className="object-cover"
+            />
+          </div>
         </div>
       )}
     </div>
@@ -101,7 +110,6 @@ const MessageBubble: React.FC<{ message: Message; isVisible: boolean }> = ({
 };
 
 const ChatUI: React.FC = () => {
-  const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [currentCycle, setCurrentCycle] = useState(0);
 
   useEffect(() => {
@@ -116,19 +124,13 @@ const ChatUI: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (currentCycle === 0) {
-      setDisplayedMessages([messageSequence[0]]);
-    } else {
-      setDisplayedMessages(messageSequence.slice(0, currentCycle + 1));
-    }
-  }, [currentCycle]);
+  const displayedMessages = messageSequence.slice(0, currentCycle + 1);
 
   return (
     <div className="relative z-10 w-full max-w-sm h-[500px] flex flex-col rounded-2xl p-6 overflow-hidden">
       {/* Chat Messages Container */}
       <div className="flex-1 overflow-y-auto flex flex-col gap-4 justify-end scrollbar-hide">
-        {displayedMessages.map((message, index) => (
+        {displayedMessages.map((message) => (
           <div
             key={`${currentCycle}-${message.id}`}
             className="animate-fade-in"

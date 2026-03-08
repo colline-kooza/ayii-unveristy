@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import {
   InputOTP,
   InputOTPGroup,
@@ -30,23 +31,21 @@ export function VerifyEmail() {
   const [isLoading, setIsLoading] = useState(false)
   const [resendLoading, setResendLoading] = useState(false)
   const [countdown, setCountdown] = useState(60)
-  const [canResend, setCanResend] = useState(false)
-  const [email, setEmail] = useState('')
-
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem("verify_email")
-    if (storedEmail) setEmail(storedEmail)
-  }, [])
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout
-    if (countdown > 0 && !canResend) {
-      timer = setTimeout(() => setCountdown(countdown - 1), 1000)
-    } else {
-      setCanResend(true)
+  const [email, setEmail] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem("verify_email") || ''
     }
+    return ''
+  })
+
+
+  useEffect(() => {
+    if (countdown <= 0) return
+    const timer = setTimeout(() => {
+      setCountdown(c => c - 1)
+    }, 1000)
     return () => clearTimeout(timer)
-  }, [countdown, canResend])
+  }, [countdown])
 
   const form = useForm<VerifyEmailInput>({
     resolver: zodResolver(verifyEmailSchema),
@@ -82,7 +81,6 @@ export function VerifyEmail() {
         return
     }
     setResendLoading(true)
-    setCanResend(false)
     setCountdown(60)
 
     await authClient.emailOtp.sendVerificationOtp({
@@ -95,7 +93,6 @@ export function VerifyEmail() {
         },
         onError: (ctx) => {
             toast.error(ctx.error.message)
-            setCanResend(true)
             setCountdown(0)
             setResendLoading(false)
         }
@@ -107,7 +104,13 @@ export function VerifyEmail() {
       <div className="bg-card m-auto h-fit w-full max-w-md rounded-lg border p-0.5 shadow-md">
         <div className="p-8 pb-6">
           <Link href="/" aria-label="go home">
-            <img src="/ayii-logo.png" alt="AYii University" className="h-24 w-auto" />
+            <Image 
+              src="/ayii-logo.png" 
+              alt="AYii University" 
+              width={96}
+              height={96}
+              className="h-24 w-auto" 
+            />
           </Link>
           <h1 className="mb-1 mt-4 text-xl font-semibold">Verify your email</h1>
           <p className="text-sm text-muted-foreground">We sent a verification code to {email}</p>
@@ -156,8 +159,8 @@ export function VerifyEmail() {
                 handleResendCode()
               }}
             >
-              <button disabled={!canResend || resendLoading}>
-                {resendLoading ? 'Resending...' : canResend ? 'Resend' : `Resend in ${countdown}s`}
+              <button disabled={countdown > 0 || resendLoading}>
+                {resendLoading ? 'Resending...' : countdown <= 0 ? 'Resend' : `Resend in ${countdown}s`}
               </button>
             </Button>
           </p>

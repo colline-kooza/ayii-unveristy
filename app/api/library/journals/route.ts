@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const status = searchParams.get("status") ?? JournalStatus.APPROVED;
 
   const where = {
-    ...(status ? { status: status as any } : {}),
+    ...(status ? { status: status as JournalStatus } : {}),
     ...(search.length >= 2
       ? {
           OR: [
@@ -54,7 +54,7 @@ const createJournalSchema = z.object({
 export async function POST(req: NextRequest) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const user = session!.user as any;
+  const user = session!.user;
 
   const validated = await validateBody(req, createJournalSchema);
   if ("validationError" in validated) return validated.validationError;

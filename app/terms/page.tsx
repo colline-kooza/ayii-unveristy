@@ -44,7 +44,7 @@ export default function TermsPage() {
                   </div>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  By accessing and using AYii University's platform, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use our platform.
+                  By accessing and using AYii University&apos;s platform, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use our platform.
                 </p>
               </div>
 
@@ -131,7 +131,7 @@ export default function TermsPage() {
               <div className="bg-white p-8 rounded-2xl border border-gray-200">
                 <h2 className="text-2xl font-bold text-black mb-4">8. Changes to Terms</h2>
                 <p className="text-gray-600 leading-relaxed mb-4">
-                  We reserve the right to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect.
+                  We reserve the right to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days&apos; notice prior to any new terms taking effect.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
                   By continuing to access or use our platform after those revisions become effective, you agree to be bound by the revised terms.

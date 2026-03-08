@@ -12,6 +12,7 @@ import {
   User,
   ClipboardList,
   Video,
+  Globe,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -55,6 +56,11 @@ export function getNavigationForRole(
           title: "Courses",
           url: "/dashboard/admin/courses",
           icon: BookOpen,
+        },
+        {
+          title: "Website Content",
+          url: "/dashboard/admin/content/homepage",
+          icon: Globe,
         },
         {
           title: "Library",

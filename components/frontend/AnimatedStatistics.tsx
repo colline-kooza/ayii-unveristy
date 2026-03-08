@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
 
 interface StatItemProps {
@@ -43,13 +44,29 @@ const CountUp = ({ value, label, suffix = "+" }: StatItemProps) => {
 };
 
 export default function AnimatedStatistics() {
+  const { data } = useQuery({
+    queryKey: ["cms", "homepage", "animatedStatistics"],
+    queryFn: async () => {
+      const res = await fetch("/api/cms/homepage/animatedStatistics");
+      if (!res.ok) throw new Error("Failed to fetch");
+      return res.json();
+    },
+  });
+
+  if (!data) return null;
+
   return (
     <section className="w-full bg-[#F5F7FA] py-7">
       <div className="container px-4 md:px-12 lg:px-24">
         <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-          <CountUp value={3000} label="Students" />
-          <CountUp value={500} label="Resources" />
-          <CountUp value={200} label="Questions Answered" />
+          {data.stats?.map((stat: any, idx: number) => (
+            <CountUp
+              key={stat.id || idx}
+              value={stat.value}
+              label={stat.label}
+              suffix={stat.suffix}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -21,7 +21,7 @@ export default function DashboardNotFound() {
           Dashboard Page Not Found
         </h1>
         <p className="text-gray-600 mb-6">
-          The dashboard page you're looking for doesn't exist or you don't have access to it.
+          The dashboard page you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

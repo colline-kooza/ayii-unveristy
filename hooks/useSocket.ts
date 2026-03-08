@@ -1,10 +1,34 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { io, Socket } from "socket.io-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/queryKeys";
 import { toast } from "sonner";
+import { Message, InfiniteThreadData } from "./useMessages";
+
+export interface Notification {
+  id: string;
+  type: string;
+  body: string;
+  isRead: boolean;
+  createdAt: string;
+  metadata?: {
+    meetingUrl?: string;
+    courseId?: string;
+    assignmentId?: string;
+    [key: string]: any;
+  };
+}
+
+export interface NotificationPage {
+  data: Notification[];
+  unreadCount?: number;
+}
+
+export interface InfiniteNotificationData {
+  pages: NotificationPage[];
+}
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
@@ -17,7 +41,7 @@ interface OnlineUser {
 }
 
 export function useSocket() {
-  const socketRef = useRef<Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState<Map<string, OnlineUser>>(
     new Map(),
@@ -32,21 +56,25 @@ export function useSocket() {
       reconnectionDelay: 2000,
     });
 
-    socketRef.current = socket;
-
-    socket.on("connect", () => setIsConnected(true));
-    socket.on("disconnect", () => setIsConnected(false));
+    socket.on("connect", () => {
+      setIsConnected(true);
+      setSocket(socket);
+    });
+    socket.on("disconnect", () => {
+      setIsConnected(false);
+      setSocket(null);
+    });
 
     // ── Notifications ─────────────────────────
-    socket.on("notification:new", (notification) => {
+    socket.on("notification:new", (notification: Notification) => {
       // Update notifications cache directly
-      queryClient.setQueryData<any>(
+      queryClient.setQueryData<InfiniteNotificationData>(
         queryKeys.notifications.all(),
-        (old: any) => {
+        (old) => {
           if (!old) return old;
           return {
             ...old,
-            pages: old.pages?.map((page: any, i: number) =>
+            pages: old.pages?.map((page, i) =>
               i === 0
                 ? {
                     ...page,
@@ -88,13 +116,13 @@ export function useSocket() {
     });
 
     // ── Messages ──────────────────────────────
-    socket.on("message:new", (message) => {
+    socket.on("message:new", (message: Message) => {
       const partnerId = message.senderId;
 
       // Add to thread cache
-      queryClient.setQueryData<any>(
+      queryClient.setQueryData<InfiniteThreadData>(
         queryKeys.messages.thread(partnerId),
-        (old: any) => {
+        (old) => {
           if (!old) return old;
           const lastPage = old.pages[old.pages.length - 1];
           return {
@@ -166,36 +194,36 @@ export function useSocket() {
 
     return () => {
       socket.disconnect();
-      socketRef.current = null;
+      setSocket(null);
     };
   }, [queryClient]);
 
   // Actions
   const joinCourse = useCallback((courseId: string) => {
-    socketRef.current?.emit("course:join", { courseId });
-  }, []);
+    socket?.emit("course:join", { courseId });
+  }, [socket]);
 
   const leaveCourse = useCallback((courseId: string) => {
-    socketRef.current?.emit("course:leave", { courseId });
-  }, []);
+    socket?.emit("course:leave", { courseId });
+  }, [socket]);
 
   const sendTypingStart = useCallback((receiverId: string) => {
-    socketRef.current?.emit("typing:start", { receiverId });
-  }, []);
+    socket?.emit("typing:start", { receiverId });
+  }, [socket]);
 
   const sendTypingStop = useCallback((receiverId: string) => {
-    socketRef.current?.emit("typing:stop", { receiverId });
-  }, []);
+    socket?.emit("typing:stop", { receiverId });
+  }, [socket]);
 
-  return {
-    socket: socketRef.current,
+  return useMemo(() => ({
+    socket,
     isConnected,
     onlineUsers,
     joinCourse,
     leaveCourse,
     sendTypingStart,
     sendTypingStop,
-  };
+  }), [socket, isConnected, onlineUsers, joinCourse, leaveCourse, sendTypingStart, sendTypingStop]);
 }
 
 // Typing indicator hook

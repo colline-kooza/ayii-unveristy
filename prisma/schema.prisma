@@ -393,3 +393,15 @@ model AdmissionApplication {
   @@index([courseId])
   @@map("admission_application")
 }
+
+model CmsContent {
+  id        String   @id @default(cuid())
+  page      String
+  section   String
+  content   Json
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([page, section])
+  @@map("cms_content")
+}

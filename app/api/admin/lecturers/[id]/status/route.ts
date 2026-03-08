@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { UserRole, UserStatus } from "@/lib/generated/prisma";
 import { sendAccountSuspended } from "@/lib/email";
 import { createNotification } from "@/lib/notify";
+import { AuthUser } from "@/lib/auth";
 import { z } from "zod";
 
 const schema = z.object({
@@ -17,7 +18,7 @@ export async function PATCH(
 ) {
   const { error, session } = await requireAuth([UserRole.ADMIN]);
   if (error) return error;
-  const admin = session!.user as any;
+  const admin = session!.user as AuthUser;
   const { id } = await params;
 
   const validated = await validateBody(req, schema);

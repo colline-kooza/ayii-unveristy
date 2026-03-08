@@ -75,7 +75,7 @@ export default function ForgotPasswordPage() {
               Forgot <span className="text-[#283593]">Password?</span>
             </h1>
             <p className="text-sm text-gray-600 text-center sm:text-left">
-              Enter your email and we'll send you a reset link
+              Enter your email and we&apos;ll send you a reset link
             </p>
           </div>
 
@@ -146,7 +146,7 @@ export default function ForgotPasswordPage() {
             <KeyRound className="h-24 w-24 mx-auto mb-6 animate-pulse" />
             <h2 className="text-4xl font-bold mb-4">Reset Your Password</h2>
             <p className="text-lg text-white/90">
-              We'll help you get back to learning in no time
+              We&apos;ll help you get back to learning in no time
             </p>
           </div>
         </div>

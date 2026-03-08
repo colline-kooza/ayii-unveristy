@@ -26,28 +26,22 @@ import { Badge } from "@/components/ui/badge";
 import { useUnreadCount } from "@/hooks/useNotifications";
 import { useConversations } from "@/hooks/useMessages";
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  image?: string;
-}
+import { AuthUser } from "@/lib/auth";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  user: User;
+  user: AuthUser;
 }
 
 export function DashboardLayout({ children, user }: DashboardLayoutProps) {
-  const [searchResults, setSearchResults] = React.useState<any[]>([]);
+  const [searchResults, setSearchResults] = React.useState<AuthUser[]>([]);
   // Initialize Socket.io connection
-  const { isConnected, onlineUsers } = useSocket();
+  const { isConnected } = useSocket();
   
   // Get unread counts for mobile nav
   const { data: unreadNotifications = 0 } = useUnreadCount();
   const { data: conversations = [] } = useConversations();
-  const unreadMessages = conversations.reduce((sum: number, conv: any) => sum + (conv.unreadCount || 0), 0);
+  const unreadMessages = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0);
 
   // Log connection status for debugging
   React.useEffect(() => {

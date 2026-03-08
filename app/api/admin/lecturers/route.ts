@@ -5,7 +5,7 @@ import {
   generateTempPassword,
 } from "@/lib/api-helpers";
 import { prisma } from "@/lib/prisma";
-import { UserRole } from "@/lib/generated/prisma";
+import { UserRole, Prisma } from "@/lib/generated/prisma";
 import { sendWelcomeLecturer } from "@/lib/email";
 import { hash } from "bcryptjs";
 import { z } from "zod";
@@ -19,14 +19,14 @@ export async function GET(req: NextRequest) {
   const limit = Math.min(50, Number(searchParams.get("limit") ?? 20));
   const search = searchParams.get("search") ?? "";
 
-  const where = {
+  const where: Prisma.UserWhereInput = {
     role: UserRole.LECTURER,
     ...(search.length >= 3
       ? {
           OR: [
-            { name: { contains: search, mode: "insensitive" as const } },
-            { email: { contains: search, mode: "insensitive" as const } },
-            { department: { contains: search, mode: "insensitive" as const } },
+            { name: { contains: search, mode: "insensitive" } },
+            { email: { contains: search, mode: "insensitive" } },
+            { department: { contains: search, mode: "insensitive" } },
           ],
         }
       : {}),

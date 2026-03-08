@@ -72,7 +72,7 @@ export default function CookiesPage() {
                       Cookies are small text files that are placed on your computer or mobile device when you visit a website. They are widely used to make websites work more efficiently and provide information to the owners of the site.
                     </p>
                     <p className="text-gray-600 leading-relaxed">
-                      Cookies set by the website owner (in this case, AYii University) are called "first-party cookies." Cookies set by parties other than the website owner are called "third-party cookies."
+                      Cookies set by the website owner (in this case, AYii University) are called &quot;first-party cookies.&quot; Cookies set by parties other than the website owner are called &quot;third-party cookies.&quot;
                     </p>
                   </div>
                 </div>

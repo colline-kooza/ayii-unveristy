@@ -167,7 +167,7 @@ export default function HelpPage() {
                       Still Need Help?
                     </h2>
                     <p className="text-gray-600 mb-6">
-                      Can't find what you're looking for? Our support team is here to help you with any questions or issues.
+                      Can&apos;t find what you&apos;re looking for? Our support team is here to help you with any questions or issues.
                     </p>
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">

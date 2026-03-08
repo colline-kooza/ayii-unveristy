@@ -116,7 +116,7 @@ export default function AdmissionsPage() {
                   Requirements
                 </Badge>
                 <h2 className="text-3xl lg:text-4xl font-bold text-black mb-6">
-                  What You'll Need
+                  What You&apos;ll Need
                 </h2>
                 <p className="text-gray-600 mb-8 leading-relaxed">
                   Make sure you have the following documents ready before starting your application. This will help streamline the process.
