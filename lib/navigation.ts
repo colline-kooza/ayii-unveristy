@@ -115,11 +115,7 @@ export function getNavigationForRole(
           url: "/dashboard/lecturer",
           icon: LayoutDashboard,
         },
-        {
-          title: "All Dashboards",
-          url: "/dashboard/all-roles",
-          icon: LayoutDashboard,
-        },
+
         {
           title: "My Courses",
           url: "/dashboard/lecturer/my-courses",
@@ -187,11 +183,7 @@ export function getNavigationForRole(
           url: "/dashboard/student",
           icon: LayoutDashboard,
         },
-        {
-          title: "All Dashboards",
-          url: "/dashboard/all-roles",
-          icon: LayoutDashboard,
-        },
+
         {
           title: "Courses",
           url: "/dashboard/student/courses",
