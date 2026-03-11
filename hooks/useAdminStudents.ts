@@ -51,6 +51,7 @@ export function useCreateStudent() {
       registrationNumber?: string;
       department: string;
       program?: string;
+      password?: string;
     }) => {
       const { data } = await apiClient.post("/admin/students", payload);
       return data;

@@ -5,9 +5,9 @@ import {
   generateTempPassword,
 } from "@/lib/api-helpers";
 import { prisma } from "@/lib/prisma";
-import { UserRole, Prisma } from "@/lib/generated/prisma";
+import { UserRole, Prisma, UserStatus } from "@/lib/generated/prisma";
 import { sendWelcomeStudent } from "@/lib/email";
-import { hash } from "bcryptjs";
+import { auth } from "@/lib/auth";
 import { z } from "zod";
 
 // GET: paginated students list with search
@@ -73,10 +73,11 @@ export async function GET(req: NextRequest) {
 const createStudentSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  registrationNumber: z.string().optional(), // Now optional for auto-generation
+  registrationNumber: z.string().optional(),
   department: z.string().min(1),
   program: z.string().optional(),
   image: z.string().optional(),
+  password: z.string().min(4).optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -121,52 +122,65 @@ export async function POST(req: NextRequest) {
       { status: 409 },
     );
 
-  const finalData = { ...data, registrationNumber: registrationNumber! };
+  const { password, ...otherData } = data;
+  const tempPassword = password || registrationNumber!;
 
-  const tempPassword = generateTempPassword();
-  const passwordHash = await hash(tempPassword, 12);
+  // 1. Use Better Auth's API so password is hashed correctly
+  try {
+    await auth.api.signUpEmail({
+      body: {
+        email: data.email,
+        password: tempPassword,
+        name: data.name,
+        role: UserRole.STUDENT,
+        status: UserStatus.ACTIVE,
+        isTemporaryPassword: true,
+      }
+    });
 
-  // Create user + credential account
-  const student = await prisma.user.create({
-    data: {
-      ...finalData,
-      role: UserRole.STUDENT,
-      isTemporaryPassword: true,
-      emailVerified: false,
-      accounts: {
-        create: {
-          accountId: finalData.email,
-          providerId: "credential",
-          password: passwordHash,
-        },
+    // 2. Update the user with our specific university fields
+    const student = await prisma.user.update({
+      where: { email: data.email },
+      data: {
+        ...otherData,
+        registrationNumber: registrationNumber!,
+        role: UserRole.STUDENT,
+        isTemporaryPassword: true,
+        emailVerified: true, 
+        status: UserStatus.ACTIVE,
       },
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      registrationNumber: true,
-      department: true,
-      createdAt: true,
-    },
-  });
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        registrationNumber: true,
+        department: true,
+        createdAt: true,
+      },
+    });
 
-  // Audit log
-  await prisma.auditLog.create({
-    data: {
-      adminId: admin.id,
-      targetUserId: student.id,
-      action: "CREATE_STUDENT",
-    },
-  });
+    // Audit log
+    await prisma.auditLog.create({
+      data: {
+        adminId: admin.id,
+        targetUserId: student.id,
+        action: "CREATE_STUDENT",
+      },
+    });
 
-  // Send welcome email (non-blocking)
-  sendWelcomeStudent({
-    to: student.email,
-    name: student.name ?? "Student",
-    registrationNumber: student.registrationNumber!,
-    temporaryPassword: tempPassword,
-  }).catch(console.error);
+    // Send welcome email (non-blocking)
+    sendWelcomeStudent({
+      to: student.email,
+      name: student.name ?? "Student",
+      registrationNumber: student.registrationNumber!,
+      temporaryPassword: tempPassword,
+    }).catch(console.error);
 
-  return NextResponse.json(student, { status: 201 });
+    return NextResponse.json(student, { status: 201 });
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err.message || "Failed to create student account" },
+      { status: 500 }
+    );
+  }
 }

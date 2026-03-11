@@ -48,6 +48,7 @@ export function useCreateLecturer() {
       specialization?: string;
       employeeId?: string;
       image?: string;
+      password?: string;
     }) => {
       const { data } = await apiClient.post("/admin/lecturers", payload);
       return data;

@@ -44,61 +44,57 @@ export default function StudentCoursesPage() {
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ y: -5 }}
+      className="h-full"
     >
       <Card 
-        className="group relative overflow-hidden rounded-[2rem] border-0 shadow-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 bg-white min-h-[340px] flex flex-col"
+        className="group relative overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-all duration-200 hover:border-primary/20 hover:shadow-md bg-white h-full flex flex-col"
       >
-        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
-        
-        <CardHeader className="p-7 pb-2 flex-1">
-          <div className="flex items-start justify-between mb-2">
-            <span className="text-[10px] font-black text-gray-300 tracking-[0.2em] italic uppercase">
+        <CardHeader className="p-6 pb-2 flex-1">
+          <div className="flex items-start justify-between mb-3">
+            <Badge variant="outline" className="text-[10px] font-bold text-gray-400 border-gray-100 px-2 py-0 rounded transition-colors group-hover:border-primary/20 group-hover:text-primary/70">
               {course.unitCode}
-            </span>
+            </Badge>
             {isEnrolled && (
-              <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-none px-2 rounded-md font-bold text-[9px] uppercase tracking-tighter">
-                <span className="w-1 h-1 rounded-full bg-green-500 mr-1 animate-pulse" />
-                ENROLLED
+              <Badge className="bg-green-50 text-green-700 hover:bg-green-50 border-green-100 px-2 rounded font-bold text-[9px] uppercase tracking-tight">
+                <span className="w-1 h-1 rounded-full bg-green-500 mr-1.5" />
+                Enrolled
               </Badge>
             )}
           </div>
-          <CardTitle className="text-base font-black italic group-hover:text-primary transition-colors leading-[1.2]">
+          <CardTitle className="text-base font-bold text-slate-900 group-hover:text-primary transition-colors leading-tight">
             {course.title}
           </CardTitle>
-          <p className="text-xs font-bold text-gray-400 mt-2 italic line-clamp-2">
-            {course.description || "Course details will be available soon."}
-          </p>
+          <CardDescription className="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+            {course.description || "Comprehensive course materials and curriculum details are provided within."}
+          </CardDescription>
         </CardHeader>
 
-        <CardContent className="p-7 pt-0 space-y-5">
-          <div className="flex items-center gap-4 border-y border-gray-50 py-4">
+        <CardContent className="p-6 pt-0 space-y-4">
+          <div className="flex items-center gap-4 py-3 border-t border-slate-50">
             <div className="flex items-center gap-1.5">
-              <div className="w-7 h-7 rounded-xl bg-primary/5 flex items-center justify-center">
-                <Users className="h-3.5 w-3.5 text-primary" />
-              </div>
-              <span className="text-[11px] font-black italic text-gray-500">{course._count?.enrollments || 0} Students</span>
+              <Users className="h-3.5 w-3.5 text-slate-400" />
+              <span className="text-[11px] font-medium text-slate-600">{course._count?.enrollments || 0} Students</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-7 h-7 rounded-xl bg-gray-50 flex items-center justify-center">
-                <BookOpen className="h-3.5 w-3.5 text-gray-400" />
-              </div>
-              <span className="text-[11px] font-black italic text-gray-500 uppercase tracking-tighter truncate max-w-[100px]">{course.department}</span>
+            <div className="flex items-center gap-1.5 overflow-hidden">
+              <BookOpen className="h-3.5 w-3.5 text-slate-400" />
+              <span className="text-[11px] font-medium text-slate-600 truncate">{course.department}</span>
             </div>
           </div>
 
           <div className="flex gap-2">
             <Button
               variant="outline"
-              className="flex-1 h-12 rounded-2xl border-gray-200 font-black text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all italic"
+              size="sm"
+              className="flex-1 h-9 rounded-lg border-slate-200 font-bold text-[11px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all"
               onClick={() => router.push(`/dashboard/student/courses/${course.id}`)}
             >
-              View Details
+              View
             </Button>
             {isEnrolled ? (
               <Button
-                variant="outline"
-                className="flex-1 h-12 rounded-2xl border-gray-100 font-black text-[11px] uppercase tracking-widest text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all italic"
+                variant="ghost"
+                size="sm"
+                className="flex-1 h-9 rounded-lg font-bold text-[11px] uppercase tracking-wider text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleUnenroll(e, course.id);
@@ -109,7 +105,8 @@ export default function StudentCoursesPage() {
               </Button>
             ) : (
               <Button
-                className="flex-1 h-12 rounded-2xl bg-primary hover:bg-primary-600 text-white font-black text-[11px] uppercase tracking-[0.15em] shadow-xl shadow-primary/20 transition-all italic"
+                size="sm"
+                className="flex-1 h-9 rounded-lg bg-primary hover:bg-primary-600 text-white font-bold text-[11px] uppercase tracking-wider transition-all"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleEnroll(e, course.id);

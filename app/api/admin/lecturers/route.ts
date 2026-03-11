@@ -5,9 +5,9 @@ import {
   generateTempPassword,
 } from "@/lib/api-helpers";
 import { prisma } from "@/lib/prisma";
-import { UserRole, Prisma } from "@/lib/generated/prisma";
+import { UserRole, Prisma, UserStatus } from "@/lib/generated/prisma";
 import { sendWelcomeLecturer } from "@/lib/email";
-import { hash } from "bcryptjs";
+import { auth } from "@/lib/auth";
 import { z } from "zod";
 
 export async function GET(req: NextRequest) {
@@ -67,6 +67,7 @@ const createLecturerSchema = z.object({
   specialization: z.string().optional(),
   employeeId: z.string().optional(),
   image: z.string().optional(),
+  password: z.string().min(4).optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -87,49 +88,64 @@ export async function POST(req: NextRequest) {
       { status: 409 },
     );
 
-  const tempPassword = "password";
-  const passwordHash = await hash(tempPassword, 12);
+  const { password, ...otherData } = data;
+  
+  // Use provided password or employeeId as default, else a temp one
+  const tempPassword = password || data.employeeId || generateTempPassword();
 
-  const lecturer = await prisma.user.create({
-    data: {
-      name: data.name,
-      email: data.email,
-      department: data.department,
-      employeeId: data.employeeId,
-      image: data.image,
-      role: UserRole.LECTURER,
-      isTemporaryPassword: true,
-      emailVerified: false,
-      accounts: {
-        create: {
-          accountId: data.email,
-          providerId: "credential",
-          password: passwordHash,
-        },
+  // 1. Use Better Auth's API so password is hashed correctly
+  try {
+    await auth.api.signUpEmail({
+      body: {
+        email: data.email,
+        password: tempPassword,
+        name: data.name,
+        role: UserRole.LECTURER,
+        status: UserStatus.ACTIVE,
+        isTemporaryPassword: true,
+      }
+    });
+
+    // 2. Update the user with our specific university fields
+    const lecturer = await prisma.user.update({
+      where: { email: data.email },
+      data: {
+        ...otherData,
+        role: UserRole.LECTURER,
+        isTemporaryPassword: true,
+        emailVerified: true,
+        status: UserStatus.ACTIVE,
       },
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      department: true,
-      createdAt: true,
-    },
-  });
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        department: true,
+        createdAt: true,
+      },
+    });
 
-  await prisma.auditLog.create({
-    data: {
-      adminId: admin.id,
-      targetUserId: lecturer.id,
-      action: "CREATE_LECTURER",
-    },
-  });
+    // Audit log
+    await prisma.auditLog.create({
+      data: {
+        adminId: admin.id,
+        targetUserId: lecturer.id,
+        action: "CREATE_LECTURER",
+      },
+    });
 
-  sendWelcomeLecturer({
-    to: lecturer.email,
-    name: lecturer.name!,
-    temporaryPassword: tempPassword,
-  }).catch(console.error);
+    // Send welcome email (non-blocking)
+    sendWelcomeLecturer({
+      to: lecturer.email,
+      name: lecturer.name!,
+      temporaryPassword: tempPassword,
+    }).catch(console.error);
 
-  return NextResponse.json(lecturer, { status: 201 });
+    return NextResponse.json(lecturer, { status: 201 });
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err.message || "Failed to create lecturer account" },
+      { status: 500 }
+    );
+  }
 }

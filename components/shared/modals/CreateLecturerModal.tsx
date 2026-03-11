@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useCreateLecturer } from "@/hooks/useAdminLecturers";
 import { SelectInput } from "@/components/shared/SelectInput";
 import { SimpleImageUpload } from "@/components/FormInputs/SimpleImageUpload";
-import { User, Camera, ChevronLeft, ChevronRight } from "lucide-react";
+import { User, Camera, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -24,6 +24,7 @@ const lecturerSchema = z.object({
   faculty: z.string().min(2, "Faculty is required"),
   specialization: z.string().optional(),
   employeeId: z.string().optional(),
+  password: z.string().min(4, "Password must be at least 4 characters").optional(),
 });
 
 type LecturerFormValues = z.infer<typeof lecturerSchema>;
@@ -55,6 +56,7 @@ const STEPS = [
   { id: 1, label: "Photo" },
   { id: 2, label: "Identity" },
   { id: 3, label: "Academic" },
+  { id: 4, label: "Security" },
 ];
 
 export function CreateLecturerModal({ open, onOpenChange }: CreateLecturerModalProps) {
@@ -79,10 +81,12 @@ export function CreateLecturerModal({ open, onOpenChange }: CreateLecturerModalP
       name: "",
       email: "",
       department: "",
+      password: "",
     },
   });
 
   const imageValue = watch("image");
+  const employeeIdValue = watch("employeeId");
 
   const onSubmit = async (data: LecturerFormValues) => {
     try {
@@ -102,15 +106,17 @@ export function CreateLecturerModal({ open, onOpenChange }: CreateLecturerModalP
     const fieldsToValidate: Record<number, (keyof LecturerFormValues)[]> = {
       1: ["image"],
       2: ["name", "email"],
+      3: ["department", "faculty"],
+      4: ["password"],
     };
 
     const isValid = await trigger(fieldsToValidate[step]);
     if (isValid) {
-      setStep((prev) => prev + 1);
+      setStep((prev) => Math.min(prev + 1, STEPS.length));
     }
   };
 
-  const prevStep = () => setStep((prev) => prev - 1);
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
     <Dialog
@@ -236,7 +242,18 @@ export function CreateLecturerModal({ open, onOpenChange }: CreateLecturerModalP
 
                 {/* STEP 3: Academic Info */}
                 {step === 3 && (
-                  <div className="space-y-5">
+                  <div className="space-y-4">
+                    <div className="grid gap-2">
+                       <Label htmlFor="employeeId" className="text-xs font-semibold text-gray-700">Employee Identification (Optional)</Label>
+                       <Input
+                         id="employeeId"
+                         {...register("employeeId")}
+                         placeholder="e.g. LEC-2025-001"
+                         className="h-11"
+                       />
+                       <p className="text-[10px] text-gray-400">Unique identifier for institutional records.</p>
+                    </div>
+
                     <div className="grid gap-2">
                       <Controller
                         name="department"
@@ -269,6 +286,38 @@ export function CreateLecturerModal({ open, onOpenChange }: CreateLecturerModalP
                         )}
                       />
                       {errors.faculty && <p className="text-xs text-red-600 font-medium">{errors.faculty.message}</p>}
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 4: Security */}
+                {step === 4 && (
+                  <div className="space-y-5">
+                    <div className="grid gap-2">
+                       <Label htmlFor="password" className="text-xs font-semibold text-gray-700">Set Account Password</Label>
+                       <Input
+                         id="password"
+                         type="password"
+                         {...register("password")}
+                         placeholder="Leave blank to use Employee ID as default"
+                         className="h-11"
+                       />
+                       <p className="text-[10px] text-gray-500 italic">
+                         By default, the lecturer&apos;s <strong>Employee ID</strong> (or a generated one) will be their password.
+                       </p>
+                       {errors.password && <p className="text-xs text-red-600 font-medium">{errors.password.message}</p>}
+                    </div>
+
+                    <div className="p-4 bg-rose-50 border border-rose-100 rounded-lg">
+                       <div className="flex gap-3">
+                         <ShieldCheck className="h-5 w-5 text-rose-600 shrink-0" />
+                         <div>
+                           <h4 className="text-xs font-semibold text-rose-900">Institutional Access</h4>
+                           <p className="text-xs text-rose-700 mt-1">
+                             This will provision an official academic account. Welcome details will be dispatched to the provided email.
+                           </p>
+                         </div>
+                       </div>
                     </div>
                   </div>
                 )}

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth, generateTempPassword } from "@/lib/api-helpers";
 import { prisma } from "@/lib/prisma";
-import { UserRole } from "@/lib/generated/prisma";
+import { UserRole, UserStatus } from "@/lib/generated/prisma";
 import { sendWelcomeStudent } from "@/lib/email";
-import { hash } from "bcryptjs";
+import { auth } from "@/lib/auth";
 import { parse } from "papaparse";
 import { z } from "zod";
 
@@ -109,40 +109,52 @@ export async function POST(req: NextRequest) {
   }[] = [];
 
   for (const row of validRows) {
-    const tempPassword = generateTempPassword();
-    const passwordHash = await hash(tempPassword, 12);
+    try {
+      const tempPassword = generateTempPassword();
 
-    const student = await prisma.user.create({
-      data: {
-        ...row,
-        role: UserRole.STUDENT,
-        isTemporaryPassword: true,
-        emailVerified: false,
-        accounts: {
-          create: {
-            accountId: row.email,
-            providerId: "credential",
-            password: passwordHash,
-          },
+      // 1. Use Better Auth's API so password is hashed correctly
+      await auth.api.signUpEmail({
+        body: {
+          email: row.email,
+          password: tempPassword,
+          name: row.name,
+          role: UserRole.STUDENT,
+          status: UserStatus.ACTIVE,
+          isTemporaryPassword: true,
+        }
+      });
+
+      // 2. Update the user with specific fields
+      const student = await prisma.user.update({
+        where: { email: row.email },
+        data: {
+          ...row,
+          role: UserRole.STUDENT,
+          isTemporaryPassword: true,
+          emailVerified: true,
+          status: UserStatus.ACTIVE,
         },
-      },
-      select: { id: true, name: true, email: true, registrationNumber: true },
-    });
+        select: { id: true, name: true, email: true, registrationNumber: true },
+      });
 
-    created.push({
-      id: student.id,
-      name: student.name!,
-      email: student.email,
-      registrationNumber: student.registrationNumber!,
-    });
+      created.push({
+        id: student.id,
+        name: student.name!,
+        email: student.email,
+        registrationNumber: student.registrationNumber!,
+      });
 
-    // Queue email (fire-and-forget)
-    sendWelcomeStudent({
-      to: student.email,
-      name: student.name!,
-      registrationNumber: row.registrationNumber,
-      temporaryPassword: tempPassword,
-    }).catch(console.error);
+      // Queue email (fire-and-forget)
+      sendWelcomeStudent({
+        to: student.email,
+        name: student.name!,
+        registrationNumber: row.registrationNumber,
+        temporaryPassword: tempPassword,
+      }).catch(console.error);
+    } catch (err) {
+      console.error(`Failed to create student ${row.email}:`, err);
+      // Continue with next student
+    }
   }
 
   // Audit log

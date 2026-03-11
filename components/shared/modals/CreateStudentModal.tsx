@@ -25,6 +25,7 @@ const studentSchema = z.object({
   department: z.string().min(2, "Department is required"),
   program: z.string().optional(),
   courseIds: z.array(z.string()).optional(),
+  password: z.string().min(4, "Password must be at least 4 characters").optional(),
 });
 
 type StudentFormValues = z.infer<typeof studentSchema>;
@@ -58,7 +59,7 @@ const STEPS = [
   { id: 1, title: "Photo", icon: Camera },
   { id: 2, title: "Identity", icon: User },
   { id: 3, title: "Academic", icon: ShieldCheck },
-  { id: 4, title: "Account", icon: ShieldCheck },
+  { id: 4, title: "Security", icon: ShieldCheck },
 ];
 
 export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalProps) {
@@ -90,6 +91,7 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
       name: "",
       email: "",
       department: "",
+      password: "",
     },
   });
 
@@ -100,6 +102,7 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
       1: ["image"],
       2: ["name", "email"],
       3: ["department"],
+      4: ["password"],
     };
 
     const fields = fieldsToValidate[step] || [];
@@ -306,9 +309,9 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
                   </div>
                 )}
 
-                {/* STEP 4: Account Summary */}
+                {/* STEP 4: Security */}
                 {step === 4 && (
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     <div className="grid gap-2">
                       <Label className="text-xs font-semibold text-gray-700 text-center">Student Identity</Label>
                       <div className="h-16 border-2 border-dashed border-blue-200 rounded-lg bg-blue-50 flex flex-col items-center justify-center space-y-1">
@@ -317,19 +320,30 @@ export function CreateStudentModal({ open, onOpenChange }: CreateStudentModalPro
                         </span>
                         <p className="text-xs text-blue-600 font-medium">Auto-Generated Registration Number</p>
                       </div>
-                      <p className="text-xs text-gray-500 text-center">
-                        The unique identification will be assigned upon account creation.
-                      </p>
+                    </div>
+
+                    <div className="grid gap-2">
+                       <Label htmlFor="password" className="text-xs font-semibold text-gray-700">Set Account Password</Label>
+                       <Input
+                         id="password"
+                         type="password"
+                         {...register("password")}
+                         placeholder="Leave blank to use Reg. No. as default"
+                         className="h-11"
+                       />
+                       <p className="text-[10px] text-gray-500 italic">
+                         By default, the student&apos;s <strong>Registration Number</strong> will be their password.
+                       </p>
+                       {errors.password && <p className="text-xs text-red-600 font-medium">{errors.password.message}</p>}
                     </div>
 
                     <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
                       <div className="flex gap-3">
                         <ShieldCheck className="h-5 w-5 text-orange-600 shrink-0" />
                         <div>
-                          <h4 className="text-xs font-semibold text-orange-900">Security Note</h4>
+                          <h4 className="text-xs font-semibold text-orange-900">Security Requirement</h4>
                           <p className="text-xs text-orange-700 mt-1">
-                            A temporary password will be automatically generated and sent to the student&apos;s email.
-                            They will be required to change it upon their first login.
+                            The student will be prompted to verify their credentials and update their password upon first authentication.
                           </p>
                         </div>
                       </div>

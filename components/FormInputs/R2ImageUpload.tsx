@@ -21,7 +21,9 @@ import {
   ExternalLink,
   Calendar,
   Layers,
+  CheckCircle2,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { FileCategory, MediaType, type UploadedFile } from "@/types/files";
 import {
@@ -53,7 +55,7 @@ interface R2ImageUploadProps {
   identifier: string;
   existingFileId?: string | string[];
   existingFileKey?: string | string[];
-  variant?: "default" | "compact" | "minimal";
+  variant?: "default" | "compact" | "minimal" | "avatar";
   multiple?: boolean;
   maxFiles?: number;
   acceptedTypes?: string;
@@ -87,7 +89,7 @@ export function R2ImageUpload({
   maxFiles = 10,
   acceptedTypes = "image/*",
 }: R2ImageUploadProps) {
-  const isMultiple = multiple || category === FileCategory.GALLERY;
+  const isMultiple = multiple || (category === FileCategory.GALLERY && multiple !== false);
   const valueArray = Array.isArray(value) ? value : value ? [value] : [];
 
   const [uploadComplete, setUploadComplete] = useState(false);
@@ -105,9 +107,14 @@ export function R2ImageUpload({
   const deleteFile = useDeleteFile();
   const deleteFileByUrl = useDeleteFileByUrl();
 
-  // Initialize files data from existing values (e.g. when editing a record)
+  // Sync files data when value changes from outside (e.g. form reset or initial load)
+  
   useEffect(() => {
-    if (valueArray.length > 0 && filesData.length === 0) {
+    const isDifferent = 
+      valueArray.length !== filesData.length || 
+      valueArray.some((url, i) => url !== filesData[i]?.url);
+
+    if (isDifferent && !isUploading) {
       const newFilesData = valueArray.map((url, index) => ({
         url,
         fileId: Array.isArray(existingFileId)
@@ -119,7 +126,7 @@ export function R2ImageUpload({
       }));
       setFilesData(newFilesData);
     }
-  }, [valueArray.length]); // intentionally only on length change
+  }, [valueArray.join(",")]); // Sync on joined string of urls
 
   // Cleanup object URLs on unmount
   useEffect(() => {
@@ -353,8 +360,14 @@ export function R2ImageUpload({
       setFilesData((prev) => {
         const completedFiles = prev.filter((f) => !f.uploading);
         const newUrls = completedFiles.map((f) => f.url);
-        if (isMultiple) onChange(newUrls);
-        else onChange(newUrls[0] || "");
+
+        // Schedule the parent notification for the next tick to avoid 
+        // updating the parent during the child's state update cycle.
+        setTimeout(() => {
+          if (isMultiple) onChange(newUrls);
+          else onChange(newUrls[0] || "");
+        }, 0);
+
         return prev;
       });
     }, 500);
@@ -437,39 +450,70 @@ export function R2ImageUpload({
 
     if (isImg && pUrl) {
       return (
-        <>
+        <div className="group/preview relative w-full h-full">
           <img
             src={pUrl}
             alt="Preview"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/preview:scale-110"
           />
           {fileData.uploading && (
-            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-              <div className="text-center">
-                <Loader2 className="w-8 h-8 text-white animate-spin mx-auto mb-2" />
-                <div className="text-white font-semibold text-sm">
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
+              <div className="relative h-12 w-12 flex items-center justify-center">
+                <svg className="w-full h-full -rotate-90">
+                  <circle
+                    cx="24"
+                    cy="24"
+                    r="20"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="transparent"
+                    className="text-white/20"
+                  />
+                  <circle
+                    cx="24"
+                    cy="24"
+                    r="20"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="transparent"
+                    strokeDasharray={125.6}
+                    strokeDashoffset={125.6 - (125.6 * (fileData.progress || 0)) / 100}
+                    className="text-white transition-all duration-300"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black text-white">
                   {fileData.progress}%
                 </div>
               </div>
             </div>
           )}
-        </>
+          {!fileData.uploading && variant === "avatar" && (
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center">
+              <Camera className="w-5 h-5 text-white" />
+            </div>
+          )}
+        </div>
       );
     }
 
     return (
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 rounded-xl overflow-hidden">
         {fileData.uploading ? (
-          <>
-            <Loader2 className={cn(sCls[size], "text-primary animate-spin mb-2")} />
-            <p className="text-xs text-gray-600 font-medium">
+          <div className="relative h-12 w-12 flex items-center justify-center">
+            <svg className="w-full h-full -rotate-90">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-gray-200" />
+              <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="4" fill="transparent" strokeDasharray={125.6} strokeDashoffset={125.6 - (125.6 * (fileData.progress || 0)) / 100} className="text-primary transition-all duration-300" />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black text-black">
               {fileData.progress}%
-            </p>
-          </>
+            </div>
+          </div>
         ) : (
           <>
-            <Icon className={cn(sCls[size], "text-gray-600 mb-1")} />
-            <p className="text-[10px] text-gray-500 font-bold uppercase">
+            <div className="h-10 w-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-gray-400 mb-2">
+              <Icon className={cn(sCls[size])} />
+            </div>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.1em]">
               {category}
             </p>
           </>
@@ -479,10 +523,10 @@ export function R2ImageUpload({
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 w-full", className)}>
       {label && (
-        <label className="text-[10px] font-bold uppercase text-gray-400 tracking-wider flex items-center gap-2 px-1">
-          <div className="h-1.5 w-1.5 rounded-full bg-red-600" /> {label}
+        <label className="text-[10px] font-black uppercase text-gray-400 tracking-[0.2em] flex items-center gap-2 px-1">
+          <div className="h-1.5 w-1.5 rounded-full bg-primary" /> {label}
         </label>
       )}
 
@@ -491,11 +535,9 @@ export function R2ImageUpload({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={cn(
-          "group relative border-2 border-dashed rounded-[1.5rem] p-1 transition-all duration-300",
-          isDragging
-            ? "border-red-500 bg-red-50/50 scale-[0.99]"
-            : "border-gray-200 hover:border-red-400 hover:bg-gray-50/30",
-          isUploading && "opacity-80 scale-[0.98]"
+          "group relative transition-all duration-500",
+          variant === "avatar" ? "h-20 w-20" : "w-full min-h-[160px]",
+          isDragging ? "scale-[1.02]" : ""
         )}
       >
         <input
@@ -508,106 +550,139 @@ export function R2ImageUpload({
           id={`file-upload-${identifier}`}
         />
 
-        {filesData.length > 0 ? (
-          <div className="p-2 sm:p-4 bg-white/50 rounded-[1.25rem]">
-            <div
+        <AnimatePresence mode="wait">
+          {filesData.length > 0 ? (
+            <motion.div
+              key="previews"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               className={cn(
-                "grid gap-3 sm:gap-4",
-                isMultiple
-                  ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
-                  : "grid-cols-1"
+                "rounded-[1.5rem] overflow-hidden transition-all duration-500",
+                variant === "avatar" ? "w-full h-full p-0.5 bg-gradient-to-br from-primary/20 via-primary/5 to-white" : "p-2 bg-gray-50/50 border border-gray-100"
               )}
             >
-              {filesData.map((f, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-square rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 group/item transition-all hover:shadow-xl hover:ring-2 hover:ring-red-500/20"
-                >
-                  {renderFilePreview(f, "large")}
+              <div
+                className={cn(
+                  "grid gap-3",
+                  isMultiple
+                    ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
+                    : "grid-cols-1 w-full h-full"
+                )}
+              >
+                {filesData.map((f, i) => (
+                  <motion.div
+                    key={i}
+                    layout
+                    className={cn(
+                      "relative overflow-hidden group/item transition-all duration-500",
+                      variant === "avatar" ? "w-full h-full rounded-2xl shadow-xl" : "aspect-square rounded-[1.25rem] border border-white shadow-sm hover:shadow-xl bg-white"
+                    )}
+                    onClick={variant === "avatar" ? handleClick : undefined}
+                  >
+                    {renderFilePreview(f, variant === "avatar" ? "large" : "medium")}
 
-                  {/* Action Overlay */}
-                  {!f.uploading && (
-                    <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent flex justify-between items-center opacity-0 group-hover/item:opacity-100 transition-all translate-y-2 group-hover/item:translate-y-0">
-                      <button
-                        type="button"
-                        onClick={() => setDetailsFile(f)}
-                        className="h-8 w-8 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all"
-                      >
-                        <Info className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleRemove(i)}
-                        disabled={deletingIndex === i}
-                        className="h-8 w-8 rounded-xl bg-red-500 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all"
-                      >
-                        {deletingIndex === i ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Trash2 className="h-4 w-4" />
+                    {/* Action Overlay */}
+                    {!f.uploading && (
+                      <div className={cn(
+                        "absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex justify-between items-center opacity-0 group-hover/item:opacity-100 transition-all translate-y-2 group-hover/item:translate-y-0 duration-300",
+                        variant === "avatar" ? "p-1.5" : "p-3"
+                      )}>
+                        {variant !== "avatar" && (
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setDetailsFile(f); }}
+                            className="h-8 w-8 rounded-xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+                          >
+                            <Info className="h-4 w-4" />
+                          </button>
                         )}
-                      </button>
-                    </div>
-                  )}
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); handleRemove(i); }}
+                          disabled={deletingIndex === i}
+                          className={cn(
+                            "rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg hover:bg-red-700 transition-colors",
+                            variant === "avatar" ? "h-6 w-full" : "h-8 w-8"
+                          )}
+                        >
+                          {deletingIndex === i ? (
+                            <Loader2 className="h-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            variant === "avatar" ? <span className="text-[8px] font-black uppercase">Remove</span> : <Trash2 className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+                    )}
 
-                  {f.uploading && (
-                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
-                      <div className="relative h-12 w-12 flex items-center justify-center mb-2">
-                        <Loader2 className="h-6 w-6 text-red-600 animate-spin" />
-                        <span className="absolute text-[9px] font-black text-red-600">
+                    {f.uploading && (
+                      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+                        <Loader2 className="h-6 w-6 text-primary animate-spin mb-2" />
+                        <span className="text-[10px] font-black text-gray-900 uppercase tracking-widest">
                           {f.progress}%
                         </span>
                       </div>
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                        Uploading
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </motion.div>
+                ))}
 
-              {isMultiple && filesData.length < maxFiles && (
-                <button
-                  type="button"
-                  onClick={handleClick}
-                  className="relative aspect-square rounded-2xl border-2 border-dashed border-gray-100 hover:border-red-400 hover:bg-red-50/50 transition-all flex flex-col items-center justify-center gap-2 group/add overflow-hidden"
-                >
-                  <div className="h-10 w-10 rounded-2xl bg-gray-50 flex items-center justify-center group-hover/add:bg-red-600 group-hover/add:text-white transition-all shadow-sm">
-                    <Plus className="h-5 w-5" />
-                  </div>
-                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover/add:text-red-600">
-                    Add Media
-                  </span>
-                </button>
+                {isMultiple && filesData.length < maxFiles && (
+                  <button
+                    type="button"
+                    onClick={handleClick}
+                    className="relative aspect-square rounded-[1.25rem] border-2 border-dashed border-gray-200 hover:border-primary hover:bg-white transition-all flex flex-col items-center justify-center gap-2 group/add overflow-hidden bg-gray-50/30"
+                  >
+                    <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm border border-gray-100">
+                      <Plus className="h-5 w-5" />
+                    </div>
+                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest group-hover:text-primary transition-colors">
+                      Add Media
+                    </span>
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              onClick={handleClick}
+              className={cn(
+                "cursor-pointer flex flex-col items-center justify-center text-center transition-all duration-500",
+                variant === "avatar" 
+                  ? "w-full h-full rounded-xl bg-gray-50 border-2 border-dashed border-gray-200 hover:border-primary/50 hover:bg-primary/5" 
+                  : "w-full py-12 space-y-4 rounded-[1.5rem] bg-gray-50/50 border-2 border-dashed border-gray-200 hover:border-primary/50 hover:bg-white"
               )}
-            </div>
-          </div>
-        ) : (
-          <div
-            onClick={handleClick}
-            className="cursor-pointer py-12 flex flex-col items-center justify-center text-center space-y-4"
-          >
-            <div className="h-20 w-20 rounded-[2rem] bg-red-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all shadow-2xl shadow-red-500/10 border border-red-100/50">
-              {isUploading ? (
-                <Loader2 className="h-10 w-10 text-red-600 animate-spin" />
+            >
+              {variant === "avatar" ? (
+                <div className="flex flex-col items-center gap-1">
+                  <Camera className="h-6 w-6 text-gray-300 group-hover:text-primary transition-colors" />
+                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter group-hover:text-primary">Upload</span>
+                </div>
               ) : (
-                <CloudUpload className="h-10 w-10 text-red-600" />
+                <>
+                  <div className="h-16 w-16 rounded-2xl bg-white flex items-center justify-center group-hover:scale-110 transition-all shadow-xl shadow-gray-200/50 border border-gray-100 group-hover:text-primary">
+                    {isUploading ? (
+                      <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                    ) : (
+                      <CloudUpload className="h-8 w-8" />
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-[11px] font-black text-black group-hover:text-primary transition-colors uppercase tracking-[0.1em]">
+                      {isUploading ? "Processing..." : "Sync New Asset"}
+                    </h4>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest opacity-60">
+                      Drag & Drop or Click to browse
+                    </p>
+                  </div>
+                </>
               )}
-            </div>
-            <div className="space-y-1 px-4">
-              <h4 className="text-base font-black text-black group-hover:text-red-600 transition-colors uppercase tracking-tight">
-                {isUploading ? "Uploading..." : "Upload Campus Media"}
-              </h4>
-              <p className="text-[11px] text-gray-400 font-bold px-4 max-w-sm mx-auto leading-relaxed uppercase tracking-tighter opacity-80">
-                Drag and drop assets here, or{" "}
-                <span className="text-red-600 font-black underline underline-offset-4 decoration-2">
-                  browse files
-                </span>
-                .
-              </p>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {description && (

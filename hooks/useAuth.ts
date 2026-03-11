@@ -40,14 +40,17 @@ export function useSignIn() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.me });
       const role = data?.user?.role;
-      const isTemp = data?.user?.isTemporaryPassword;
 
-      if (isTemp) {
-        router.push("/change-password");
-        return;
+      // Fast role-based redirects
+      if (role === "ADMIN") {
+        router.push("/dashboard/admin/overview");
+      } else if (role === "LECTURER") {
+        router.push("/dashboard/lecturer");
+      } else if (role === "STUDENT") {
+        router.push("/dashboard/student");
+      } else {
+        router.push("/dashboard");
       }
-      // Redirect to /dashboard which will then redirect based on role
-      router.push("/dashboard");
     },
     onError: (error) => {
       toast.error("Sign in failed", { description: getErrorMessage(error) });
@@ -94,6 +97,8 @@ export function useUpdateProfile() {
       name?: string;
       email?: string;
       department?: string;
+      bio?: string;
+      image?: string;
     }) => {
       const { data } = await apiClient.patch("/users/me", updates);
       return data;
