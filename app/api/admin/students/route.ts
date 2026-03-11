@@ -94,14 +94,30 @@ export async function POST(req: NextRequest) {
   // Auto-generate if not provided or doesn't have AYII prefix
   if (!registrationNumber || !registrationNumber.startsWith("AYII/")) {
     const year = new Date().getFullYear();
-    const count = await prisma.user.count({
+    // Use findFirst ordered by registrationNumber desc to get the highest one instead of count
+    // this avoids collisions if a student was deleted
+    const lastStudent = await prisma.user.findFirst({
       where: {
         registrationNumber: { startsWith: `AYII/${year}/` },
         role: UserRole.STUDENT
-      }
+      },
+      orderBy: {
+        registrationNumber: 'desc'
+      },
+      select: { registrationNumber: true }
     });
+
+    let nextNumber = 1;
+    if (lastStudent?.registrationNumber) {
+      const parts = lastStudent.registrationNumber.split('/');
+      const lastCount = parseInt(parts[parts.length - 1]);
+      if (!isNaN(lastCount)) {
+        nextNumber = lastCount + 1;
+      }
+    }
+
     // Format: AYII/2026/0001
-    registrationNumber = `AYII/${year}/${(count + 1).toString().padStart(4, '0')}`;
+    registrationNumber = `AYII/${year}/${nextNumber.toString().padStart(4, '0')}`;
   }
 
   // Check uniqueness
