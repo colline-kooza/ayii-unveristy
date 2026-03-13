@@ -12,13 +12,11 @@ import {
   Lock,
   Mail,
   ArrowLeft,
-  Shield,
-  UserCheck,
-  GraduationCap,
   Star,
   BookOpen,
   Users,
   Award,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,15 +31,6 @@ import {
 } from "@/components/ui/form";
 import { useSignIn } from "@/hooks/useAuth";
 
-interface QuickLoginUser {
-  role: string;
-  email: string;
-  password: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  bgColor: string;
-  hoverColor: string;
-}
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -69,36 +58,6 @@ const defaultCarouselImages = [
 
 ];
 
-const demoUsers: QuickLoginUser[] = [
-  {
-    role: "Admin",
-    email: "admin@ayii.edu",
-    password: "Admin@2025",
-    icon: Shield,
-    color: "text-red-600",
-    bgColor: "bg-red-50",
-    hoverColor: "hover:bg-red-100",
-  },
-  {
-    role: "Lecturer",
-    email: "lecturer@ayii.edu",
-    password: "Lecturer@2025",
-    icon: UserCheck,
-    color: "text-[#8B1538]",
-    bgColor: "bg-rose-50",
-    hoverColor: "hover:bg-rose-100",
-  },
-  {
-    role: "Student",
-    email: "student@ayii.edu",
-    password: "Student@2025",
-    icon: GraduationCap,
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-    hoverColor: "hover:bg-green-100",
-  },
-];
-
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -122,14 +81,6 @@ export default function SignInPage() {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
-
-  const handleQuickLogin = (user: QuickLoginUser) => {
-    form.setValue("email", user.email);
-    form.setValue("password", user.password);
-    toast.success("Demo Credentials Filled", {
-      description: `Filled ${user.role} login credentials`,
-    });
-  };
 
   async function onSubmit(data: LoginFormValues) {
     try {
@@ -389,34 +340,6 @@ export default function SignInPage() {
                 </Button>
               </form>
             </Form>
-
-            {/* Quick Login Buttons */}
-            <div className="pt-2">
-              <p className="text-center text-gray-500 text-xs sm:text-sm mb-3">
-                Quick Demo Login
-              </p>
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                {demoUsers.map((user, index) => {
-                  const IconComponent = user.icon;
-                  return (
-                    <Button
-                      key={index}
-                      type="button"
-                      variant="outline"
-                      className={`h-14 sm:h-14 flex flex-col items-center justify-center p-2 rounded-lg border-2 transition-all duration-200 ${user.bgColor} ${user.hoverColor} border-gray-200 hover:border-gray-300 hover:shadow-md`}
-                      onClick={() => handleQuickLogin(user)}
-                    >
-                      <IconComponent
-                        className={`h-4 w-4 sm:h-5 sm:w-5 ${user.color} mb-1`}
-                      />
-                      <span className={`text-xs font-medium ${user.color}`}>
-                        {user.role}
-                      </span>
-                    </Button>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
           {/* Footer */}
