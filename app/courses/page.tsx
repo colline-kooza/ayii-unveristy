@@ -1,19 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { 
-  BookOpen, 
-  Search, 
-  Users, 
-  Star,
-  ChevronRight,
-  Loader2,
-  LogIn
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { BookOpen, Search, Users, Star, ChevronRight, Loader2, LogIn } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { useMe } from "@/hooks/useAuth";
@@ -29,40 +18,23 @@ export default function PublicCoursesPage() {
 
   useEffect(() => {
     fetch("/api/courses/public")
-      .then(res => res.json())
-      .then(data => {
-        setCourses(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+      .then((r) => r.json())
+      .then((d) => { setCourses(d); setLoading(false); })
+      .catch(() => setLoading(false));
   }, []);
 
-  const handleCourseAction = () => {
-    if (user) {
-      // User is logged in, redirect to dashboard
-      router.push("/dashboard");
-    } else {
-      // User is not logged in, redirect to sign in
-      router.push("/auth/sign-in");
-    }
-  };
-
-  const filteredCourses = courses.filter(course => 
-    course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    course.unitCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    course.department.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = courses.filter((c) =>
+    c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.unitCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.department.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleAction = () => router.push(user ? "/dashboard" : "/auth/sign-in");
 
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-10 w-10 animate-spin text-red-600" />
-          <p className="text-xs font-semibold text-gray-500">Loading courses...</p>
-        </div>
+        <Loader2 className="h-8 w-8 animate-spin text-[#8B1538]" />
       </div>
     );
   }
@@ -70,126 +42,139 @@ export default function PublicCoursesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main>
-        <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-800 py-16 text-white lg:py-30 ">
-          <div className="container relative z-10 mx-auto px-6 lg:px-12 text-center">
-            <Badge className="mb-4 bg-red-600/20 text-red-400 border-red-500/30 text-xs font-semibold px-4 py-1">
-              Course Catalog 2026
-            </Badge>
-            <h1 className="text-3xl lg:text-5xl font-bold mb-4">
-              Explore Our <br />
-              <span className="text-red-400">Academic Programs</span>
-            </h1>
-            <p className="max-w-2xl mx-auto text-sm text-gray-300 mb-6">
-              Discover our comprehensive selection of courses designed to help you achieve your academic and professional goals.
-            </p>
-            
-            <div className="max-w-xl mx-auto relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Search by department, code, or course title..." 
-                className="h-10 pl-10 pr-4 bg-white/10 border-white/20 text-white placeholder:text-gray-400 text-sm"
+
+      {/* Hero */}
+      <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: "320px", paddingTop: "64px" }}>
+        <div className="absolute inset-0">
+          <img src="/img2.jpeg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#5A0F23]/88 via-[#8B1538]/82 to-[#6B1329]/92" />
+        </div>
+        <div className="relative w-full text-center px-4 py-10">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold mb-3 uppercase tracking-widest">
+            <BookOpen className="w-3 h-3" />
+            Course Catalog 2026
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight tracking-tight mb-1">
+            Explore Our
+            <span className="ml-2 bg-gradient-to-r from-[#FF6B7A] to-[#FFB3BA] bg-clip-text text-transparent">
+              Academic Programs
+            </span>
+          </h1>
+          <p className="text-xs text-white/55 max-w-sm mx-auto mt-1 mb-5">
+            Discover courses designed to help you achieve your academic and professional goals.
+          </p>
+          {/* Search */}
+          <div className="relative max-w-md mx-auto">
+            <div className="flex items-center bg-white/10 border border-white/25 rounded-xl backdrop-blur-sm overflow-hidden focus-within:border-white/50 focus-within:bg-white/15 transition-all shadow-lg shadow-black/20">
+              <Search className="ml-4 h-4 w-4 text-white/50 shrink-0" />
+              <input
+                type="text"
+                placeholder="Search by department, code, or title..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="flex-1 bg-transparent px-3 py-3 text-sm text-white placeholder-white/40 focus:outline-none"
               />
+              {searchTerm && (
+                <button onClick={() => setSearchTerm("")} className="mr-3 text-white/40 hover:text-white/70 text-xs font-medium transition-colors">
+                  Clear
+                </button>
+              )}
             </div>
           </div>
-        </section>
-
-        {/* Course Grid */}
-        <div className="container mx-auto px-6 lg:px-12 -mt-6 relative z-20 pb-12">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredCourses.map((course) => (
-              <Card key={course.id} className="border-gray-200 bg-white hover:shadow-lg transition-all group flex flex-col">
-                <CardHeader className="p-0 relative h-40 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent z-10"></div>
-                  <img 
-                    src="https://img.freepik.com/free-photo/group-diverse-pupils-engaging-online-course-discussion-via-video-call_482257-123125.jpg?semt=ais_hybrid&w=740&q=80"
-                    alt={course.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3 z-20">
-                    <Badge className="bg-white/90 text-gray-900 border-0 text-xs font-semibold">
-                      {course.unitCode}
-                    </Badge>
-                  </div>
-                  <div className="absolute bottom-3 left-3 z-20 right-3">
-                     <h2 className="text-base font-bold text-white mb-0.5">{course.title}</h2>
-                     <p className="text-xs font-medium text-red-300">{course.department}</p>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="p-5 flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Avatar className="h-7 w-7 border">
-                      <AvatarImage src={course.lecturer?.image || ""} />
-                      <AvatarFallback className="bg-red-100 text-red-700 text-xs font-semibold">
-                        {course.lecturer?.name?.[0] || 'L'}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-xs text-gray-500">Instructor</p>
-                      <p className="text-xs font-semibold text-gray-900">{course.lecturer?.name || "Faculty Member"}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-gray-600 mb-4 line-clamp-2">
-                    {course.description || "Comprehensive course covering essential concepts and practical applications."}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg">
-                      <Users className="h-3 w-3 text-red-600" />
-                      <div>
-                        <p className="text-xs font-semibold text-gray-900">{course._count?.enrollments || 0}</p>
-                        <p className="text-xs text-gray-500">Students</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg">
-                      <Star className="h-3 w-3 text-orange-500" />
-                      <div>
-                        <p className="text-xs font-semibold text-gray-900">4.9</p>
-                        <p className="text-xs text-gray-500">Rating</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                
-                <CardFooter className="p-5 pt-0 mt-auto">
-                  <Button 
-                    onClick={handleCourseAction}
-                    className="w-full h-9 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold gap-2"
-                  >
-                    {user ? (
-                      <>
-                        View Course
-                        <ChevronRight className="h-4 w-4" />
-                      </>
-                    ) : (
-                      <>
-                        <LogIn className="h-4 w-4" />
-                        Sign In to Enroll
-                      </>
-                    )}
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          {filteredCourses.length === 0 && (
-            <div className="py-20 text-center">
-              <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 mb-4">
-                <BookOpen className="h-8 w-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
-              <p className="text-sm text-gray-500 max-w-sm mx-auto">
-                Try adjusting your search criteria to find what you&apos;re looking for.
-              </p>
-            </div>
-          )}
         </div>
+      </section>
+
+      {/* Course Grid */}
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+        {filtered.length === 0 ? (
+          <div className="py-16 text-center">
+            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <BookOpen className="h-6 w-6 text-gray-300" />
+            </div>
+            <p className="text-sm font-semibold text-gray-600">No courses found</p>
+            <p className="text-xs text-gray-400 mt-1">Try adjusting your search criteria</p>
+          </div>
+        ) : (
+          <>
+            <p className="text-xs text-gray-400 mb-6">
+              <span className="font-semibold text-gray-700 text-sm">{filtered.length}</span> course{filtered.length !== 1 ? "s" : ""} available
+            </p>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((course) => (
+                <div key={course.id} className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all group flex flex-col overflow-hidden">
+                  {/* Thumbnail */}
+                  <div className="relative h-40 overflow-hidden bg-gray-100">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
+                    <img
+                      src="https://img.freepik.com/free-photo/group-diverse-pupils-engaging-online-course-discussion-via-video-call_482257-123125.jpg?semt=ais_hybrid&w=740&q=80"
+                      alt={course.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-2.5 left-2.5 z-20">
+                      <span className="px-2 py-0.5 bg-white/90 text-gray-900 rounded-full text-[10px] font-bold">
+                        {course.unitCode}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-2.5 left-3 z-20 right-3">
+                      <h2 className="text-sm font-bold text-white leading-snug mb-0.5 line-clamp-1">{course.title}</h2>
+                      <p className="text-[10px] font-medium text-[#FFB3BA]">{course.department}</p>
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Avatar className="h-6 w-6 border border-gray-200">
+                        <AvatarImage src={course.lecturer?.image || ""} />
+                        <AvatarFallback className="bg-[#8B1538]/10 text-[#8B1538] text-[10px] font-bold">
+                          {course.lecturer?.name?.[0] || "L"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-[10px] text-gray-400">Instructor</p>
+                        <p className="text-xs font-semibold text-gray-800 leading-none">{course.lecturer?.name || "Faculty Member"}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed flex-1">
+                      {course.description || "Comprehensive course covering essential concepts and practical applications."}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="flex items-center gap-1.5 px-2 py-1.5 bg-gray-50 rounded-lg">
+                        <Users className="h-3 w-3 text-[#8B1538]" />
+                        <div>
+                          <p className="text-xs font-bold text-gray-800 leading-none">{course._count?.enrollments ?? 0}</p>
+                          <p className="text-[9px] text-gray-400 mt-0.5">Students</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2 py-1.5 bg-gray-50 rounded-lg">
+                        <Star className="h-3 w-3 text-amber-500" />
+                        <div>
+                          <p className="text-xs font-bold text-gray-800 leading-none">4.9</p>
+                          <p className="text-[9px] text-gray-400 mt-0.5">Rating</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleAction}
+                      className="w-full h-8 bg-gradient-to-r from-[#8B1538] to-[#C41E3A] hover:from-[#C41E3A] hover:to-[#E63946] text-white text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-[#8B1538]/20"
+                    >
+                      {user ? (
+                        <><span>View Course</span><ChevronRight className="h-3.5 w-3.5" /></>
+                      ) : (
+                        <><LogIn className="h-3.5 w-3.5" /><span>Sign In to Enroll</span></>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </main>
+
       <Footer />
     </div>
   );

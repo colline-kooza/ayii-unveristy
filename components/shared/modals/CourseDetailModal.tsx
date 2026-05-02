@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users, Building, AlertCircle, Loader2 } from "lucide-react";

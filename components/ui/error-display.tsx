@@ -1,3 +1,5 @@
+"use client";
+
 interface QueryErrorDisplayProps {
   error: Error;
   onRetry?: () => void;

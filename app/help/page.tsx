@@ -1,213 +1,174 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import { BookOpen, Users, MessageCircle, FileText, Video, Settings, GraduationCap, HelpCircle, Search, ChevronRight } from "lucide-react";
 import Header from "@/components/frontend/Header";
 import Footer from "@/components/frontend/Footer";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Users, MessageCircle, FileText, Video, Settings, GraduationCap, HelpCircle } from "lucide-react";
-import Link from "next/link";
+
+const categories = [
+  { icon: GraduationCap, title: "Getting Started",           description: "Learn the basics and set up your account.",                  articles: 12 },
+  { icon: BookOpen,      title: "Courses & Enrollment",      description: "Browse courses, enroll, and access materials.",              articles: 18 },
+  { icon: Video,         title: "Live Classes",               description: "Join live sessions and use video conferencing tools.",       articles: 8  },
+  { icon: FileText,      title: "Assignments & Submissions",  description: "Submit assignments and track your academic progress.",       articles: 15 },
+  { icon: Users,         title: "Account Management",         description: "Manage your profile, settings, and security preferences.",  articles: 10 },
+  { icon: Settings,      title: "Technical Support",          description: "Troubleshoot technical issues and get platform support.",   articles: 20 },
+];
+
+const popular = [
+  "How do I enroll in a course?",
+  "How to join a live class session?",
+  "How do I submit an assignment?",
+  "How to reset my password?",
+  "How to update my profile information?",
+  "How to access the digital library?",
+];
 
 export default function HelpPage() {
-  const categories = [
-    {
-      icon: GraduationCap,
-      title: "Getting Started",
-      description: "Learn the basics of using the platform and setting up your account.",
-      articles: 12
-    },
-    {
-      icon: BookOpen,
-      title: "Courses & Enrollment",
-      description: "Find answers about browsing courses, enrolling, and accessing materials.",
-      articles: 18
-    },
-    {
-      icon: Video,
-      title: "Live Classes",
-      description: "Get help with joining live sessions and using video conferencing tools.",
-      articles: 8
-    },
-    {
-      icon: FileText,
-      title: "Assignments & Submissions",
-      description: "Learn how to submit assignments and track your academic progress.",
-      articles: 15
-    },
-    {
-      icon: Users,
-      title: "Account Management",
-      description: "Manage your profile, settings, and account security preferences.",
-      articles: 10
-    },
-    {
-      icon: Settings,
-      title: "Technical Support",
-      description: "Troubleshoot technical issues and get platform support.",
-      articles: 20
-    }
-  ];
+  const [search, setSearch] = useState("");
 
-  const popularArticles = [
-    "How do I enroll in a course?",
-    "How to join a live class session?",
-    "How do I submit an assignment?",
-    "How to reset my password?",
-    "How to update my profile information?",
-    "How to access the digital library?"
-  ];
+  const filteredCategories = categories.filter((c) =>
+    !search || c.title.toLowerCase().includes(search.toLowerCase()) || c.description.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-linear-to-b from-black to-gray-800 py-20 text-white lg:py-24">
-          <div className="container relative z-10 mx-auto px-6 lg:px-12 text-center">
-            <Badge className="mb-6 bg-red-600/20 text-red-400 border-red-500/30 text-xs font-semibold px-5 py-1.5">
-              Help Center
-            </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              How Can We <span className="text-red-400">Help You?</span>
-            </h1>
-            <p className="max-w-2xl mx-auto text-lg text-gray-300 mb-8">
-              Search our knowledge base or browse categories to find answers to your questions.
-            </p>
-            <div className="max-w-2xl mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search for help articles..."
-                  className="w-full h-14 px-6 pr-12 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-lg bg-red-600 hover:bg-red-700 flex items-center justify-center transition-colors">
-                  <HelpCircle className="h-5 w-5 text-white" />
+
+      {/* Hero */}
+      <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: "320px", paddingTop: "64px" }}>
+        <div className="absolute inset-0">
+          <img src="/img2.jpeg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#5A0F23]/88 via-[#8B1538]/82 to-[#6B1329]/92" />
+        </div>
+        <div className="relative w-full text-center px-4 py-10">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold mb-3 uppercase tracking-widest">
+            <HelpCircle className="w-3 h-3" />
+            Help Center
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight tracking-tight mb-1">
+            How Can We
+            <span className="ml-2 bg-gradient-to-r from-[#FF6B7A] to-[#FFB3BA] bg-clip-text text-transparent">
+              Help You?
+            </span>
+          </h1>
+          <p className="text-xs text-white/55 max-w-sm mx-auto mt-1 mb-5">
+            Search our knowledge base or browse categories to find answers to your questions.
+          </p>
+          {/* Search bar */}
+          <div className="relative max-w-md mx-auto">
+            <div className="flex items-center bg-white/10 border border-white/25 rounded-xl backdrop-blur-sm overflow-hidden focus-within:border-white/50 focus-within:bg-white/15 transition-all shadow-lg shadow-black/20">
+              <Search className="ml-4 h-4 w-4 text-white/50 shrink-0" />
+              <input
+                type="text"
+                placeholder="Search help articles..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="flex-1 bg-transparent px-3 py-3 text-sm text-white placeholder-white/40 focus:outline-none"
+              />
+              {search && (
+                <button onClick={() => setSearch("")} className="mr-3 text-white/40 hover:text-white/70 text-xs font-medium transition-colors">
+                  Clear
                 </button>
-              </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main>
+        {/* Categories */}
+        <section className="py-10 bg-gray-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-7">
+              <h2 className="text-xl font-extrabold text-gray-900 mb-1">Browse by Category</h2>
+              <p className="text-xs text-gray-500">Find help organised by topic.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredCategories.map((cat, i) => (
+                <div key={i} className="bg-white p-5 rounded-xl border border-gray-200 hover:border-[#8B1538]/30 hover:shadow-md transition-all cursor-pointer group">
+                  <div className="h-9 w-9 rounded-lg bg-[#8B1538]/10 flex items-center justify-center mb-3 group-hover:bg-[#8B1538] transition-colors">
+                    <cat.icon className="h-4.5 w-4.5 text-[#8B1538] group-hover:text-white transition-colors" />
+                  </div>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1">{cat.title}</h3>
+                  <p className="text-xs text-gray-500 mb-2 leading-relaxed">{cat.description}</p>
+                  <p className="text-[10px] text-[#8B1538] font-bold">{cat.articles} articles</p>
+                </div>
+              ))}
+              {filteredCategories.length === 0 && (
+                <div className="col-span-3 py-10 text-center text-xs text-gray-400">No categories match your search.</div>
+              )}
             </div>
           </div>
         </section>
 
-        {/* Categories */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-black mb-4">
-                Browse by Category
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Find the help you need organized by topic.
-              </p>
+        {/* Popular Articles */}
+        <section className="py-10 bg-white">
+          <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-7">
+              <span className="inline-block px-3 py-1 bg-[#8B1538]/10 text-[#8B1538] rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">Most Viewed</span>
+              <h2 className="text-xl font-extrabold text-gray-900 mb-1">Popular Help Articles</h2>
+              <p className="text-xs text-gray-500">Quick answers to the most common questions.</p>
             </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categories.map((category, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-2xl border border-gray-200 hover:border-red-500 hover:shadow-lg transition-all cursor-pointer group"
-                >
-                  <div className="h-12 w-12 rounded-xl bg-red-100 flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors">
-                    <category.icon className="h-6 w-6 text-red-600 group-hover:text-white transition-colors" />
+            <div className="space-y-2">
+              {popular.map((article, i) => (
+                <div key={i} className="flex items-center justify-between gap-3 p-3.5 bg-gray-50 rounded-xl hover:bg-[#8B1538]/5 transition-colors cursor-pointer group">
+                  <div className="flex items-center gap-3">
+                    <div className="h-7 w-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center shrink-0">
+                      <FileText className="h-3.5 w-3.5 text-[#8B1538]" />
+                    </div>
+                    <p className="text-xs font-semibold text-gray-700 group-hover:text-[#8B1538] transition-colors">{article}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-2">{category.title}</h3>
-                  <p className="text-sm text-gray-600 mb-4">{category.description}</p>
-                  <p className="text-xs text-red-600 font-semibold">{category.articles} articles</p>
+                  <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-[#8B1538] shrink-0 transition-colors" />
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Popular Articles */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-12">
-                <Badge className="mb-4 bg-red-100 text-red-700 text-xs font-semibold px-5 py-1.5">
-                  Most Viewed
-                </Badge>
-                <h2 className="text-3xl lg:text-4xl font-bold text-black mb-4">
-                  Popular Help Articles
-                </h2>
-                <p className="text-gray-600">
-                  Quick answers to the most common questions.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {popularArticles.map((article, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-50 p-4 rounded-xl hover:bg-red-50 transition-colors cursor-pointer group flex items-center justify-between"
-                  >
+        {/* Still Need Help */}
+        <section className="py-10 bg-gray-50">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <div className="grid sm:grid-cols-2 gap-6 items-center">
+                <div>
+                  <h2 className="text-base font-extrabold text-gray-900 mb-2">Still Need Help?</h2>
+                  <p className="text-xs text-gray-500 mb-4 leading-relaxed">Can't find what you're looking for? Our support team is ready to help.</p>
+                  <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-lg bg-white flex items-center justify-center shrink-0">
-                        <FileText className="h-4 w-4 text-red-600" />
+                      <div className="h-8 w-8 rounded-lg bg-[#8B1538]/10 flex items-center justify-center shrink-0">
+                        <MessageCircle className="h-4 w-4 text-[#8B1538]" />
                       </div>
-                      <p className="text-black font-medium group-hover:text-red-600 transition-colors">
-                        {article}
-                      </p>
+                      <div>
+                        <p className="text-xs font-bold text-gray-800">Live Chat</p>
+                        <p className="text-[10px] text-gray-400">Available 24/7</p>
+                      </div>
                     </div>
-                    <svg className="h-5 w-5 text-gray-400 group-hover:text-red-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Support */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white p-8 lg:p-12 rounded-2xl shadow-lg border border-gray-200">
-                <div className="grid lg:grid-cols-2 gap-8 items-center">
-                  <div>
-                    <h2 className="text-3xl font-bold text-black mb-4">
-                      Still Need Help?
-                    </h2>
-                    <p className="text-gray-600 mb-6">
-                      Can&apos;t find what you&apos;re looking for? Our support team is here to help you with any questions or issues.
-                    </p>
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
-                          <MessageCircle className="h-5 w-5 text-red-600" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-black">Live Chat</p>
-                          <p className="text-sm text-gray-600">Available 24/7</p>
-                        </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-[#8B1538]/10 flex items-center justify-center shrink-0">
+                        <FileText className="h-4 w-4 text-[#8B1538]" />
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
-                          <FileText className="h-5 w-5 text-red-600" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-black">Submit a Ticket</p>
-                          <p className="text-sm text-gray-600">Response within 24 hours</p>
-                        </div>
+                      <div>
+                        <p className="text-xs font-bold text-gray-800">Submit a Ticket</p>
+                        <p className="text-[10px] text-gray-400">Response within 24 hours</p>
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <Link href="/contact">
-                      <button className="w-full px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors">
-                        Contact Support
-                      </button>
-                    </Link>
-                    <Link href="/faq">
-                      <button className="w-full px-6 py-4 bg-gray-100 hover:bg-gray-200 text-black font-semibold rounded-xl transition-colors">
-                        View FAQs
-                      </button>
-                    </Link>
-                  </div>
+                </div>
+                <div className="space-y-2.5">
+                  <Link href="/contact" className="block w-full h-9 bg-gradient-to-r from-[#8B1538] to-[#C41E3A] text-white text-xs font-bold rounded-lg flex items-center justify-center transition-all hover:from-[#C41E3A] hover:to-[#E63946]">
+                    Contact Support
+                  </Link>
+                  <Link href="/faq" className="block w-full h-9 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg flex items-center justify-center transition-colors">
+                    View FAQs
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   );

@@ -14,6 +14,8 @@ const PAGES = [
   { id: "help", label: "Help", icon: FileText },
 ];
 
+// Re-export for use in admin content page
+
 export function PageSelector() {
   const pathname = usePathname();
 

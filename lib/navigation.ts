@@ -13,6 +13,9 @@ import {
   ClipboardList,
   Video,
   Globe,
+  Images,
+  Newspaper,
+  Layers,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -58,9 +61,31 @@ export function getNavigationForRole(
           icon: BookOpen,
         },
         {
-          title: "Website Content",
+          title: "CMS",
           url: "/dashboard/admin/content/homepage",
-          icon: Globe,
+          icon: Layers,
+          items: [
+            {
+              title: "Website Pages",
+              url: "/dashboard/admin/content/homepage",
+              icon: Globe,
+            },
+            {
+              title: "Blog Posts",
+              url: "/dashboard/admin/cms/blog",
+              icon: FileText,
+            },
+            {
+              title: "Gallery",
+              url: "/dashboard/admin/cms/gallery",
+              icon: Images,
+            },
+            {
+              title: "School Updates",
+              url: "/dashboard/admin/cms/updates",
+              icon: Newspaper,
+            },
+          ],
         },
         {
           title: "Library",
