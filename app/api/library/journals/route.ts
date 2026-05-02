@@ -5,9 +5,6 @@ import { UserRole, JournalStatus } from "@/lib/generated/prisma";
 import { z } from "zod";
 
 export async function GET(req: NextRequest) {
-  const { error } = await requireAuth();
-  if (error) return error;
-
   const { searchParams } = req.nextUrl;
   const page = Math.max(1, Number(searchParams.get("page") ?? 1));
   const limit = 20;

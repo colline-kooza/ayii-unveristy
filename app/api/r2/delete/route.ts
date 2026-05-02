@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { requireAuth } from "@/lib/api-helpers";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { r2Client } from "@/lib/r2Client";
 
 export async function DELETE(request: Request) {
+  const { error: authError } = await requireAuth();
+  if (authError) return authError;
+
   try {
     const body = await request.json();
     const { key } = body;

@@ -20,6 +20,10 @@ const PUBLIC_PATHS = [
   "/terms",
   "/cookies",
   "/admissions",
+  "/blog",
+  "/gallery",
+  "/updates",
+  "/library",
 ];
 
 export async function middleware(request: NextRequest) {

@@ -95,7 +95,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard/library" className="text-gray-300 hover:text-[#FFB3BA] transition-colors text-sm">
+                <Link href="/library" className="text-gray-300 hover:text-[#FFB3BA] transition-colors text-sm">
                   Digital Library
                 </Link>
               </li>
